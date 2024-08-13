@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1723556419335,
+      "tag": "0000_lethal_fabian_cortez",
+      "breakpoints": true
+    }
+  ]
+}

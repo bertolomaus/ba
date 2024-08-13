@@ -8,9 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "drizzle-generate": "drizzle-kit generate",
-    "drizzle-migrate": "drizzle-kit migrate",
-    "drizzle-studio": "drizzle-kit studio"
+    "db-generate": "drizzle-kit generate",
+    "db-migrate": "drizzle-kit migrate",
+    "db-studio": "drizzle-kit studio"
   },
   "dependencies": {
     "better-sqlite3": "^11.1.2",

@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     
     db.insert(users).values({
         email: 'email',
-        passwort: 'pw',
+        password: 'pw',
     })
     .execute();
 })

@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import addUser from "../components/addUser.vue"
+import FormLogin from '~/components/FormLogin.vue';
 </script>
 
 <template>
     <div>
-        <addUser />
+        <h1>Hello World</h1>
+        <div>
+            <FormLogin />
+        </div>
+        <pre>
+        </pre>
     </div>
 </template>

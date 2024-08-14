@@ -7,5 +7,10 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     }
-  }
+  },
+  "include": [
+    "server/**/*.ts",
+    "nuxt.config.ts",
+    "types/**/*.d.ts"
+  ]
 }

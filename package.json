@@ -13,10 +13,12 @@
     "db-studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.1",
     "better-sqlite3": "^11.1.2",
     "drizzle-orm": "^0.33.0",
     "nuxt": "^3.12.4",
-    "vue": "latest"
+    "nuxt-auth-utils": "^0.3.3",
+    "vue": "^3.4.30"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

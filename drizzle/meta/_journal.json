@@ -8,6 +8,34 @@
       "when": 1723556419335,
       "tag": "0000_lethal_fabian_cortez",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1723563131364,
+      "tag": "0001_loving_the_hunter",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1723564170598,
+      "tag": "0002_dizzy_skin",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1723645933832,
+      "tag": "0003_wandering_caretaker",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1723657580642,
+      "tag": "0004_overrated_forge",
+      "breakpoints": true
     }
   ]
 }

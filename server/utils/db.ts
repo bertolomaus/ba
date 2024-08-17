@@ -14,11 +14,18 @@ export const db = drizzle(sqlite);
 //   .from(users)
 //   .where(sql`${users.username} = ${sql.placeholder('username')}`)
 
-export const prepLogin = db
+export const login = db
+.select({
+  id: users.id,
+  password: users.password,
+  data: users.data,
+})
+.from(users)
+.where(sql`${users.username} = ${sql.placeholder("username")}`);
+
+export const getUserData = db
   .select({
-    id: users.id,
-    password: users.password,
     data: users.data,
   })
   .from(users)
-  .where(sql`${users.username} = ${sql.placeholder("username")}`);
+  .where(sql`${users.id} = ${sql.placeholder("id")}`);

@@ -1,23 +1,7 @@
 <script lang="ts" setup>
-const props = defineProps({
-  id: Number
-})
+import { useAuth } from '~/composables/useAuth'
 
-// login with credentials
-const logout = async () => {
-  try {
-    // send credentials to api/auth
-    await $fetch('/api/auth/logout', {
-      method: 'POST',
-      body: {
-        id: props.id
-      }
-    })
-  }
-  catch (error) {
-    // console.error(error.statusMessage);
-  }
-}
+const { logout } = useAuth()
 </script>
 
 <template>

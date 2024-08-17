@@ -1,20 +1,26 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { useAuth } from '~/composables/useAuth'
+
+const { login } = useAuth();
 
 const username = ref<string>('u1')
 const password = ref<string>('u1')
 
 // login with credentials
-const login = async () => {
+const handleLogin = async () => {
   try {
     // send credentials to api/auth
-    await $fetch('/api/auth/login', {
+    const loginRequest = await $fetch('/api/auth/login', {
       method: 'POST',
       body: {
         username: username.value,
         password: password.value
       }
     })
+    if(loginRequest.success){
+      login(loginRequest.userId)
+    }
   }
   catch (error) {
     // console.error(error.statusMessage);
@@ -24,7 +30,7 @@ const login = async () => {
 
 <template>
   <div class="form-login">
-    <form @submit.prevent="login">
+    <form @submit.prevent="handleLogin">
       <div class="field-username">
         <input class="border border-black mb-2" type="text" name="username" v-model="username" autocomplete="username"
           required />

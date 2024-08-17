@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
     setCookie(event, 'auth', JSON.stringify(cookieData), {
       httpOnly: true, // cookie is only accessible by the server
-      sameSite: 'lax',  // CSFR protection
+      sameSite: 'lax',  // CSRF protection
       secure: process.env.NODE_ENV === 'production',  // Use HTTPS in production
       path: '/',  // cookie is accessible on all routes
       maxAge: 60 * 60 * 24 * 7, // cookie expires in 7 days

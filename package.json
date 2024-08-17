@@ -14,14 +14,12 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "better-sqlite3": "^11.1.2",
-    "drizzle-orm": "^0.33.0",
+    "better-sqlite3": "^9.6.0",
+    "drizzle-orm": "^0.29.5",
     "nuxt": "^3.12.4",
-    "nuxt-auth-utils": "^0.3.3",
-    "vue": "^3.4.30"
+    "vue": "latest"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.11",
     "drizzle-kit": "^0.24.0"
   }
 }

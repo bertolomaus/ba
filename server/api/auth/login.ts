@@ -1,4 +1,5 @@
 import { prepLogin } from "../../utils/db";
+import { prepLogin } from "../../utils/db";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -22,6 +23,15 @@ export default defineEventHandler(async (event) => {
       maxAge: 60 * 60 * 24 * 7, // cookie expires in 7 days
     })
 
+    return { success: true }
+  }
+  else{
+    // Invalid credentials
+    throw createError({
+      statusCode: 401,
+      statusMessage: 'Cursed Email or Password',
+    })
+  }
     return { success: true }
   }
   else{

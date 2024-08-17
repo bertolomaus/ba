@@ -12,5 +12,5 @@ export const useAuth = () => {
     userId.value = 0
   };
 
-  return { isLoggedIn, login, logout }
+  return { isLoggedIn, userId, login, logout }
 };

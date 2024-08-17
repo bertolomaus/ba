@@ -3,16 +3,16 @@ import { getUserData } from "../../utils/db";
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
-  // prepared statements -> ~/server/utils/db.ts
-  const result = getUserData.get({ id: body.id });
-
-  // check if user exists and password is correct
-  if (result) {
-    return { result, success: true };
+  // check if valid id is requesten. 0 is not valid.
+  if(body.id != 0){
+    // prepared statements -> ~/server/utils/db.ts
+    const result = getUserData.get({ id: body.id });
+    return { result, success: true };    
   } else {
-    // Invalid credentials
+    // Invalid user id
     throw createError({
-      statusCode: 404,
+      statusCode: 403,
+      statusMessage: 'We do not share secrets with strangers.'
     });
   }
 });

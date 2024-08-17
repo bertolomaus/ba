@@ -1,4 +1,5 @@
 # Open Issues Report
+- make useState persistent through reloads. use cookie for it
 
 ## Possible improvements
 - use an auth cookie. 

@@ -29,3 +29,10 @@ export const getUserData = db
   })
   .from(users)
   .where(sql`${users.id} = ${sql.placeholder("id")}`);
+
+  export const updateUserData = db
+    .update(users)
+    .set({
+      data: sql`${sql.placeholder("data")}`
+    })
+    .where(sql`${users.id} = ${sql.placeholder("id")}`);

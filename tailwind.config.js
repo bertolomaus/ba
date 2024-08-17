@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["~/{assets,components,composables,content,pages}/**/*.{json,ts,vue}"],
+  content: ["~/{assets,components,composables,content,pages}/*.{html,js,json,ts,jsx,tsx,vue}"],
   theme: {
     container: {
       screens: {
@@ -8,7 +8,6 @@ export default {
         md: '800px',
         lg: '1280px',
         xl: '2000px',
-        xl: '3000px',
       },
     },
     fontFamily: {

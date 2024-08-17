@@ -6,6 +6,5 @@
 <template>
     <div>
         <h1 class="">Fragen</h1>
-        <ContentDoc/>
     </div>
 </template>

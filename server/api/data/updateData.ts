@@ -1,4 +1,4 @@
-import { updateUserData, getUserData } from "../../utils/db";
+import { updateUserData, getUserDataById } from "../../utils/db";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     // prepared statements -> ~/server/utils/db.ts
     // update user data and return updated data as a string
     updateUserData.run({ id: body.id, data: body.data });
-    const result = getUserData.get({ id: body.id });
+    const result = getUserDataById.get({ id: body.id });
 
     return { result, success: true };
   } else {

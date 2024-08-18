@@ -1,18 +1,20 @@
-import { drizzle } from "drizzle-orm/better-sqlite3";
-import Database from "better-sqlite3";
-import { sql } from "drizzle-orm";
-import { users } from "~/schema";
+import { drizzle } from "drizzle-orm/better-sqlite3"
+import Database from "better-sqlite3"
+import { sql } from "drizzle-orm"
+import { users } from "~/schema"
 
-const sqlite = new Database("sqlite.db");
-export const db = drizzle(sqlite);
+const sqlite = new Database("sqlite.db")
+export const db = drizzle(sqlite)
 
-// export const prepRegister = db
-//   .select({
-//     id: users.id,
-//     data: users.data,
-//   })
-//   .from(users)
-//   .where(sql`${users.username} = ${sql.placeholder('username')}`)
+// prepared statements
+export const register = db
+.insert(users)
+.values({
+  id: sql.placeholder('id'),
+  username: sql.placeholder('username'),
+  password: sql.placeholder('password'),
+  data: sql.placeholder('data'),
+})
 
 export const login = db
 .select({
@@ -21,18 +23,26 @@ export const login = db
   data: users.data,
 })
 .from(users)
-.where(sql`${users.username} = ${sql.placeholder("username")}`);
+.where(sql`${users.username} = ${sql.placeholder("username")}`)
 
-export const getUserData = db
+export const getUserDataById = db
   .select({
     data: users.data,
   })
   .from(users)
-  .where(sql`${users.id} = ${sql.placeholder("id")}`);
+  .where(sql`${users.id} = ${sql.placeholder("id")}`)
 
-  export const updateUserData = db
-    .update(users)
-    .set({
-      data: sql`${sql.placeholder("data")}`
-    })
-    .where(sql`${users.id} = ${sql.placeholder("id")}`);
+export const getUsernameAndId = db
+  .select({
+    id: users.id,
+    username: users.username,
+  })
+  .from(users)
+  .where(sql`${users.username} = ${sql.placeholder("username")} OR ${users.id} = ${sql.placeholder("id")}`)
+
+export const updateUserData = db
+  .update(users)
+  .set({
+    data: sql`${sql.placeholder("data")}`
+  })
+  .where(sql`${users.id} = ${sql.placeholder("id")}`)

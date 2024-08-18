@@ -1,22 +1,52 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import { useAuth } from '~/composables/useAuth'
+import { generateNumber } from '~/composables/generateRandomNumber'
+
+const { login } = useAuth();
 const username = ref<string>('');
 const password = ref<string>('');
 const passwordConfirm = ref<string>('');
-const userData = ref<any>();
 
 const register = async () => {
-  try {
-    userData.value = await $fetch('/api/auth/register', {
+  // generate a random 8-digit id
+  const newId = ref<number>(generateNumber(8))
+
+  let requestUsername = await $fetch('/api/data/getUsername', {
+    method: 'POST',
+    body: {
+      username: username.value,
+      id: newId.value
+    }
+  })
+
+  // if newId is by change unavailable, keep generating new ones until one is free
+  while(requestUsername.matchingIdFound){
+    newId.value = generateNumber(8)
+    requestUsername = await $fetch('/api/data/getUsername', {
       method: 'POST',
       body: {
         username: username.value,
+        id: newId.value
+      }
+    })
+  }
+
+  // check if username is already taken
+  if(requestUsername.matchingNameFound){
+    console.log('name already taken')
+  }
+  //check if pw was entered correctly
+  else if(password.value === passwordConfirm.value){
+    // insert a new user into table 'users'
+    await $fetch('/api/auth/register', {
+      method: 'POST',
+      body: {
+        id: newId.value,
+        username: username.value,
         password: password.value
       }
-    });
-  }
-  catch (error) {
-    // console.error(error.statusMessage);
+    })
   }
 }
 </script>

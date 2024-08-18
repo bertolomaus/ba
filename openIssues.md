@@ -1,5 +1,8 @@
 # Open Issues Report
 
+## registration
+- add field for username (=displayName)
+
 ## authentication
 - make useState persistent through reloads. use cookie for it
 

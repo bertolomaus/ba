@@ -11,7 +11,7 @@ export const register = db
 .insert(users)
 .values({
   id: sql.placeholder('id'),
-  username: sql.placeholder('username'),
+  email: sql.placeholder('email'),
   password: sql.placeholder('password'),
   data: sql.placeholder('data'),
 })
@@ -23,7 +23,7 @@ export const login = db
   data: users.data,
 })
 .from(users)
-.where(sql`${users.username} = ${sql.placeholder("username")}`)
+.where(sql`${users.email} = ${sql.placeholder("username")}`)
 
 export const getUserDataById = db
   .select({
@@ -32,13 +32,13 @@ export const getUserDataById = db
   .from(users)
   .where(sql`${users.id} = ${sql.placeholder("id")}`)
 
-export const getUsernameAndId = db
+export const getEmailAndId = db
   .select({
     id: users.id,
-    username: users.username,
+    email: users.email,
   })
   .from(users)
-  .where(sql`${users.username} = ${sql.placeholder("username")} OR ${users.id} = ${sql.placeholder("id")}`)
+  .where(sql`${users.email} = ${sql.placeholder("email")} OR ${users.id} = ${sql.placeholder("id")}`)
 
 export const updateUserData = db
   .update(users)

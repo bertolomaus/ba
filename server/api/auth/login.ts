@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   // prepared statements -> ~/server/utils/db.ts
-  const result = login.get({ username: body.username });
+  const result = login.get({ email: body.email });
 
   // check if user exists and password is correct
   if (result && result?.password == body.password) {

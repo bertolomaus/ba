@@ -4,7 +4,7 @@ import { useAuth } from '~/composables/useAuth'
 
 const { login } = useAuth();
 
-const username = ref<string>('u1')
+const email = ref<string>('u1')
 const password = ref<string>('u1')
 
 // login with credentials
@@ -14,7 +14,7 @@ const handleLogin = async () => {
     const loginRequest = await $fetch('/api/auth/login', {
       method: 'POST',
       body: {
-        username: username.value,
+        email: email.value,
         password: password.value
       }
     })
@@ -32,9 +32,9 @@ const handleLogin = async () => {
   <div class="form-login">
     <form @submit.prevent="handleLogin">
       <div class="field-username">
-        <input class="border border-black mb-2" type="text" name="username" v-model="username" autocomplete="username"
+        <input class="border border-black mb-2" type="text" name="email" v-model="email" autocomplete="email"
           required />
-        <label for="username">Email</label>
+        <label for="email">Email</label>
       </div>
       <div class="field-password">
         <input class="border border-black mb-2" type="text" name="password" v-model="password"

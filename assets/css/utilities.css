@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* TEXT COLOR */
+  .text-textColor{color:#4c586d}
+  .text-textColor-primary{color:#00112f}
+  .text-textColor-secondary{color:#eb4747}
+  .text-textColor-highlight{color:#ffd824}
+  .text-textColor-muted{color:#999fab}
+  
+  /* PRIMARY */
+  .text-primary{color:#00112f}
+  .text-primary-light{color:#00112f}
+  .text-primary-dark{color:#000b20}
+  .bg-primary{background-color:#00112f}
+  .bg-primary-light{background-color:#00112f}
+  .bg-primary-dark{background-color:#000b20}
+  .border-primary{border-color:#00112f}
+  .border-primary-light{border-color:#00112f}
+  .border-primary-dark{border-color:#000b20}
+  
+  /* SECONDARY */
+  .text-secondary{color:#eb4747}
+  .bg-secondary{background-color:#eb4747}
+  .border-secondary{border-color:#eb4747}
+  
+  /* HIGHLIGHT */
+  .text-highlight{color:#ffd824}
+  .bg-highlight{background-color:#ffd824}
+  .border-highlight{border-color:#ffd824}
+  
+  /* MUTED */
+  .text-muted{color:#999fab}
+  .bg-muted{background-color:#e5e7ea}
+  .border-muted{border-color:#999fab}
+  
+  /* INVERTED */
+  .text-inverted{color:#cccfd5}
+  .text-inverted-primary{color:#e5e7ea}
+  .text-inverted-secondary{color:#e5e7ea}
+  .text-inverted-highlight{color:#fff}
+  .text-inverted-muted{color:#667082}
+  .bg-inverted{background-color:#cccfd5}
+  .bg-inverted-primary{background-color:#e5e7ea}
+  .bg-inverted-secondary{background-color:#e5e7ea}
+  .bg-inverted-highlight{background-color:#fff}
+  .bg-inverted-muted{background-color:#192843}
+  .border-inverted{border-color:#cccfd5}
+  .border-inverted-primary{border-color:#e5e7ea}
+  .border-inverted-secondary{border-color:#e5e7ea}
+  .border-inverted-highlight{border-color:#fff}
+  .border-inverted-muted{border-color:#667082}
+  
+  /* SUCCESS */
+  .text-success{color:#33ff88}
+  .bg-success{background-color:#33ff88}
+  .border-success{border-color:#33ff88}
+  
+  /* ERROR */
+  .text-error{color:#eb4747}
+  .bg-error{background-color:#eb4747}
+  .border-error{border-color:#eb4747}
+  
+  /* WARNING */
+  .text-warning{color:#ffd824}
+  .bg-warning{background-color:#ffd824}
+  .border-warning{border-color:#ffd824}
+}

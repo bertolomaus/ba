@@ -5,4 +5,5 @@ export default defineEventHandler(async (event) => {
 
   // prepared statements -> ~/server/utils/db.ts
   const result = register.run({ id: body.id, email: body.email, password: body.password, data: '{name: "", projekte: []}' });
+  return {success: true}
 });

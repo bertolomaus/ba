@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useAuth } from '~/composables/useAuth'
+const { isLoggedIn, userId } = useAuth()
 </script>
 
 <template>
@@ -9,6 +11,9 @@
       </li>
       <li>
         <NuxtLink to="/profil">Profil</NuxtLink>
+      </li>
+      <li>
+        Logged In: {{ isLoggedIn }}, User ID: {{ userId }}
       </li>
     </ul>
   </nav>

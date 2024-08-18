@@ -1,0 +1,37 @@
+/* ********** BASIC FONT ********** */
+
+body{
+  @apply font-sans font-normal text-base tracking-wide leading-6 antialiased text-textColor;
+  min-height:100vh;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6{
+  @apply font-serif font-bold text-base tracking-wide leading-5 text-textColor-primary
+}
+
+h1, .h1{
+  @apply text-3xl
+}
+
+h2, .h2{
+  @apply text-2xl
+}
+
+h3, .h3{
+  @apply text-xl
+}
+
+h4, .h4{
+  @apply text-lg
+}
+
+h5, .h5{
+  @apply text-lg font-medium
+}
+
+h6, .h6{
+  @apply text-lg font-normal
+}
+
+/* ********** COMPONENT/AUTHENTICATION ********** */

@@ -23,7 +23,8 @@ const registerSchema = toTypedSchema(
   }),
 )
 
-const { login } = useAuth();
+const router = useRouter()
+const { login } = useAuth()
 const { values, errors, defineField } = useForm({
   validationSchema: registerSchema,
 });
@@ -39,7 +40,7 @@ const register = async () => {
   let requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
     method: 'POST',
     body: {
-      email: email.value,
+      email: values.email,
       id: newId.value
     }
   })
@@ -62,26 +63,32 @@ const register = async () => {
   }
   else{
     // insert a new user into table 'users'
-    await $fetch('/api/auth/register', {
-      method: 'POST',
-      body: {
-        id: newId.value,
-        email: values.email,
-        password: values.password
+    try{
+      const loginRequest = await $fetch('/api/auth/register', {
+        method: 'POST',
+        body: {
+          id: newId.value,
+          email: values.email,
+          password: values.password
+        }
+      })
+      if(loginRequest.success){
+        // login new users and redirect them to the profile site
+        login(newId.value)
+        router.push('/profil')
       }
-    })
+    } catch (error) {
+      console.error('Error while creating a new user:', error)
+    }
+
   }
 }
 </script>
 
 <template>
   <div class="form-register">
-    <pre>
-      values: {{ values }}
-      errors: {{ errors }}
-    </pre>
     <form @submit.prevent="register">
-      <div class="field-username">
+      <div class="field-email">
         <input class="border border-black mb-2" v-model="email" v-bind="emailAttrs" name="email" placeholder="E-Mail" />
         <label for="email">E-Mail</label>
         <div>{{ errors.email }}</div>

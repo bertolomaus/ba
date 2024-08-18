@@ -4,8 +4,8 @@ import { useAuth } from '~/composables/useAuth'
 
 const { login } = useAuth();
 
-const email = ref<string>('u1')
-const password = ref<string>('u1')
+const email = ref<string>('')
+const password = ref<string>('')
 
 // login with credentials
 const handleLogin = async () => {
@@ -31,14 +31,14 @@ const handleLogin = async () => {
 <template>
   <div class="form-login">
     <form @submit.prevent="handleLogin">
-      <div class="field-username">
-        <input class="border border-black mb-2" type="text" name="email" v-model="email" autocomplete="email"
+      <div class="field-email">
+        <input class="border border-black mb-2" type="text" name="email" v-model="email" autocomplete="on"
           required />
-        <label for="email">Email</label>
+        <label for="email">E-Mail</label>
       </div>
       <div class="field-password">
         <input class="border border-black mb-2" type="text" name="password" v-model="password"
-          autocomplete="current-password" required />
+          autocomplete="on" required />
         <label for="password">Passwort</label>
       </div>
       <div class="field-submit">

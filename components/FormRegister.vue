@@ -8,9 +8,18 @@ import * as yup from 'yup'
 
 const registerSchema = toTypedSchema(
   yup.object({
-    email: yup.string().required().email(),
-    password: yup.string().required(),
-    passwordConfirm: yup.string().required(),
+    email: yup
+      .string()
+      .required('Gib eine gültige E-Mail Adresse an.')
+      .email('Gib eine gültige E-Mail Adresse an.'),
+    password: yup
+      .string()
+      .required('Gib ein Passwort ein.')
+      .min(8, 'Dein Passwort muss mindestens 8 Zeichen lang sein.'),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref('password'), undefined], 'Passwörter stimmen nicht überein.')
+      .required('Bestätige dein Passwort.'),
   }),
 )
 
@@ -21,52 +30,47 @@ const { values, errors, defineField } = useForm({
 
 const [email, emailAttrs] = defineField('email')
 const [password, passwordAttrs] = defineField('password')
-const [passwordConfirm, passwordConfirmAttrs] = defineField('password')
+const [passwordConfirm, passwordConfirmAttrs] = defineField('passwordConfirm')
 
-// const register = async () => {
-//   // generate a random 8-digit id
-//   const newId = ref<number>(generateNumber(8))
+const register = async () => {
+  // generate a random 8-digit id
+  const newId = ref<number>(generateNumber(8))
 
-//   let requestUsername = await $fetch('/api/data/getUsername', {
-//     method: 'POST',
-//     body: {
-//       username: username.value,
-//       id: newId.value
-//     }
-//   })
+  let requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
+    method: 'POST',
+    body: {
+      email: email.value,
+      id: newId.value
+    }
+  })
 
-//   // if newId is by change unavailable, keep generating new ones until one is free
-//   while(requestUsername.matchingIdFound){
-//     newId.value = generateNumber(8)
-//     requestUsername = await $fetch('/api/data/getUsername', {
-//       method: 'POST',
-//       body: {
-//         username: username.value,
-//         id: newId.value
-//       }
-//     })
-//   }
+  // if newId is by change unavailable, keep generating new ones until one is free
+  while(requestUniqueKeys.matchingIdFound){
+    newId.value = generateNumber(8)
+    requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
+      method: 'POST',
+      body: {
+        email: values.email,
+        id: newId.value
+      }
+    })
+  }
 
-//   // check if username is already taken
-//   if(requestUsername.matchingNameFound){
-//     console.log('name already taken')
-//   }
-//   //check if pw was entered correctly
-//   else if(password.value === passwordConfirm.value){
-//     // insert a new user into table 'users'
-//     await $fetch('/api/auth/register', {
-//       method: 'POST',
-//       body: {
-//         id: newId.value,
-//         username: username.value,
-//         password: password.value
-//       }
-//     })
-//   }
-// }
-
-const doSomething = () => {
-  console.log(values)
+  // check if username is already taken
+  if(requestUniqueKeys.matchingEmailFound){
+    console.log('name already taken')
+  }
+  else{
+    // insert a new user into table 'users'
+    await $fetch('/api/auth/register', {
+      method: 'POST',
+      body: {
+        id: newId.value,
+        email: values.email,
+        password: values.password
+      }
+    })
+  }
 }
 </script>
 
@@ -76,18 +80,21 @@ const doSomething = () => {
       values: {{ values }}
       errors: {{ errors }}
     </pre>
-    <form @submit.prevent="doSomething">
+    <form @submit.prevent="register">
       <div class="field-username">
         <input class="border border-black mb-2" v-model="email" v-bind="emailAttrs" name="email" placeholder="E-Mail" />
         <label for="email">E-Mail</label>
+        <div>{{ errors.email }}</div>
       </div>
       <div class="field-password">
         <input class="border border-black mb-2" v-model="password" v-bind="passwordAttrs" name="password" placeholder="Passwort" />
         <label for="password">Passwort</label>
+        <div>{{ errors.password }}</div>
       </div>
       <div class="field-password">
-        <input class="border border-black mb-2" v-model="password" v-bind="passwordAttrs" name="passwordConfirm" placeholder="Passwort bestätigen" />
+        <input class="border border-black mb-2" v-model="passwordConfirm" v-bind="passwordConfirmAttrs" name="passwordConfirm" placeholder="Passwort bestätigen" />
         <label for="passwordConfirm">Passwort bestätigen</label>
+        <div>{{ errors.passwordConfirm }}</div>
       </div>
       <div class="field-submit">
         <button type="submit">Registrieren</button>

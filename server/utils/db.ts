@@ -32,7 +32,7 @@ export const getUserDataById = db
   .from(users)
   .where(sql`${users.id} = ${sql.placeholder("id")}`)
 
-export const getEmailAndId = db
+export const getUniqueKeys = db
   .select({
     id: users.id,
     email: users.email,

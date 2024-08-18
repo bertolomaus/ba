@@ -1,11 +1,10 @@
-import { getEmailAndId as getEmailAndId } from "../../utils/db"
-import { ref } from "vue"
+import { getUniqueKeys } from "../../utils/db"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   // prepared statements -> ~/server/utils/db.ts
-  const result = getEmailAndId.get({ email: body.email, id: body.id });
+  const result = getUniqueKeys.get({ email: body.email, id: body.id });
   let matchingIdFound = false
   let matchingEmailFound = false
 

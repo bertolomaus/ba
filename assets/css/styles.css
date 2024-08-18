@@ -34,4 +34,57 @@ h6, .h6{
   @apply text-lg font-normal
 }
 
+
+
+/* ********** BASIC FORM ********** */
+
+input{
+  @apply border border-transparent rounded p-2 bg-bgColor-muted transition-all;
+  @apply hover:border-muted focus:border-primary focus:bg-bgColor-mutedLight;
+  outline:none;
+}
+
+form .field{
+  @apply relative
+}
+
+form .field + .field{
+  @apply mt-4
+}
+
+
+
 /* ********** COMPONENT/AUTHENTICATION ********** */
+
+.user-authentication label{
+  @apply absolute left-1 top-2 text-textColor-muted text-sm transition-all z-10 pointer-events-none px-1;
+}
+
+.user-authentication .has-text input{
+  @apply bg-bgColor-mutedLight
+}
+
+.user-authentication input:focus + label,
+.user-authentication .has-text input + label,
+.user-authentication .is-acceptable input + label{
+  @apply left-1 top-0 text-xs leading-4 bg-gradient-to-t from-bgColor-mutedLight from-50% to-white to-50%;
+  transform:translateY(-50%);
+}
+
+.user-authentication .has-error input{
+  @apply border-error;
+  box-shadow: 0 0 3px #eb4747;
+}
+
+.user-authentication .is-acceptable input{
+  @apply border-success;
+  box-shadow: 0 0 3px #33ff88;
+}
+
+.user-authentication .errors{
+  @apply h-max transition-all text-error text-sm overflow-hidden
+}
+
+.user-authentication .has-error .errors{
+  @apply h-fit
+}

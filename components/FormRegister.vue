@@ -11,7 +11,19 @@ const registerSchema = toTypedSchema(
     email: yup
       .string()
       .required('Gib eine gültige E-Mail Adresse an.')
-      .email('Gib eine gültige E-Mail Adresse an.'),
+      .email('Gib eine gültige E-Mail Adresse an.')
+      .test('isEmailAvailable', 'E-Mail Adresse wird bereits verwendet.', 
+        async (email = yup.ref('email').toString()) => {
+          console.log(email)
+          const requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
+            method: 'POST',
+            body: {
+              email: email,
+              id: 0
+            }
+          })
+          return !requestUniqueKeys.matchingEmailFound
+        }),
     password: yup
       .string()
       .required('Gib ein Passwort ein.')
@@ -88,23 +100,29 @@ const register = async () => {
 <template>
   <div class="form-register">
     <form @submit.prevent="register">
-      <div class="field-email">
-        <input class="border border-black mb-2" v-model="email" v-bind="emailAttrs" name="email" placeholder="E-Mail" />
+      <div class="field field-email" :class="[{'has-text': email}, {'has-error': errors.email}, {'is-acceptable': email && !errors.email}]">
+        <input v-model="email" v-bind="emailAttrs" name="email" />
         <label for="email">E-Mail</label>
-        <div>{{ errors.email }}</div>
+        <div class="errors">
+          {{ errors.email }}
+        </div>
       </div>
-      <div class="field-password">
-        <input class="border border-black mb-2" v-model="password" v-bind="passwordAttrs" name="password" placeholder="Passwort" />
+      <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
+        <input v-model="password" v-bind="passwordAttrs"  name="password" />
         <label for="password">Passwort</label>
-        <div>{{ errors.password }}</div>
+        <div class="errors">
+          {{ errors.password }}
+        </div>
       </div>
-      <div class="field-password">
-        <input class="border border-black mb-2" v-model="passwordConfirm" v-bind="passwordConfirmAttrs" name="passwordConfirm" placeholder="Passwort bestätigen" />
+      <div class="field field-password" :class="[{'has-text': passwordConfirm}, {'has-error': errors.passwordConfirm}, {'is-acceptable': passwordConfirm && !errors.passwordConfirm}]">
+        <input  v-model="passwordConfirm" v-bind="passwordConfirmAttrs" name="passwordConfirm" />
         <label for="passwordConfirm">Passwort bestätigen</label>
-        <div>{{ errors.passwordConfirm }}</div>
+        <div class="errors">
+          {{ errors.passwordConfirm }}
+        </div>
       </div>
-      <div class="field-submit">
-        <button type="submit">Registrieren</button>
+      <div class="field field-submit">
+        <button class="btn btn-submit" type="submit">Registrieren</button>
       </div>
     </form>
   </div>

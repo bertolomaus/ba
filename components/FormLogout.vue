@@ -6,6 +6,10 @@ const { logout } = useAuth()
 
 <template>
   <div class="form-logout">
-    <button class="btn btn-logout" @click="logout()">Logout</button>
+    <form @submit.prevent="logout">
+      <div class="field">
+        <button class="btn btn-logout btn-submit" type="submit">Logout</button>
+      </div>
+    </form>
   </div>
 </template>

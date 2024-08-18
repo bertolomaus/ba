@@ -31,18 +31,16 @@ const handleLogin = async () => {
 <template>
   <div class="form-login">
     <form @submit.prevent="handleLogin">
-      <div class="field-email">
-        <input class="border border-black mb-2" type="text" name="email" v-model="email" autocomplete="on"
-          required />
+      <div class="field field-email">
+        <input type="text" name="email" v-model="email" autocomplete="on" required :class="{'has-text': email}" />
         <label for="email">E-Mail</label>
       </div>
-      <div class="field-password">
-        <input class="border border-black mb-2" type="text" name="password" v-model="password"
-          autocomplete="on" required />
+      <div class="field field-password">
+        <input type="text" name="password" v-model="password" autocomplete="on" required :class="{'has-text': password}" />
         <label for="password">Passwort</label>
       </div>
-      <div class="field-submit">
-        <button type="submit">Login</button>
+      <div class="field field-submit">
+        <button class="btn btn-submit" type="submit">Login</button>
       </div>
     </form>
   </div>

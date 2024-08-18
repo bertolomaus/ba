@@ -17,6 +17,9 @@ export default {
       'serif': ["Roboto Mono", "serif"],
     },
     fontSize: {
+      '2xs': '.5rem',
+      'xs': '.75rem',
+      'sm': '.875rem',
       'base': '1rem',
       'lg': '1.25rem',
       'xl': '1.5rem',
@@ -30,7 +33,15 @@ export default {
           primary: '#00112f',
           secondary: '#eb4747',
           highlight: '#ffd824',
-          muted: '#999fab'
+          muted: '#999fab',
+        },
+        bgColor: {
+          DEFAULT: 'rgba(0,0,0,0)',
+          primary: '#00112f',
+          secondary: '#eb4747',
+          highlight: '#ffd824',
+          muted: '#eaebee',
+          mutedLight: '#f4f5f6'
         },
         primary: {
           DEFAULT: '#00112f',
@@ -44,7 +55,7 @@ export default {
           DEFAULT: '#ffd824'
         },
         muted: {
-          DEFAULT: '#999fab'
+          DEFAULT: '#999fab',
         },
         inverted: {
           DEFAULT: '#e5e7ea',

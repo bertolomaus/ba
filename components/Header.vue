@@ -24,7 +24,7 @@ const { isLoggedIn, userId } = useAuth()
           </svg>
         </div>
         <div class="toggle-profil">
-          <span>☃</span>
+          <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="64" width="64">
         </div>
       </div>
     </div>

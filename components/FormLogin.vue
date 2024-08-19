@@ -73,5 +73,6 @@ const handleLogin = async () => {
         <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Login</button>
       </div>
     </form>
+    <button class="btn mt-4" @click="login(1)">Login as Dev</button>
   </div>
 </template>

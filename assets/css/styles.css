@@ -55,7 +55,7 @@ form .field + .field{
 
 /* *** BUTTON *** */
 .btn{
-  @apply leading-5 font-serif text-sm uppercase px-8 py-2 font-bold rounded transition-all m-0.5 relative z-10 border-2 border-bgColor-muted block;
+  @apply leading-5 font-serif text-sm uppercase px-8 py-2 font-bold rounded transition-all relative z-10 border-2 border-bgColor-muted block;
   @apply hover:text-inverted hover:border-bgColor-primaryLight
 }
 
@@ -82,6 +82,29 @@ form .field + .field{
 
 .btn-primary{
   @apply text-inverted bg-bgColor-primaryLight
+}
+
+
+/* ********** COMPONENT/HEADER ********** */
+
+.headerbar{
+  @apply fixed top-0 left-0 w-full px-8 h-20 transition-all flex justify-between
+}
+
+.logo img{
+  @apply h-16 w-auto transition-all;
+}
+
+.sidebar-togglers{
+  @apply flex items-center
+}
+
+.toggle-nav{
+  @apply mr-8
+}
+
+.toggle-nav svg{
+  @apply w-6
 }
 
 

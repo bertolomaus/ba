@@ -31,37 +31,42 @@ export default {
         textColor: {
           DEFAULT: '#4c586d',
           primary: '#00112f',
-          secondary: '#eb4747',
+          red: '#eb4747',
+          blue: '#00319f',
           highlight: '#ffd824',
-          muted: '#999fab',
+          muted: '#99a0ac',
         },
         bgColor: {
           DEFAULT: 'rgba(0,0,0,0)',
           primary: '#00112f',
           primaryLight: '#203c6c',
-          secondary: '#eb4747',
+          red: '#eb4747',
+          blue: '#00319f',
           highlight: '#ffd824',
           muted: '#f4f5f6',
-          alt: '#00319f',
         },
         primary: {
           DEFAULT: '#00112f',
           light: '#192843',
           dark: '#000b20'
         },
-        secondary: {
+        red: {
           DEFAULT: '#eb4747'
+        },
+        blue: {
+          DEFAULT: '#00319f'
         },
         highlight: {
           DEFAULT: '#ffd824'
         },
         muted: {
-          DEFAULT: '#999fab',
+          DEFAULT: '#99a0ac',
         },
         inverted: {
           DEFAULT: '#e5e7ea',
           primary: '#e5e7ea',
-          secondary: '#e5e7ea',
+          red: '#e5e7ea',
+          blue: '#e5e7ea',
           highlight: '#ffffff',
           text: '#cccfd5',
           muted: '#667082'

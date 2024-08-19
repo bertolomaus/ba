@@ -46,3 +46,9 @@ export const updateUserData = db
     data: sql`${sql.placeholder("data")}`
   })
   .where(sql`${users.id} = ${sql.placeholder("id")}`)
+
+export const getAllIds = db
+.select({
+  id: users.id,
+})
+.from(users)

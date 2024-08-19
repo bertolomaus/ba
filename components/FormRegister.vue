@@ -46,9 +46,10 @@ const [passwordConfirm, passwordConfirmAttrs] = defineField('passwordConfirm')
 
 const register = async () => {
   // generate a random 8-digit id
-  const newId = ref<number>(generateNumber(8))
+  const newId = ref<number>(0)
 
-  let requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
+  /* MAYBE NEEDED WHEN USING AUTH COOKIE. FOR NOW, GENERATE ID IN API/AUTH
+  const requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
     method: 'POST',
     body: {
       email: values.email,
@@ -66,32 +67,26 @@ const register = async () => {
         id: newId.value
       }
     })
-  }
+  } 
+  */
 
-  // check if username is already taken
-  if(requestUniqueKeys.matchingEmailFound){
-    console.log('name already taken')
-  }
-  else{
-    // insert a new user into table 'users'
-    try{
-      const loginRequest = await $fetch('/api/auth/register', {
-        method: 'POST',
-        body: {
-          id: newId.value,
-          email: values.email,
-          password: values.password
-        }
-      })
-      if(loginRequest.success){
-        // login new users and redirect them to the profile site
-        login(newId.value)
-        router.push('/profil')
+  // insert a new user into table 'users'
+  try{
+    const registerRequest = await $fetch('/api/auth/register', {
+      method: 'POST',
+      body: {
+        id: 0,
+        email: values.email,
+        password: values.password
       }
-    } catch (error) {
-      console.error('Error while creating a new user:', error)
+    })
+    if(registerRequest.success){
+      // login new users and redirect them to the profile site
+      login(registerRequest.newId)
+      router.push('/profil')
     }
-
+  } catch (error) {
+    console.error('Error while creating a new user:', error)
   }
 }
 </script>

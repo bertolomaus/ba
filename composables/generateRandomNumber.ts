@@ -1,3 +1,5 @@
+import { ref } from "vue"
+
 export const generateNumber = (length: number) => {
   const charPool = '0123456789'
   const newId = ref<string>('')

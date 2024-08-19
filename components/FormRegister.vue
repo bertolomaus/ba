@@ -14,7 +14,6 @@ const registerSchema = toTypedSchema(
       .email('Gib eine gültige E-Mail Adresse an.')
       .test('isEmailAvailable', 'E-Mail Adresse wird bereits verwendet.', 
         async (email = yup.ref('email').toString()) => {
-          console.log(email)
           const requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
             method: 'POST',
             body: {
@@ -37,7 +36,7 @@ const registerSchema = toTypedSchema(
 
 const router = useRouter()
 const { login } = useAuth()
-const { values, errors, defineField } = useForm({
+const { values, errors, defineField, meta } = useForm({
   validationSchema: registerSchema,
 });
 
@@ -105,6 +104,9 @@ const register = async () => {
         <label for="email">E-Mail</label>
         <div class="errors">
           {{ errors.email }}
+          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.email">
+            this is a dummy text to keep the stupid divs size.
+          </div>
         </div>
       </div>
       <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
@@ -112,6 +114,9 @@ const register = async () => {
         <label for="password">Passwort</label>
         <div class="errors">
           {{ errors.password }}
+          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.password">
+            this is a dummy text to keep the stupid divs size.
+          </div>
         </div>
       </div>
       <div class="field field-password" :class="[{'has-text': passwordConfirm}, {'has-error': errors.passwordConfirm}, {'is-acceptable': passwordConfirm && !errors.passwordConfirm}]">
@@ -119,10 +124,13 @@ const register = async () => {
         <label for="passwordConfirm">Passwort bestätigen</label>
         <div class="errors">
           {{ errors.passwordConfirm }}
+          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.passwordConfirm">
+            this is a dummy text to keep the stupid divs size.
+          </div>
         </div>
       </div>
       <div class="field field-submit">
-        <button class="btn btn-submit" type="submit">Registrieren</button>
+        <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Registrieren</button>
       </div>
     </form>
   </div>

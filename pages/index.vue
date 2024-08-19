@@ -6,5 +6,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <UserAuthentication />
+  <div class="dashboard">
+    <UserAuthentication />
+  </div>
 </template>

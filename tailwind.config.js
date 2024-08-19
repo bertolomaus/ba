@@ -38,10 +38,11 @@ export default {
         bgColor: {
           DEFAULT: 'rgba(0,0,0,0)',
           primary: '#00112f',
+          primaryLight: '#203c6c',
           secondary: '#eb4747',
           highlight: '#ffd824',
-          muted: '#eaebee',
-          mutedLight: '#f4f5f6'
+          muted: '#f4f5f6',
+          alt: '#00319f',
         },
         primary: {
           DEFAULT: '#00112f',
@@ -74,6 +75,13 @@ export default {
         warning: {
           DEFAULT: '#ffd824'
         }
+      },
+      transitionDuration: {
+        DEFAULT: '200ms'
+      },
+      boxShadow: {
+        fakeBorder: '0 0 0 1px #000',
+        fakeBorder2: '0 0 0 2px #000',
       }
     }
   },

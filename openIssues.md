@@ -1,8 +1,6 @@
 # Open Issues Report
 
 ## registration
-- add field for username (=displayName)
-- add veevalidate for login
 
 ## authentication
 - make useState persistent through reloads. use cookie for it

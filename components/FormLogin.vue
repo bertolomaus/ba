@@ -1,11 +1,29 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useAuth } from '~/composables/useAuth'
+import { useForm } from 'vee-validate'
+import { toTypedSchema } from '@vee-validate/yup'
+import * as yup from 'yup'
 
-const { login } = useAuth();
+const registerSchema = toTypedSchema(
+  yup.object({
+    email: yup
+      .string()
+      .required('Gib eine gültige E-Mail Adresse an.')
+      .email('Gib eine gültige E-Mail Adresse an.'),
+    password: yup
+      .string()
+      .required('Gib ein Passwort ein.')
+  }),
+)
 
-const email = ref<string>('')
-const password = ref<string>('')
+const { login } = useAuth()
+const { values, errors, defineField, meta } = useForm({
+  validationSchema: registerSchema,
+});
+
+const [email, emailAttrs] = defineField('email')
+const [password, passwordAttrs] = defineField('password')
 
 // login with credentials
 const handleLogin = async () => {
@@ -14,8 +32,8 @@ const handleLogin = async () => {
     const loginRequest = await $fetch('/api/auth/login', {
       method: 'POST',
       body: {
-        email: email.value,
-        password: password.value
+        email: values.email,
+        password: values.password
       }
     })
     if(loginRequest.success){
@@ -31,16 +49,28 @@ const handleLogin = async () => {
 <template>
   <div class="form-login">
     <form @submit.prevent="handleLogin">
-      <div class="field field-email">
-        <input type="text" name="email" v-model="email" autocomplete="on" required :class="{'has-text': email}" />
+      <div class="field field-email" :class="[{'has-text': email}, {'has-error': errors.email}, {'is-acceptable': email && !errors.email}]">
+        <input v-model="email" v-bind="emailAttrs" name="email" />
         <label for="email">E-Mail</label>
+        <div class="errors">
+          {{ errors.email }}
+          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.email">
+            this is a dummy text to keep the stupid divs size.
+          </div>
+        </div>
       </div>
-      <div class="field field-password">
-        <input type="text" name="password" v-model="password" autocomplete="on" required :class="{'has-text': password}" />
+      <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
+        <input v-model="password" v-bind="passwordAttrs"  name="password" />
         <label for="password">Passwort</label>
+        <div class="errors">
+          {{ errors.password }}
+          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.password">
+            this is a dummy text to keep the stupid divs size.
+          </div>
+        </div>
       </div>
       <div class="field field-submit">
-        <button class="btn btn-submit" type="submit">Login</button>
+        <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Login</button>
       </div>
     </form>
   </div>

@@ -1,5 +1,3 @@
-import { useAuth } from '~/composables/useAuth'
-
 interface UserData {
   name: string;
   projekte: number[];

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import FormLogout from './FormLogout.vue'
 import UserAuthentication from './UserAuthentication.vue'
-import { useAuth } from '~/composables/useAuth'
+
 const { isLoggedIn, userId } = useAuth()
+const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
 </script>
 
 <template>
@@ -18,9 +19,9 @@ const { isLoggedIn, userId } = useAuth()
       <div class="sidebar-togglers">
         <div class="toggle-nav">
           <svg viewBox="0 0 8 7">
-            <rect width="8" height="1" y="0" />
-            <rect width="8" height="1" y="3" />
-            <rect width="8" height="1" y="6" />
+            <rect width="8" height="1" x="0" y="0" />
+            <rect width="8" height="1" x="0" y="3" />
+            <rect width="8" height="1" x="0" y="6" />
           </svg>
         </div>
         <div class="toggle-profil">
@@ -29,42 +30,64 @@ const { isLoggedIn, userId } = useAuth()
       </div>
     </div>
     <div class="sidebar">
-      <div class="navigation">
-        <nav>
-          <ul>
-            <li>
-              <NuxtLink to="/">Dashboard</NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/profil">Profil</NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/frgen">Fragen</NuxtLink>
-              <ul>
-                <li>Frage 1</li>
-                <li>Frage 2</li>
-                <li>Frage 3</li>
-              </ul>
-            </li>
-            <li>
-              <NuxtLink to="/projekte">Projekte</NuxtLink>
-              <ul>
-                <li>Projekt 1</li>
-                <li>Projekt 2</li>
-                <li>Projekt 3</li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="interaction">
-        <div class="sidebar-authentication">
-          <UserAuthentication v-if="!isLoggedIn" />
-          <FormLogout v-else />
-          <p>
-            Logged In: {{ isLoggedIn }}<br />
-            UserID: {{ userId }}
-          </p>
+      <div class="sidebar-overlay"></div>
+      <div class="sidebar-content">
+        <div class="sidebar-controls">
+          <div class="sidebar-controls-highlight" :class="[{'highlight-nav': showSidebarNav}, {'highlight-interaction': !showSidebarNav}]"></div>
+          <div class="sidebar-open-navigation" @click="showNavigation">
+            <svg viewBox="0 0 8 7">
+              <rect width="8" height="1" x="0" y="0" />
+              <rect width="8" height="1" x="0" y="3" />
+              <rect width="8" height="1" x="0" y="6" />
+            </svg>
+          </div>
+          <div class="sidebar-open-interaction" @click="showInteraction">
+            <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="48" width="48">
+          </div>
+          <div class="sidebar-close">
+            <svg viewBox="0 0 9 9">
+              <rect width="1" height="9" x="4" y="0" />
+              <rect width="9" height="1" x="0" y="4" />
+            </svg>
+          </div>
+        </div>
+        <div class="navigation" :class="[{'active': showSidebarNav}]">
+          <nav>
+            <ul>
+              <li>
+                <NuxtLink to="/">Dashboard</NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/profil">Profil</NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/fragen">Fragen</NuxtLink>
+                <ul>
+                  <li><NuxtLink to="/fragen">Frage 1</NuxtLink></li>
+                  <li><NuxtLink to="/fragen">Frage 2</NuxtLink></li>
+                  <li><NuxtLink to="/fragen">Frage 3</NuxtLink></li>
+                </ul>
+              </li>
+              <li>
+                <NuxtLink to="/projekte">Projekte</NuxtLink>
+                <ul>
+                  <NuxtLink to="/projekte">Projekt 1</NuxtLink>
+                  <NuxtLink to="/projekte">Projekt 2</NuxtLink>
+                  <NuxtLink to="/projekte">Projekt 3</NuxtLink>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="interaction" :class="[{'active': !showSidebarNav}]">
+          <div class="sidebar-authentication">
+            <UserAuthentication v-if="!isLoggedIn" />
+            <FormLogout v-else />
+            <p>
+              Logged In: {{ isLoggedIn }}<br />
+              UserID: {{ userId }}
+            </p>
+          </div>
         </div>
       </div>
     </div>

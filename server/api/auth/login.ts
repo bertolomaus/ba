@@ -1,14 +1,18 @@
-import { login } from "../../utils/db";
+import { getLoginData } from "../../utils/db"
+import { useAuth } from '~/composables/useAuth'
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
+  const body = await readBody(event)
+  const { login } = useAuth()
 
   // prepared statements -> ~/server/utils/db.ts
-  const result = login.get({ email: body.email });
+  const result = getLoginData.get({ email: body.email })
 
   // check if user exists and password is correct
   if (result && result?.password == body.password) {
     const userId = result.id
+    
+    login(userId)
     return { userId, success: true };
   } else {
     // Invalid credentials

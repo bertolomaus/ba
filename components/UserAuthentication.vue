@@ -2,11 +2,12 @@
 import FormLogin from '../components/FormLogin.vue'
 import FormRegister from '../components/FormRegister.vue'
 
+const { showLogin } = useToggleContent()
 </script>
 
 <template>
   <div class="user-authentication">
-    <FormRegister />
-    <FormLogin />
+    <FormLogin v-if="showLogin" />
+    <FormRegister v-else />
   </div>
 </template>

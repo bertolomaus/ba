@@ -16,7 +16,7 @@ export const register = db
   data: sql.placeholder('data'),
 })
 
-export const login = db
+export const getLoginData = db
 .select({
   id: users.id,
   password: users.password,

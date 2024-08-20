@@ -4,12 +4,21 @@ export default {
     "~/{assets,components,composables,content,pages}/*.{html,js,json,ts,jsx,tsx,vue}",
   ],
   theme: {
+    screens: {
+      'sm': "500px",
+      'md': "800px",
+      'lg': "1328px",
+      'xl': "2048px",
+      '2xl': '2560px'
+    },
     container: {
+      center: true,
       screens: {
-        'sm': "480px",
-        'md': "800px",
-        'lg': "1280px",
-        'xl': "2000px",
+        'sm': "100%",
+        'md': "100%",
+        'lg': "100%",
+        'xl': "100%",
+        '2xl': '100%'
       },
     },
     fontFamily: {
@@ -43,7 +52,8 @@ export default {
           red: '#eb4747',
           blue: '#00319f',
           highlight: '#ffd824',
-          muted: '#f4f5f6',
+          muted: '#dbdde2',
+          mutedLight: '#f4f5f6',
         },
         primary: {
           DEFAULT: '#00112f',
@@ -87,6 +97,14 @@ export default {
       boxShadow: {
         fakeBorder: '0 0 0 1px #000',
         fakeBorder2: '0 0 0 2px #000',
+      },
+      padding: {
+        conainer: '4rem',
+        conainerLg: '6rem',
+        conainerSm: '2rem',
+        conainerXs: '1rem',
+        card: '1rem',
+        cardSm: '0.5rem',
       }
     }
   },

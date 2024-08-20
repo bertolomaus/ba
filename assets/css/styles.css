@@ -1,13 +1,14 @@
 /* ********** BASIC FONT ********** */
 
 body{
-  @apply font-sans font-normal text-base tracking-wide leading-6 antialiased text-textColor;
+  @apply font-sans font-light text-base tracking-wide leading-6 antialiased text-textColor pt-20;
   min-height:100vh;
 }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6{
-  @apply font-serif font-bold text-base tracking-wide leading-5 text-textColor-primary uppercase
+  @apply font-serif font-bold text-base tracking-wide text-textColor-primary uppercase tracking-normal;
+  line-height:1em;
 }
 
 h1, .h1{
@@ -34,13 +35,59 @@ h6, .h6{
   @apply text-lg font-normal
 }
 
+a{
+  @apply text-textColor-primary transition-all font-normal
+}
+
+p+p{
+  margin-top:.75em;
+}
+
+[class^="el-"]:not(:last-child){
+  @apply mb-8
+}
+
+svg{
+  @apply fill-current;
+}
+
+
+
+/* ********** BASIC LAYOUT ********** */
+
+.container{
+  @apply p-conainer;
+  max-width: 1328px;
+}
+
+.container.small{
+  max-width:928px;
+}
+
+.container.large{
+  max-width:1728px;
+}
+
+.container.padding-lg{
+  @apply py-conainerLg;
+}
+
+.container.padding-sm{
+  @apply py-conainerSm;
+}
+
+.container.padding-xs{
+  @apply py-conainerXs;
+}
+
+
 
 
 /* ********** BASIC ELEMENTS ********** */
 
 /* *** FORM *** */
 input{
-  @apply border border-transparent rounded p-2 bg-bgColor-muted transition-all block w-full;
+  @apply border border-transparent rounded p-2 bg-bgColor-mutedLight transition-all block w-full;
   @apply hover:border-muted focus:border-primary focus:bg-white;
   outline:none;
 }
@@ -84,11 +131,30 @@ form .field + .field{
   @apply text-inverted bg-bgColor-primaryLight
 }
 
+/* BTN VARIATION */
+.btn-text{
+  @apply relative
+}
+
+.btn-text:after{
+  @apply absolute bottom-0 left-0 w-0 bg-current transition-all;
+  @apply hover:w-full;
+  height:1px;
+  content:"";
+}
+
+a:hover .btn-text:after{
+  @apply w-full
+}
+
+/* *** TEXT *** */
+
 
 /* ********** COMPONENT/HEADER ********** */
 
 .headerbar{
-  @apply fixed top-0 left-0 w-full px-8 h-20 transition-all flex justify-between
+  @apply fixed top-0 left-0 w-full px-8 h-20 transition-all flex justify-between items-center;
+  z-index: 1000;
 }
 
 .logo img{
@@ -106,6 +172,89 @@ form .field + .field{
 .toggle-nav svg{
   @apply w-6
 }
+
+.sidebar{
+  @apply fixed right-0 top-0 h-full;
+  z-index:1010;
+}
+
+.sidebar-overlay{
+  @apply fixed w-full h-full top-0 right-0 bg-black opacity-60;
+}
+
+.sidebar-controls{
+  @apply absolute px-8 pt-4 top-0 right-0 h-20 w-full flex items-center bg-white;
+}
+
+.sidebar-controls-highlight{
+  @apply absolute h-16 left-8 w-16 bg-bgColor-muted border rounded border-muted transition-all;
+}
+
+.sidebar-controls-highlight.highlight-interaction{
+  @apply left-28
+}
+
+.sidebar-open-navigation, .sidebar-open-interaction{
+  @apply mr-4 relative px-5 h-16 flex items-center;
+  z-index:10;
+}
+
+.sidebar-open-interaction{
+  @apply px-2;
+}
+
+.sidebar-open-navigation svg{
+  @apply w-6;
+}
+
+.sidebar-close{
+  @apply w-12 rotate-45 absolute right-4 p-3 text-muted;
+}
+
+.sidebar-content{
+  @apply absolute h-full right-0 top-0 bg-white pt-24 px-8 pb-8 overflow-x-hidden;
+  width:400px;
+  z-index:10;
+}
+
+.sidebar-content:before, .sidebar-content:after{
+  @apply absolute w-8 h-full top-0;
+  z-index: 20;
+  content:"";
+}
+
+.sidebar-content:before{
+  @apply bg-gradient-to-r from-bgColor-muted to-transparent left-0
+}
+
+.sidebar-content:after{
+  @apply bg-gradient-to-l from-bgColor-muted to-transparent right-0
+}
+
+.sidebar .navigation, .sidebar .interaction{
+  @apply absolute top-24 left-0 transition-transform w-full px-8;
+}
+
+.sidebar .navigation{
+  transform:translateX(100%);
+}
+
+.sidebar .interaction{
+  transform:translateX(-100%);
+}
+
+.sidebar .navigation.active, .sidebar .interaction.active{
+  @apply translate-x-0;
+}
+
+.sidebar .navigation a{
+  @apply relative py-1 pl-4 block text-textColor;
+}
+
+.sidebar .navigation ul ul a{
+  @apply pl-8 font-light;
+}
+
 
 
 /* ********** COMPONENT/AUTHENTICATION ********** */

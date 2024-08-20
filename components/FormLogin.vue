@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { useAuth } from '~/composables/useAuth'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
@@ -17,7 +16,8 @@ const registerSchema = toTypedSchema(
   }),
 )
 
-const { login } = useAuth()
+const { login, isLoggedIn } = useAuth()
+const { toggleAuthForm } = useToggleContent()
 const { values, errors, defineField, meta } = useForm({
   validationSchema: registerSchema,
 });
@@ -36,9 +36,6 @@ const handleLogin = async () => {
         password: values.password
       }
     })
-    if(loginRequest.success){
-      login(loginRequest.userId)
-    }
   }
   catch (error) {
     // console.error(error.statusMessage);
@@ -48,6 +45,7 @@ const handleLogin = async () => {
 
 <template>
   <div class="form-login">
+    <p class="h3">Login</p>
     <form @submit.prevent="handleLogin">
       <div class="field field-email" :class="[{'has-text': email}, {'has-error': errors.email}, {'is-acceptable': email && !errors.email}]">
         <input v-model="email" v-bind="emailAttrs" name="email" />
@@ -73,6 +71,9 @@ const handleLogin = async () => {
         <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Login</button>
       </div>
     </form>
-    <button class="btn mt-4" @click="login(1)">Login as Dev</button>
+    <p>
+      Du hast noch keinen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span class="btn-text">Registrieren</span></a>
+    </p>
+    <button v-if="!isLoggedIn" class="btn mt-4" @click="login(1)">Login as Dev</button>
   </div>
 </template>

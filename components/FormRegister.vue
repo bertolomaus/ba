@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useAuth } from '~/composables/useAuth'
-import { generateNumber } from '~/composables/generateRandomNumber'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
@@ -35,7 +32,7 @@ const registerSchema = toTypedSchema(
 )
 
 const router = useRouter()
-const { login } = useAuth()
+const { toggleAuthForm } = useToggleContent()
 const { values, errors, defineField, meta } = useForm({
   validationSchema: registerSchema,
 });
@@ -45,31 +42,6 @@ const [password, passwordAttrs] = defineField('password')
 const [passwordConfirm, passwordConfirmAttrs] = defineField('passwordConfirm')
 
 const register = async () => {
-  // generate a random 8-digit id
-  const newId = ref<number>(0)
-
-  /* MAYBE NEEDED WHEN USING AUTH COOKIE. FOR NOW, GENERATE ID IN API/AUTH
-  const requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
-    method: 'POST',
-    body: {
-      email: values.email,
-      id: newId.value
-    }
-  })
-
-  // if newId is by change unavailable, keep generating new ones until one is free
-  while(requestUniqueKeys.matchingIdFound){
-    newId.value = generateNumber(8)
-    requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
-      method: 'POST',
-      body: {
-        email: values.email,
-        id: newId.value
-      }
-    })
-  } 
-  */
-
   // insert a new user into table 'users'
   try{
     const registerRequest = await $fetch('/api/auth/register', {
@@ -81,9 +53,12 @@ const register = async () => {
       }
     })
     if(registerRequest.success){
-      // login new users and redirect them to the profile site
-      login(registerRequest.newId)
       router.push('/profil')
+    } else {
+      throw createError({
+        statusCode: 500,
+        statusMessage: "There's a fracture in the Weave. Roll Arcana to investigate.",
+      });
     }
   } catch (error) {
     console.error('Error while creating a new user:', error)
@@ -93,6 +68,7 @@ const register = async () => {
 
 <template>
   <div class="form-register">
+    <p class="h3">Registrieren</p>
     <form @submit.prevent="register">
       <div class="field field-email" :class="[{'has-text': email}, {'has-error': errors.email}, {'is-acceptable': email && !errors.email}]">
         <input v-model="email" v-bind="emailAttrs" name="email" />
@@ -128,5 +104,8 @@ const register = async () => {
         <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Registrieren</button>
       </div>
     </form>
+    <p>
+      Du hast bereits einen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span class="btn-text">Login</span></a>
+    </p>
   </div>
 </template>

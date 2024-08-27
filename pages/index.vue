@@ -3,6 +3,7 @@ import UserAuthentication from '../components/UserAuthentication.vue'
 import BavariaIpsum from '../components/BavariaIpsum.vue'
 
 const { isLoggedIn } = useAuth()
+const { modalShowAskQuestion } = useModal()
 </script>
 
 <template>
@@ -17,5 +18,6 @@ const { isLoggedIn } = useAuth()
     </div>
     
     <UserAuthentication v-if="!isLoggedIn" />
+    <div class="btn mx-auto w-max" @click="modalShowAskQuestion">Frage Stellen</div>
   </div>
 </template>

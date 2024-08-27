@@ -165,11 +165,16 @@ a:hover .btn-text:after{
   @apply flex items-center
 }
 
-.toggle-nav{
-  @apply mr-8
+.open-navigation, .open-interaction{
+  @apply cursor-pointer transition-colors;
 }
 
-.toggle-nav svg{
+.open-navigation{
+  @apply mr-4 p-4;
+  @apply hover:text-primary;
+}
+
+.open-navigation svg{
   @apply w-6
 }
 
@@ -222,7 +227,7 @@ a:hover .btn-text:after{
 }
 
 .sidebar-content{
-  @apply absolute h-full right-0 top-0 bg-white pt-24 px-8 pb-8 overflow-x-hidden translate-x-[400px] transition-all;
+  @apply absolute h-full right-0 top-0 bg-white overflow-x-hidden translate-x-[400px] transition-all;
   width:400px;
   z-index:10;
 }
@@ -245,8 +250,16 @@ a:hover .btn-text:after{
   @apply bg-gradient-to-l from-white to-transparent right-0
 }
 
+.sidebar .h4{
+  @apply mb-8;
+}
+
+.sidebar .interaction .h3{
+  @apply text-lg mb-4;
+}
+
 .sidebar .navigation, .sidebar .interaction{
-  @apply absolute top-24 left-0 transition-transform w-full px-8;
+  @apply absolute top-28 left-0 transition-transform w-full px-8;
 }
 
 .sidebar .navigation{
@@ -310,11 +323,19 @@ a:hover .btn-text:after{
   @apply disabled:pointer-events-none disabled:text-textColor-muted;
 }
 
+.user-authentication form + p{
+  @apply mt-4;
+}
+
+.user-authentication .h3{
+  @apply mb-4;
+}
+
 /* *** DASHBOARD *** */
 .dashboard .user-authentication{
   @apply max-w-sm mx-auto
 }
 
 .dashboard .user-authentication .btn{
-  @apply ml-auto
+  @apply ml-0;
 }

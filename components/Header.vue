@@ -17,14 +17,14 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
         </NuxtLink>
       </div>
       <div class="sidebar-togglers">
-        <div class="toggle-nav" @click="showNavigation">
+        <div class="open-navigation" @click="showNavigation">
           <svg viewBox="0 0 8 7">
             <rect width="8" height="1" x="0" y="0" />
             <rect width="8" height="1" x="0" y="3" />
             <rect width="8" height="1" x="0" y="6" />
           </svg>
         </div>
-        <div class="toggle-profil" @click="showInteraction">
+        <div class="open-interaction" @click="showInteraction">
           <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="64" width="64">
         </div>
       </div>
@@ -52,6 +52,7 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
           </div>
         </div>
         <div class="navigation" :class="[{'active': showSidebarNav}]">
+          <p class="h4">Navigation</p>
           <nav>
             <ul>
               <li>
@@ -81,9 +82,10 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
         </div>
         <div class="interaction" :class="[{'active': !showSidebarNav}]">
           <div class="sidebar-authentication">
+            <p class="h4">Interaktion</p>
             <UserAuthentication v-if="!isLoggedIn" />
             <FormLogout v-else />
-            <p>
+            <p class="mt-4">
               Logged In: {{ isLoggedIn }}<br />
               UserID: {{ userId }}
             </p>

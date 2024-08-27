@@ -1,18 +1,18 @@
 export const useModal = () => {
-  const modalOpen = useState<boolean>('modalOpen', () => false)
+  const showModal = useState<boolean>('showModal', () => false)
   const modalAskQuestion = useState<boolean>('modalAskQuestion', () => false)
 
   const toggleModal = () => {
-    modalOpen.value = !modalOpen.value
+    showModal.value = !showModal.value
   }
 
   const modalShowAskQuestion = () => {
-    modalOpen.value = true
+    showModal.value = true
     modalAskQuestion.value = true
   }
 
   return {
-    toggleModal, modalOpen,
+    toggleModal, showModal,
     modalShowAskQuestion, modalAskQuestion
   }
 };

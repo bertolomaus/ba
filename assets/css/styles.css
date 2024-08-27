@@ -174,12 +174,20 @@ a:hover .btn-text:after{
 }
 
 .sidebar{
-  @apply fixed right-0 top-0 h-full;
+  @apply fixed right-0 top-0 h-full pointer-events-none;
   z-index:1010;
 }
 
+.sidebar.open{
+  @apply pointer-events-auto;
+}
+
 .sidebar-overlay{
-  @apply fixed w-full h-full top-0 right-0 bg-black opacity-60;
+  @apply fixed w-screen h-screen top-0 right-0 bg-black opacity-0 transition-all;
+}
+
+.sidebar.open .sidebar-overlay{
+  @apply opacity-60 pointer-events-auto;
 }
 
 .sidebar-controls{
@@ -195,7 +203,8 @@ a:hover .btn-text:after{
 }
 
 .sidebar-open-navigation, .sidebar-open-interaction{
-  @apply mr-4 relative px-5 h-16 flex items-center;
+  @apply mr-4 relative px-5 h-16 flex items-center cursor-pointer transition-colors;
+  @apply hover:text-primary;
   z-index:10;
 }
 
@@ -208,13 +217,18 @@ a:hover .btn-text:after{
 }
 
 .sidebar-close{
-  @apply w-12 rotate-45 absolute right-4 p-3 text-muted;
+  @apply w-12 -rotate-45 absolute right-4 p-3 text-muted cursor-pointer transition-all border-transparent rounded-full;
+  @apply hover:rotate-45 hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
 }
 
 .sidebar-content{
-  @apply absolute h-full right-0 top-0 bg-white pt-24 px-8 pb-8 overflow-x-hidden;
+  @apply absolute h-full right-0 top-0 bg-white pt-24 px-8 pb-8 overflow-x-hidden translate-x-[400px] transition-all;
   width:400px;
   z-index:10;
+}
+
+.sidebar.open .sidebar-content{
+  @apply translate-x-0;
 }
 
 .sidebar-content:before, .sidebar-content:after{
@@ -224,11 +238,11 @@ a:hover .btn-text:after{
 }
 
 .sidebar-content:before{
-  @apply bg-gradient-to-r from-bgColor-muted to-transparent left-0
+  @apply bg-gradient-to-r from-white to-transparent left-0
 }
 
 .sidebar-content:after{
-  @apply bg-gradient-to-l from-bgColor-muted to-transparent right-0
+  @apply bg-gradient-to-l from-white to-transparent right-0
 }
 
 .sidebar .navigation, .sidebar .interaction{

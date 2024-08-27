@@ -17,20 +17,20 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
         </NuxtLink>
       </div>
       <div class="sidebar-togglers">
-        <div class="toggle-nav">
+        <div class="toggle-nav" @click="showNavigation">
           <svg viewBox="0 0 8 7">
             <rect width="8" height="1" x="0" y="0" />
             <rect width="8" height="1" x="0" y="3" />
             <rect width="8" height="1" x="0" y="6" />
           </svg>
         </div>
-        <div class="toggle-profil">
+        <div class="toggle-profil" @click="showInteraction">
           <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="64" width="64">
         </div>
       </div>
     </div>
-    <div class="sidebar">
-      <div class="sidebar-overlay"></div>
+    <div class="sidebar" :class="[{'open': showSidebar}]">
+      <div class="sidebar-overlay" @click="toggleSidebar"></div>
       <div class="sidebar-content">
         <div class="sidebar-controls">
           <div class="sidebar-controls-highlight" :class="[{'highlight-nav': showSidebarNav}, {'highlight-interaction': !showSidebarNav}]"></div>
@@ -44,7 +44,7 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
           <div class="sidebar-open-interaction" @click="showInteraction">
             <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="48" width="48">
           </div>
-          <div class="sidebar-close">
+          <div class="sidebar-close" @click="toggleSidebar">
             <svg viewBox="0 0 9 9">
               <rect width="1" height="9" x="4" y="0" />
               <rect width="9" height="1" x="0" y="4" />

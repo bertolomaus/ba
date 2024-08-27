@@ -16,6 +16,6 @@ const { isLoggedIn } = useAuth()
       </div>
     </div>
     
-    <UserAuthentication v-if="isLoggedIn" />
+    <UserAuthentication v-if="!isLoggedIn" />
   </div>
 </template>

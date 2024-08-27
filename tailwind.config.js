@@ -52,7 +52,7 @@ export default {
           red: '#eb4747',
           blue: '#00319f',
           highlight: '#ffd824',
-          muted: '#dbdde2',
+          muted: '#e5e7ea',
           mutedLight: '#f4f5f6',
         },
         primary: {

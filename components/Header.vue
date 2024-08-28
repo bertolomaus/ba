@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import FormLogout from './FormLogout.vue'
 import UserAuthentication from './UserAuthentication.vue'
+import SVGClose from './SVGClose.vue'
 
 const { isLoggedIn, userId } = useAuth()
 const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
+const profileLink = computed(() => `/profile?id=${userId}`)
 </script>
 
 <template>
@@ -44,12 +46,7 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
           <div class="sidebar-open-interaction" @click="showInteraction">
             <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="48" width="48">
           </div>
-          <div class="sidebar-close" @click="toggleSidebar">
-            <svg viewBox="0 0 9 9">
-              <rect width="1" height="9" x="4" y="0" />
-              <rect width="9" height="1" x="0" y="4" />
-            </svg>
-          </div>
+          <SVGClose class="sidebar-close" @click="toggleSidebar" />
         </div>
         <div class="navigation" :class="[{'active': showSidebarNav}]">
           <p class="h4">Navigation</p>
@@ -59,7 +56,7 @@ const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, s
                 <NuxtLink to="/">Dashboard</NuxtLink>
               </li>
               <li>
-                <NuxtLink to="/profil">Profil</NuxtLink>
+                <NuxtLink :to="{path: 'profil', query: {wizard: userId}}">Profil</NuxtLink>
               </li>
               <li>
                 <NuxtLink to="/fragen">Fragen</NuxtLink>

@@ -1,10 +1,37 @@
 # Open Issues Report
 
-## nav
-- 2 sidebars: sitemap // profile & personal gedöns
-- 2 icons: burger menu // profil-pic
-  - toggle zwischen angezeigtem menu wenn klick auf icon
-- fixed header bar: logo, current site name, menu icons
+## profil
+- name
+- avatar
+- skills
+  - mit angabe, wie gut
+- interessen
+- kurz-bio input
+- credentials ändern
+- profil löschen
+
+## frage stellen
+- tags
+- hilfestellung, was gute fragen ausmacht
+- vorschläge, wer helfen könnte
+
+## projekte
+- titel
+- beschreibung
+- zielkarte
+- req skills
+- ressourcen
+  - mitglieder
+  - miro, discord, cloud etc
+- mitglieder suchen
+- sichtbarkeit
+  - für alle sichtbar / projekt sucht mitglieder
+- häkchen: abgeschlossen
+
+## alle fragen / alle projekte
+- suche/filter nach tags
+- liste mit allen sichtbaren fragen/projekten
+- pagination
 
 ## authentication
 - make useState persistent through reloads. use cookie for it

@@ -2,7 +2,9 @@
 </script>
 
 <template>
-  <div>
-    <h1 class="">Profil</h1>
+  <div class="profil">
+    <div class="container">
+      <h1 class="">At your service, Master NAME</h1>
+    </div>
   </div>
 </template>

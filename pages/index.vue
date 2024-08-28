@@ -18,6 +18,6 @@ const { modalShowAskQuestion } = useModal()
     </div>
     
     <UserAuthentication v-if="!isLoggedIn" />
-    <div class="btn mx-auto w-max" @click="modalShowAskQuestion">Frage Stellen</div>
+    <div class="btn mx-auto w-max mt-8" @click="modalShowAskQuestion">Frage Stellen</div>
   </div>
 </template>

@@ -86,7 +86,7 @@ svg{
 /* ********** BASIC ELEMENTS ********** */
 
 /* *** FORM *** */
-input{
+input, textarea{
   @apply border border-transparent rounded p-2 bg-bgColor-mutedLight transition-all block w-full;
   @apply hover:border-muted focus:border-primary focus:bg-white;
   outline:none;
@@ -98,6 +98,45 @@ form .field{
 
 form .field + .field{
   @apply mt-4
+}
+
+form label{
+  @apply absolute left-1 top-2 text-textColor-muted text-sm transition-all z-10 pointer-events-none px-1;
+}
+
+form .has-text input{
+  @apply bg-white
+}
+
+form :focus + label,
+form .has-text label,
+form .is-acceptable label{
+  @apply left-1 top-0 text-xs leading-4 bg-white;
+  transform:translateY(-50%);
+}
+
+form .has-error input,
+form .has-error textarea{
+  @apply border-error;
+  box-shadow: 0 0 3px #eb4747;
+}
+
+form .is-acceptable input,
+form .is-acceptable textarea{
+  @apply border-success;
+  box-shadow: 0 0 3px #33ff88;
+}
+
+form .errors{
+  @apply text-error text-sm overflow-hidden max-h-0 transition-all;
+}
+
+form .has-error .errors{
+  @apply max-h-12
+}
+
+form .btn{
+  @apply disabled:pointer-events-none disabled:text-textColor-muted;
 }
 
 /* *** BUTTON *** */
@@ -145,6 +184,11 @@ form .field + .field{
 
 a:hover .btn-text:after{
   @apply w-full
+}
+
+.btn-close{
+  @apply w-12 -rotate-45 p-3 text-muted cursor-pointer transition-all border-transparent rounded-full;
+  @apply hover:rotate-45 hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
 }
 
 /* *** TEXT *** */
@@ -222,8 +266,7 @@ a:hover .btn-text:after{
 }
 
 .sidebar-close{
-  @apply w-12 -rotate-45 absolute right-4 p-3 text-muted cursor-pointer transition-all border-transparent rounded-full;
-  @apply hover:rotate-45 hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
+  @apply absolute right-4;
 }
 
 .sidebar-content{
@@ -284,44 +327,7 @@ a:hover .btn-text:after{
 
 
 
-/* ********** COMPONENT/AUTHENTICATION ********** */
-
-.user-authentication label{
-  @apply absolute left-1 top-2 text-textColor-muted text-sm transition-all z-10 pointer-events-none px-1;
-}
-
-.user-authentication .has-text input{
-  @apply bg-white
-}
-
-.user-authentication input:focus + label,
-.user-authentication .has-text input + label,
-.user-authentication .is-acceptable input + label{
-  @apply left-1 top-0 text-xs leading-4 bg-white;
-  transform:translateY(-50%);
-}
-
-.user-authentication .has-error input{
-  @apply border-error;
-  box-shadow: 0 0 3px #eb4747;
-}
-
-.user-authentication .is-acceptable input{
-  @apply border-success;
-  box-shadow: 0 0 3px #33ff88;
-}
-
-.user-authentication .errors{
-  @apply text-error text-sm overflow-hidden max-h-0 transition-all;
-}
-
-.user-authentication .has-error .errors{
-  @apply max-h-12
-}
-
-.user-authentication .btn{
-  @apply disabled:pointer-events-none disabled:text-textColor-muted;
-}
+/* ********** COMPONENT/USER AUTHENTICATION ********** */
 
 .user-authentication form + p{
   @apply mt-4;
@@ -332,6 +338,35 @@ a:hover .btn-text:after{
 }
 
 /* *** DASHBOARD *** */
+
 .dashboard .user-authentication{
   @apply max-w-sm mx-auto
+}
+
+
+
+/* ********** COMPONENT/MODAL ********** */
+
+.modal{
+  @apply fixed top-0 left-0 right-0 bottom-0 transition-all opacity-0;
+  z-index:10000;
+}
+
+.modal.open{
+  @apply opacity-100;
+}
+
+.modal-overlay{
+  @apply absolute top-0 left-0 right-0 bottom-0 bg-black opacity-30;
+}
+
+.modal-content{
+  @apply absolute bg-white rounded-lg top-16 left-16 right-16 bottom-16 p-16;
+  z-index: 1;
+}
+
+.modal-close{
+  @apply absolute top-10 right-10 bg-bgColor-mutedLight shadow;
+  @apply hover:bg-bgColor-muted;
+  z-index: 2;
 }

@@ -25,7 +25,8 @@ interface UserDataWithId {
 export const useData = () => {
   const userData = useState<UserData>('userData', () => ({name: "", status: "", skills: [], hobbies: [], bio: "", projekte: []}));
   const { userId } = useAuth()
-  const skills = useState<string[]>('skills', () => [])
+  const allSkills = useState<string[]>('allSkills', () => [])
+  const allHobbies = useState<string[]>('allHobbies', () => [])
   
   // login with credentials
   const fetchData = async () => {
@@ -101,14 +102,25 @@ export const useData = () => {
 
   const listSkills = async () => {
     const data = await fetchAllData()
-    data.forEach((item: UserDataWithId) => {
+    data?.forEach((item: UserDataWithId) => {
       item.skills.forEach((skill: Skill) => {
-        if (!skills.value.includes(skill.name)) {
-          skills.value.push(skill.name);
+        if (!allSkills.value.includes(skill.name)) {
+          allSkills.value.push(skill.name);
         }
       })
     })
   }
 
-  return { getName, updateUserData, fetchData, userData, listSkills };
+  const listHobbies = async () => {
+    const data = await fetchAllData()
+    data?.forEach((item: UserDataWithId) => {
+      item.hobbies.forEach((hobby: string) => {
+        if (!allHobbies.value.includes(hobby)) {
+          allHobbies.value.push(hobby);
+        }
+      })
+    })
+  }
+
+  return { getName, updateUserData, fetchData, userData, listSkills, allSkills, listHobbies, allHobbies };
 };

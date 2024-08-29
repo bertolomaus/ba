@@ -58,7 +58,7 @@ onMounted(() => {
           <li>on mounted: load all skills in an array</li>
           <li>on key up: if length >= 2: check if input value is contained in any skill array value</li>
           <li>div mit allen vorschlägen unterhalb vom input field</li>
-          <li>vielleicht input > select, und searchable?</li>
+          <li>vielleicht input > select, und searchable? https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option</li>
           <li>durchtabben / on enter: add skill zu skills json; erzeuge neues element mit name & level; clear input</li>
         </ul>
         <div class="btn w-max my-4" @click="listSkills">Get Data</div>

@@ -1,11 +1,31 @@
+interface Skill{
+  name: string
+  level: number
+}
+
 interface UserData {
-  name: string;
-  projekte: number[];
+  name: string
+  status: string
+  skills: Skill[]
+  hobbies: string[]
+  bio: string
+  projekte: number[]
+}
+
+interface UserDataWithId {
+  id: number,
+  name: string
+  status: string
+  skills: Skill[]
+  hobbies: string[]
+  bio: string
+  projekte: number[]
 }
 
 export const useData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", projekte: []}));
+  const userData = useState<UserData>('userData', () => ({name: "", status: "", skills: [], hobbies: [], bio: "", projekte: []}));
   const { userId } = useAuth()
+  const skills = useState<string[]>('skills', () => [])
   
   // login with credentials
   const fetchData = async () => {
@@ -19,10 +39,15 @@ export const useData = () => {
       })
       if(dataRequest.success && dataRequest.result){
         userData.value = JSON.parse(dataRequest.result.data)
+      } else {
+        throw createError({
+          statusCode: 500,
+          statusMessage: "There's a fracture in the Weave. Roll Arcana to investigate.",
+        })
       }
     }
     catch (error) {
-      // console.error(error.statusMessage);
+      console.error('Error while fetching data:', error)
     }
   }
 
@@ -53,5 +78,37 @@ export const useData = () => {
     return userData.value.name
   };
 
-  return { getName, updateUserData };
+  const fetchAllData = async () => {
+    try {
+      // send request to api/data
+      const dataRequest = await $fetch('/api/data/getAllData', {
+        method: 'POST',
+        body: {}
+      })
+      if(dataRequest.success && dataRequest.result){
+        return dataRequest.result
+      } else {
+        throw createError({
+          statusCode: 500,
+          statusMessage: "There's a fracture in the Weave. Roll Arcana to investigate.",
+        })
+      }
+    }
+    catch (error) {
+      console.error('Error while fetching data:', error)
+    }
+  }
+
+  const listSkills = async () => {
+    const data = await fetchAllData()
+    data.forEach((item: UserDataWithId) => {
+      item.skills.forEach((skill: Skill) => {
+        if (!skills.value.includes(skill.name)) {
+          skills.value.push(skill.name);
+        }
+      })
+    })
+  }
+
+  return { getName, updateUserData, fetchData, userData, listSkills };
 };

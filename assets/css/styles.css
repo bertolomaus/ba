@@ -370,3 +370,23 @@ a:hover .btn-text:after{
   @apply hover:bg-bgColor-muted;
   z-index: 2;
 }
+
+
+
+/* ********** COMPONENT/AUTOCOMPLETE ********** */
+
+.autocomplete{
+  @apply relative;
+}
+
+.suggestions-list{
+  @apply absolute top-full w-max min-w-40 bg-bgColor-mutedLight border-muted rounded-md overflow-hidden;
+}
+
+.suggestions-list li{
+  @apply p-2
+}
+
+.suggestions-list .active{
+  @apply bg-bgColor-primary text-inverted;
+}

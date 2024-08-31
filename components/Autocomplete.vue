@@ -11,9 +11,12 @@ const filteredSuggestions = computed(() => {
     suggestion.toLowerCase().includes(inputValue.value.toLowerCase())
   )
 })
+const emit = defineEmits({
+  submitInput: (payload: {payload: string}) => true
+})
 
 const onInput = () => {
-  activeSuggestionIndex.value = -1;
+  activeSuggestionIndex.value = -1
 };
 
 const nextSuggestion = () => {
@@ -33,6 +36,10 @@ const prevSuggestion = () => {
 const onEnter = () => {
   if (activeSuggestionIndex.value >= 0 && filteredSuggestions.value.length > 0) {
     selectSuggestion(activeSuggestionIndex.value)
+  }
+  if (inputValue.value.length > 0){
+    emit('submitInput', {payload: inputValue.value})
+    inputValue.value = ''
   }
 }
 

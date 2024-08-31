@@ -6,11 +6,14 @@ const { userId } = useAuth()
 const urlQuery = route.query.wizard
 const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies } = useData()
 const isOwner = ref<boolean>(false)
-const addSkill = ref<string>('')
+// const addSkill = ref<Skill>({name: '', level: 0})
+let addSkill: Skill = {name: '', level: 0}
 const addHobby = ref<string>('')
 
-const autoComplete = (string: string) => {
-  console.log(string)
+const addNewSkill = (eventPayload: { payload: string }) => {
+  addSkill.name = eventPayload.payload
+  userData.value.skills.push({name: eventPayload.payload, level: 0})
+  console.log(userData.value.skills)
 }
 
 onMounted(() => {
@@ -28,6 +31,7 @@ onMounted(() => {
       <ul class="p-8 list-disc">
         <li>switcher: editable</li>
         <li>speichern-button: speichere data-json, update in datenbank</li>
+        <li>JWT auth für persistenten login</li>
       </ul>
       <div class="grid grid-cols-2 gap-16">
         <div>
@@ -54,8 +58,8 @@ onMounted(() => {
       </div>
       <div class="skills">
         <h3>Prepared Spells</h3>
-        <!-- <input placeholder="Add Skill" name="addSkill" v-model="addSkill" list="skill" /> -->
-        <Autocomplete :suggestions="allSkills" v-model="addSkill" />
+        <p>{{ addSkill }}</p>
+        <Autocomplete :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
 
         <ul class="p-8 list-disc">
           <li>on mounted: load all skills in an array</li>

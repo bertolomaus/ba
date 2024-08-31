@@ -29,13 +29,13 @@ export const useData = () => {
   const allHobbies = useState<string[]>('allHobbies', () => [])
   
   // login with credentials
-  const fetchData = async () => {
+  const fetchData = async (id = userId.value) => {
     try {
       // send request to api/data
       const dataRequest = await $fetch('/api/data/getData', {
         method: 'POST',
         body: {
-          id: userId.value,
+          id: id,
         }
       })
       if(dataRequest.success && dataRequest.result){

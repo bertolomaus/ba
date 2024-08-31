@@ -3,24 +3,29 @@ import Autocomplete from '../components/Autocomplete.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
-const urlQuery = route.query.wizard
+const profileId = route.query.wizard
 const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies } = useData()
 const isOwner = ref<boolean>(false)
-// const addSkill = ref<Skill>({name: '', level: 0})
-let addSkill: Skill = {name: '', level: 0}
 const addHobby = ref<string>('')
 
 const addNewSkill = (eventPayload: { payload: string }) => {
-  addSkill.name = eventPayload.payload
   userData.value.skills.push({name: eventPayload.payload, level: 0})
-  console.log(userData.value.skills)
+  console.log(userData.value)
 }
 
-onMounted(() => {
-  fetchData()
-  urlQuery == userId.value.toString() ? isOwner.value = true : isOwner.value = false
-  listSkills()
-  listHobbies()
+onMounted(async () => {
+  try{
+    if(profileId){
+      fetchData(parseInt(profileId.toString()))
+    } else{
+      fetchData()
+    }
+    profileId == userId.value.toString() ? isOwner.value = true : isOwner.value = false
+    listSkills()
+    listHobbies()
+  } catch (error){
+    console.error(error)
+  }
 })
 </script>
 
@@ -52,13 +57,18 @@ onMounted(() => {
           </div>
           <div class="status">
             <h3>Status</h3>
-            <textarea placeholder="Status" name="status" v-model="userData.name"></textarea>
+            <textarea placeholder="Status" name="status" v-model="userData.status"></textarea>
           </div>
         </div>
       </div>
       <div class="skills">
         <h3>Prepared Spells</h3>
-        <p>{{ addSkill }}</p>
+        <ul class="list-skills">
+          <li class="item-skills grid grid-cols-2 gap-8" v-for="skill in userData.skills" :key="skill.name">
+            <div class="w-max">{{ skill.name }}</div>
+            <div>Skilllevel: {{  skill.level }}</div>
+          </li>
+        </ul>
         <Autocomplete :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
 
         <ul class="p-8 list-disc">
@@ -83,7 +93,7 @@ onMounted(() => {
       </div>
       <div class="bio">
         <h3>Bio</h3>
-        <textarea placeholder="Bio" name="bio" v-model="userData.name"></textarea>
+        <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
       </div>
       <pre class="mt-16">{{ userData }}</pre>
       <pre>{{ allSkills }}</pre>

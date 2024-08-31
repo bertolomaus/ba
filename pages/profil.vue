@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import Autocomplete from '../components/Autocomplete.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
@@ -53,7 +54,9 @@ onMounted(() => {
       </div>
       <div class="skills">
         <h3>Prepared Spells</h3>
-        <input placeholder="Add Skill" name="addSkill" v-model="addSkill" />
+        <!-- <input placeholder="Add Skill" name="addSkill" v-model="addSkill" list="skill" /> -->
+        <Autocomplete :suggestions="allSkills" v-model="addSkill" />
+
         <ul class="p-8 list-disc">
           <li>on mounted: load all skills in an array</li>
           <li>on key up: if length >= 2: check if input value is contained in any skill array value</li>

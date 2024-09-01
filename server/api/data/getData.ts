@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     // Invalid user id
     throw createError({
       statusCode: 403,
-      statusMessage: 'We do not share secrets with strangers.'
+      statusMessage: 'Ye be unbeknownst to us. Be gone, stranger!'
     });
   }
 });

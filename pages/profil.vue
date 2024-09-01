@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Autocomplete from '../components/Autocomplete.vue'
+import Star from '../components/Star.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
@@ -45,7 +46,6 @@ onMounted(async () => {
       <h1 class="">At your service, {{ userData.name }}</h1>
       <ul class="p-8 list-disc">
         <li>switcher: editable</li>
-        <li>speichern-button: speichere data-json, update in datenbank</li>
         <li>JWT auth für persistenten login</li>
       </ul>
       <div class="grid grid-cols-2 gap-16">
@@ -75,20 +75,17 @@ onMounted(async () => {
         <h3>Prepared Spells</h3>
         <ul class="list-skills">
           <li class="item-skills grid grid-cols-2 gap-8" v-for="skill in userData.skills" :key="skill.name">
-            <div class="w-max">{{ skill.name }}</div>
-            <div>Skilllevel: {{  skill.level }}</div>
+            <div class="w-max">{{ skill.name }}, {{ skill.level }}</div>
+            <div class="grid grid-cols-5 gap-2">
+              <Star />
+              <Star />
+              <Star />
+              <Star />
+              <Star />
+            </div>
           </li>
         </ul>
         <Autocomplete :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
-
-        <ul class="p-8 list-disc">
-          <li>on mounted: load all skills in an array</li>
-          <li>on key up: if length >= 2: check if input value is contained in any skill array value</li>
-          <li>div mit allen vorschlägen unterhalb vom input field</li>
-          <li>vielleicht input > select, und searchable? https://stackoverflow.com/questions/18796221/creating-a-select-box-with-a-search-option</li>
-          <li>durchtabben / on enter: add skill zu skills json; erzeuge neues element mit name & level; clear input</li>
-        </ul>
-        <div class="btn w-max my-4" @click="listSkills">Get Data</div>
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
@@ -98,23 +95,14 @@ onMounted(async () => {
           </li>
         </ul>
         <Autocomplete :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
-        <ul class="p-8 list-disc">
-          <li>on mounted: load all hobbies in an array</li>
-          <li>on key up: if length >= 2: check if input value is contained in any hobby array value</li>
-          <li>div mit allen vorschlägen unterhalb vom input field</li>
-          <li>vielleicht input > select, und searchable?</li>
-          <li>durchtabben / on enter: add hobby zu hobbies json; erzeuge neues tag; clear input</li>
-        </ul>
       </div>
       <div class="bio">
         <h3>Bio</h3>
         <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
       </div>
       <div class="save">
-        <p class="btn w-max" @click="save">Speichern</p>
+        <p class="btn w-max mt-8" @click="save">Speichern</p>
       </div>
-      <pre class="mt-16">{{ userData }}</pre>
-      <pre>{{ allSkills }}</pre>
     </div>
   </div>
 </template>

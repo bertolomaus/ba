@@ -3,14 +3,24 @@ import Autocomplete from '../components/Autocomplete.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
-const profileId = route.query.wizard
-const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies } = useData()
+const profileId = route.query.id?.toString()
+const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies, updateUserData } = useData()
 const isOwner = ref<boolean>(false)
-const addHobby = ref<string>('')
 
 const addNewSkill = (eventPayload: { payload: string }) => {
   userData.value.skills.push({name: eventPayload.payload, level: 0})
-  console.log(userData.value)
+}
+
+const addNewHobby = (eventPayload: { payload: string }) => {
+  userData.value.hobbies.push(eventPayload.payload)
+}
+
+const save = () => {
+  if(profileId){
+      updateUserData(parseInt(profileId), userData.value)
+    } else{
+      updateUserData(undefined, userData.value)
+    }
 }
 
 onMounted(async () => {
@@ -82,7 +92,12 @@ onMounted(async () => {
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
-        <input placeholder="Add Hobby" name="addHobby" v-model="addHobby" />
+        <ul class="list-skills">
+          <li class="item-skills" v-for="hobby in userData.hobbies" :key="hobby">
+            <div class="w-max">{{ hobby }}</div>
+          </li>
+        </ul>
+        <Autocomplete :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
         <ul class="p-8 list-disc">
           <li>on mounted: load all hobbies in an array</li>
           <li>on key up: if length >= 2: check if input value is contained in any hobby array value</li>
@@ -94,6 +109,9 @@ onMounted(async () => {
       <div class="bio">
         <h3>Bio</h3>
         <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
+      </div>
+      <div class="save">
+        <p class="btn w-max" @click="save">Speichern</p>
       </div>
       <pre class="mt-16">{{ userData }}</pre>
       <pre>{{ allSkills }}</pre>

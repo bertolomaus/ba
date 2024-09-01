@@ -52,7 +52,7 @@ export const useData = () => {
     }
   }
 
-  const updateUserData = async (data: Object) => {
+  const updateUserData = async (id = userId.value, data: Object) => {
     const dataString = JSON.stringify(data)
 
     try {
@@ -60,7 +60,7 @@ export const useData = () => {
       const dataRequest = await $fetch('/api/data/updateData', {
         method: 'POST',
         body: {
-          id: userId.value,
+          id: id,
           data: dataString,
         }
       })

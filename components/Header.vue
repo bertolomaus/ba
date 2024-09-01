@@ -56,7 +56,7 @@ const profileLink = computed(() => `/profile?id=${userId}`)
                 <NuxtLink to="/">Dashboard</NuxtLink>
               </li>
               <li>
-                <NuxtLink :to="{path: 'profil', query: {wizard: userId}}">Profil</NuxtLink>
+                <NuxtLink :to="{path: 'profil', query: {id: userId}}">Profil</NuxtLink>
               </li>
               <li>
                 <NuxtLink to="/fragen">Fragen</NuxtLink>

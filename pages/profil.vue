@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Autocomplete from '../components/Autocomplete.vue'
 import Star from '../components/Star.vue'
+import Trash from '../components/Trash.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
@@ -14,6 +15,10 @@ const addNewSkill = (eventPayload: { payload: string }) => {
 
 const addNewHobby = (eventPayload: { payload: string }) => {
   userData.value.hobbies.push(eventPayload.payload)
+}
+
+const remove = (index: number) => {
+  userData.value.skills.splice(index, 1)
 }
 
 const save = () => {
@@ -74,15 +79,18 @@ onMounted(async () => {
       <div class="skills">
         <h3>Prepared Spells</h3>
         <ul class="list-skills">
-          <li class="item-skills grid grid-cols-2 gap-8" v-for="skill in userData.skills" :key="skill.name">
-            <div class="w-max">{{ skill.name }}, {{ skill.level }}</div>
-            <div class="grid grid-cols-5 gap-2">
-              <Star />
-              <Star />
-              <Star />
-              <Star />
-              <Star />
+          <li class="item-skills flex" v-for="(skill, index) in userData.skills" :key="skill.name">
+            <div class="skill-name">{{ skill.name }}, {{ skill.level }}</div>
+            <div class="flex skill-level">
+              <Star
+                @click="skill.level = index + 1"
+                class="pr-2 cursor-pointer"
+                v-for="(item, index) in 5"
+                :key="index" :data-skill="index + 1"
+                :class="index + 1 <= skill.level ? 'fill-primary' : 'fill-none'"
+              />
             </div>
+            <Trash @click="remove(index)" class="ml-4" />
           </li>
         </ul>
         <Autocomplete :suggestions="allSkills.sort()" @submit-input="addNewSkill" />

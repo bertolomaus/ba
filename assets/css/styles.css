@@ -390,3 +390,30 @@ a:hover .btn-text:after{
 .suggestions-list .active{
   @apply bg-bgColor-primary text-inverted;
 }
+
+
+
+/* ********** PROFILE ********** */
+
+.skill-name{
+  @apply w-40
+}
+
+.skill-level .star{
+  @apply w-6 overflow-visible stroke-2 stroke-primary;
+}
+
+.skill-level:hover .star{
+  @apply fill-primary;
+}
+
+.skill-level:hover .star:hover + svg,
+.skill-level:hover .star:hover + svg + svg, 
+.skill-level:hover .star:hover + svg + svg + svg,
+.skill-level:hover .star:hover + svg + svg + svg + svg{
+  @apply fill-none;
+}
+
+.skills .trash{
+  @apply w-5;
+}

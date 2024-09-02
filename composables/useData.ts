@@ -122,5 +122,5 @@ export const useData = () => {
     })
   }
 
-  return { getName, updateUserData, fetchData, userData, listSkills, allSkills, listHobbies, allHobbies };
-};
+  return { getName, updateUserData, fetchData, userData, listSkills, allSkills, listHobbies, allHobbies }
+}

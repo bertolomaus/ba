@@ -5,7 +5,7 @@ import Trash from '../components/Trash.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
-const profileId = route.query.id?.toString()
+const profileId = route.query.wizard?.toString()
 const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies, updateUserData } = useData()
 const isOwner = ref<boolean>(false)
 
@@ -80,7 +80,7 @@ onMounted(async () => {
         <h3>Prepared Spells</h3>
         <ul class="list-skills">
           <li class="item-skills flex" v-for="(skill, index) in userData.skills" :key="skill.name">
-            <div class="skill-name">{{ skill.name }}, {{ skill.level }}</div>
+            <div class="skill-name">{{ skill.name }}</div>
             <div class="flex skill-level">
               <Star
                 @click="skill.level = index + 1"

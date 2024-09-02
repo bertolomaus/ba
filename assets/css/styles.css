@@ -393,6 +393,14 @@ a:hover .btn-text:after{
 
 
 
+/* ********** COMPONENT/TRASH ********** */
+
+.trash{
+  @apply cursor-pointer;
+}
+
+
+
 /* ********** PROFILE ********** */
 
 .skill-name{

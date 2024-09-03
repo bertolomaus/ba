@@ -4,6 +4,11 @@ import BavariaIpsum from '../components/BavariaIpsum.vue'
 
 const { isLoggedIn } = useAuth()
 const { modalShowAskQuestion } = useModal()
+const { showSidebar } = useToggleContent()
+
+onMounted(() => {
+  showSidebar.value = false
+})
 </script>
 
 <template>

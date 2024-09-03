@@ -59,3 +59,18 @@ export const getAllData = db
     data: users.data,
   })
   .from(users)
+
+export const getIdsBySkills = db
+  .select({
+    id: users.id
+  })
+  .from(users)
+  .where(
+    sql`
+      EXISTS (
+        SELECT 1
+        FROM json_each(${users.data}, '$.skills.name') AS skill
+        WHERE skill IN ${sql.placeholder('skills')}
+      )
+    `
+  )

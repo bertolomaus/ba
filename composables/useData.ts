@@ -3,7 +3,7 @@ export interface Skill{
   level: number
 }
 
-interface UserData {
+export interface UserData {
   name: string
   status: string
   skills: Skill[]

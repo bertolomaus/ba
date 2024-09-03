@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
   // get the id of all users that have at least 1 matching skill
   // prepared statements -> ~/server/utils/db.ts
   const results = getAllData.all()
-  console.log(...results)
   const matches = ref<object[]>([])
 
   results.forEach((result) => {

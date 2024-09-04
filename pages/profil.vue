@@ -95,7 +95,7 @@ try{
             <Trash @click="remove(index)" class="ml-4" />
           </li>
         </ul>
-        <Autocomplete :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
+        <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
@@ -104,7 +104,7 @@ try{
             <div class="w-max">{{ hobby }}</div>
           </li>
         </ul>
-        <Autocomplete :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
+        <Autocomplete :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
       </div>
       <div class="bio">
         <h3>Bio</h3>

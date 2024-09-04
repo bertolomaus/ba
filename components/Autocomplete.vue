@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 interface Props {
+  label: string,
   suggestions: string[]
 }
 const props = defineProps<Props>()
@@ -61,6 +62,7 @@ const selectSuggestion = (index: number) => {
       @keydown.enter.prevent="onEnter"
       ref="inputField"
     />
+    <label for="inputField">{{ props.label }}</label>
     <ul v-if="filteredSuggestions.length > 0" class="suggestions-list">
       <li
         v-for="(suggestion, index) in filteredSuggestions"

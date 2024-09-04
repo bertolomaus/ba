@@ -100,7 +100,8 @@ form .field + .field{
   @apply mt-4
 }
 
-form label{
+form label,
+.autocomplete label{
   @apply absolute left-1 top-2 text-textColor-muted text-sm transition-all z-10 pointer-events-none px-1;
 }
 
@@ -110,7 +111,8 @@ form .has-text input{
 
 form :focus + label,
 form .has-text label,
-form .is-acceptable label{
+form .is-acceptable label,
+.autocomplete :focus + label{
   @apply left-1 top-0 text-xs leading-4 bg-white;
   transform:translateY(-50%);
 }
@@ -380,7 +382,8 @@ a:hover .btn-text:after{
 }
 
 .suggestions-list{
-  @apply absolute top-full w-max min-w-40 bg-bgColor-mutedLight border-muted rounded-md overflow-hidden;
+  @apply absolute top-full w-max min-w-40 bg-bgColor-mutedLight border-muted border rounded-md overflow-hidden;
+  z-index:100;
 }
 
 .suggestions-list li{

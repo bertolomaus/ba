@@ -2,6 +2,9 @@
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
+import Autocomplete from '../components/Autocomplete.vue'
+const { allSkills, listSkills } = useData()
+const requiredSkills = ref<string[]>([])
 
 const registerSchema = toTypedSchema(
   yup.object({
@@ -36,9 +39,18 @@ const getHelpers = async () => {
   }
 }
 
+const addRequiredSkill = (eventPayload: { payload: string }) => {
+  requiredSkills.value.push(eventPayload.payload)
+  console.log(requiredSkills.value)
+}
+
 const postQuestion = () => {
   console.log('post question')
 }
+
+onMounted(() => {
+  listSkills()
+})
 </script>
 
 <template>
@@ -55,6 +67,12 @@ const postQuestion = () => {
               this is a dummy text to keep the stupid divs size.
             </div>
           </div>
+        </div>
+        <div class="field field-tags">
+          <ul class="tags">
+            <li v-for="(skill, index) in requiredSkills" :key="index">{{ skill }}</li>
+          </ul>
+          <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()" @submit-input="addRequiredSkill" />
         </div>
         <div class="field field-description" :class="[{'has-text': description}, {'has-error': errors.description}, {'is-acceptable': description && !errors.description}]">
           <textarea v-model="description" v-bind="descriptionAttrs"  name="description" ></textarea>

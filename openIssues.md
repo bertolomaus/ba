@@ -6,7 +6,7 @@
 
 ## profil
 - [x] add avatar to data json
-- [ ] add preferred contact method
+- [x] add preferred contact method
 - [ ] wizardly wording
 - [ ] toggle edit mode
 
@@ -36,3 +36,6 @@
 - [ ] make useState persistent through reloads. use cookie for it
 - [ ] forgot passwpord
 - [ ] jwt
+
+## notification
+- [ ] google firebase notifications

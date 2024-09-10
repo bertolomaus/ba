@@ -193,7 +193,23 @@ a:hover .btn-text:after{
   @apply hover:rotate-45 hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
 }
 
-/* *** TEXT *** */
+/* *** TAGS *** */
+
+.tags{
+  @apply flex gap-1 mb-2;
+}
+
+.tags li{
+  @apply px-3 py-1 bg-primary text-inverted rounded-2xl flex cursor-pointer
+}
+
+.tags svg{
+  @apply w-0 fill-red transition-all pl-0
+}
+
+.tags li:hover svg{
+  @apply w-7 pl-1.5
+}
 
 
 /* ********** COMPONENT/HEADER ********** */

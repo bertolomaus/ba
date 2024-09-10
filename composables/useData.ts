@@ -78,10 +78,16 @@ export const useData = () => {
   }
 
   // fetch userData & return name from the JSON
-  const getName = () => {
-    fetchData()
+  const getName = (id = userId.value) => {
+    fetchData(id)
     return userData.value.name
-  };
+  }
+
+  // fetch userData & return avatar from the JSON
+  const getAvatar = (id = userId.value) => {
+    fetchData(id)
+    return userData.value.avatar
+  }
 
   const fetchAllData = async () => {
     try {
@@ -126,5 +132,5 @@ export const useData = () => {
     })
   }
 
-  return { getName, updateUserData, fetchData, userData, listSkills, allSkills, listHobbies, allHobbies }
+  return { getName, getAvatar, updateUserData, fetchData, userData, listSkills, allSkills, listHobbies, allHobbies }
 }

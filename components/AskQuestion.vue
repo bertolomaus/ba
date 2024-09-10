@@ -3,9 +3,16 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
 import Autocomplete from '../components/Autocomplete.vue'
-import type { MatchingHelper } from '~/composables/useQuestion';
+import Trash from '../components/Trash.vue'
 
-const { allSkills, listSkills } = useData()
+interface MatchingHelper{
+  id: number
+  commonSkills: string[]
+  name: string
+  avatar: string
+}
+
+const { allSkills, listSkills, getName, getAvatar } = useData()
 const requiredSkills = ref<string[]>([])
 const possibleHelpers = ref<MatchingHelper[]>([])
 
@@ -30,14 +37,14 @@ const [description, descriptionAttrs] = defineField('description')
 const getHelpers = async () => {
   try {
     // send credentials to api/data
-    const helperRequest = await $fetch('/api/data/getIdsBySkills', {
+    const matchesRequest = await $fetch('/api/data/getIdsBySkills', {
       method: 'POST',
       body: {
         skills: requiredSkills.value
       }
     })
 
-    helperRequest.matches.forEach((match) => {
+    matchesRequest.matches.forEach((match) => {
       if (possibleHelpers.value.some(helper => helper.id == match.id)){
         possibleHelpers.value[(possibleHelpers.value.findIndex(helper => helper.id == match.id))].commonSkills = match.commonSkills
       } else {
@@ -47,8 +54,15 @@ const getHelpers = async () => {
 
     possibleHelpers.value = computed(() => possibleHelpers.value.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
     console.log(possibleHelpers.value)
+
+    for(let helper of possibleHelpers.value){
+      helper.name = getName(helper.id)
+      helper.avatar = getAvatar(helper.id)
+      console.log(helper)
+    }
   }
   catch (error) {
+    console.error(error)
   }
 }
 
@@ -59,6 +73,10 @@ const addRequiredSkill = async (eventPayload: { payload: string }) => {
 
 const postQuestion = () => {
   console.log('post question')
+}
+
+const removeSkill = (index: number) => {
+  requiredSkills.value.splice(index, 1)
 }
 
 onMounted(() => {
@@ -82,8 +100,8 @@ onMounted(() => {
           </div>
         </div>
         <div class="field field-tags">
-          <ul class="tags">
-            <li v-for="(skill, index) in requiredSkills" :key="index">{{ skill }}</li>
+          <ul class="tags" v-if="requiredSkills.length > 0">
+            <li v-for="(skill, index) in requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}<Trash /></li>
           </ul>
           <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()" @submit-input="addRequiredSkill" />
         </div>

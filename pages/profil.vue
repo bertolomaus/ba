@@ -18,15 +18,13 @@ const addNewHobby = (eventPayload: { payload: string }) => {
   userData.value.hobbies.push(eventPayload.payload)
 }
 
-const remove = (index: number) => {
+const removeSkill = (index: number) => {
   userData.value.skills.splice(index, 1)
 }
 
 const save = () => {
-  if(profileId){
+  if(profileId != '0' && profileId == userId.toString()){
       updateUserData(parseInt(profileId), userData.value)
-    } else{
-      updateUserData(undefined, userData.value)
     }
 }
 
@@ -52,7 +50,6 @@ try{
     <div class="container">
       <h1 class="">At your service, {{ userData.name }}</h1>
       <ul class="p-8 list-disc">
-        <li>switcher: editable</li>
         <li>JWT auth für persistenten login</li>
       </ul>
       <div class="grid grid-cols-2 gap-16">
@@ -78,6 +75,15 @@ try{
           </div>
         </div>
       </div>
+      <div class="contact">
+        <h3>Contact</h3>
+        <p>Abgesehen von Eulen und Gedankenlesen, wie können andere dich am einfachsten erreichen?</p>
+        <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
+        <input placeholder="Discord" name="discord" v-model="userData.contact[1]" />
+        <input placeholder="Signal" name="signal" v-model="userData.contact[2]" />
+        <input placeholder="Webex" name="webex" v-model="userData.contact[3]" />
+        <input placeholder="Email" name="email" v-model="userData.contact[4]" />
+      </div>
       <div class="skills">
         <h3>Prepared Spells</h3>
         <ul class="list-skills">
@@ -92,7 +98,7 @@ try{
                 :class="index + 1 <= skill.level ? 'fill-primary' : 'fill-none'"
               />
             </div>
-            <Trash @click="remove(index)" class="ml-4" />
+            <Trash @click="removeSkill(index)" class="ml-4" />
           </li>
         </ul>
         <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />

@@ -5,6 +5,8 @@ export interface Skill{
 
 export interface UserData {
   name: string
+  avatar: string
+  contact: string[]
   status: string
   skills: Skill[]
   hobbies: string[]
@@ -13,7 +15,9 @@ export interface UserData {
 }
 
 interface UserDataWithId {
-  id: number,
+  id: number
+  avatar: string
+  contact: string[]
   name: string
   status: string
   skills: Skill[]
@@ -23,7 +27,7 @@ interface UserDataWithId {
 }
 
 export const useData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", status: "", skills: [], hobbies: [], bio: "", projekte: []}));
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "~/assets/img/logo-dark-red.png", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}));
   const { userId } = useAuth()
   const allSkills = useState<string[]>('allSkills', () => [])
   const allHobbies = useState<string[]>('allHobbies', () => [])

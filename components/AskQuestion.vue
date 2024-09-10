@@ -3,8 +3,11 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
 import Autocomplete from '../components/Autocomplete.vue'
+import type { MatchingHelper } from '~/composables/useQuestion';
+
 const { allSkills, listSkills } = useData()
 const requiredSkills = ref<string[]>([])
+const possibleHelpers = ref<MatchingHelper[]>([])
 
 const registerSchema = toTypedSchema(
   yup.object({
@@ -30,18 +33,28 @@ const getHelpers = async () => {
     const helperRequest = await $fetch('/api/data/getIdsBySkills', {
       method: 'POST',
       body: {
-        skills: ['Java', 'C++', 'Python', 'Vue.js']
+        skills: requiredSkills.value
       }
     })
-    console.log(helperRequest)
+
+    helperRequest.matches.forEach((match) => {
+      if (possibleHelpers.value.some(helper => helper.id == match.id)){
+        possibleHelpers.value[(possibleHelpers.value.findIndex(helper => helper.id == match.id))].commonSkills = match.commonSkills
+      } else {
+        possibleHelpers.value.push(match)
+      }
+    })
+
+    possibleHelpers.value = computed(() => possibleHelpers.value.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
+    console.log(possibleHelpers.value)
   }
   catch (error) {
   }
 }
 
-const addRequiredSkill = (eventPayload: { payload: string }) => {
+const addRequiredSkill = async (eventPayload: { payload: string }) => {
   requiredSkills.value.push(eventPayload.payload)
-  console.log(requiredSkills.value)
+  await getHelpers()
 }
 
 const postQuestion = () => {

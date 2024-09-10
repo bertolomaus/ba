@@ -14,7 +14,7 @@ const profileLink = computed(() => `/profile?id=${userId}`)
     <div class="headerbar">
       <div class="logo">
         <NuxtLink to="/">
-          <img src="../assets/img/logo-dark-red.png" alt="Wizard Logo" height="64" width="207">
+          <img src="~/assets/img/logo-dark-red.png" alt="Wizard Logo" height="64" width="207">
           <!-- <img src="../assets/img/logo-dark-red.png" alt="Wizard Logo" height="64" width="207" class="dark:opacity-0">
           <img src="../assets/img/logo-light-red.png" alt="Wizard Logo" height="64" width="207" class="dark:opacity-1"> -->
         </NuxtLink>

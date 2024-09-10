@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   }
 
   // prepared statements -> ~/server/utils/db.ts
-  register.run({ id: newId, email: body.email, password: body.password, data: '{"name":"","projekte":[]}' })
+  register.run({ id: newId, email: body.email, password: body.password, data: '{"name":"","avatar":"~/assets/img/logo-dark-red.png","contact":[],status":"","skills":[],"hobbies":[],"bio":"","projekte":[]}'})
   login(newId)
   return {success: true}
 });

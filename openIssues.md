@@ -1,44 +1,38 @@
 # Open Issues Report
 
+## dashboard
+- [ ] replace bavaria ipsum with wizardly wording
+- [ ] quick buttons for most important features: questions & asking, projects & add new, profile
+
 ## profil
-- name
-- avatar
-- skills
-  - mit angabe, wie gut
-- interessen
-- kurz-bio input
-- credentials ändern
-- profil löschen
-- userData als useState machen
+- [x] add avatar to data json
+- [ ] add preferred contact method
+- [ ] wizardly wording
+- [ ] toggle edit mode
 
 ## frage stellen
-- tags
-- hilfestellung, was gute fragen ausmacht
-- vorschläge, wer helfen könnte
+- [ ] suggestions id -> name, avatar & commonskills as card
+- [ ] guide how do ask good questions
+- [ ] add postQuestion function: generate new json in content/frage/id.json
 
 ## projekte
-- titel
-- beschreibung
-- zielkarte
-- req skills
-- ressourcen
-  - mitglieder
-  - miro, discord, cloud etc
-- mitglieder suchen
-- sichtbarkeit
-  - für alle sichtbar / projekt sucht mitglieder
-- häkchen: abgeschlossen
+- [ ] title
+- [ ] req skills
+- [ ] description
+- [ ] zielkarte
+- [ ] ressources: members, miro, discord, cloud etc
+- [ ] find members
+- [ ] visibility: everyone, lfm
+- [ ] checkbox: finished
+- [ ] add new project function: generate new json in content/projekt/id.json
+- [ ] toggle edit mode
 
 ## alle fragen / alle projekte
-- suche/filter nach tags
-- liste mit allen sichtbaren fragen/projekten
-- pagination
+- [ ] toggle edit modesearch/filter with tags
+- [ ] toggle edit modelist all visible questions/projects
+- [ ] toggle edit modepagination
 
 ## authentication
-- make useState persistent through reloads. use cookie for it
-- forgot passwpord 
-
-## possible improvements
-- use an auth cookie. 
-  - db.ts -> preplogin could generate an auth cookie
-  - db.ts -> prepDataRequest could check for auth cookie
+- [ ] make useState persistent through reloads. use cookie for it
+- [ ] forgot passwpord
+- [ ] jwt

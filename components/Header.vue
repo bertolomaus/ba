@@ -28,7 +28,7 @@ const profileLink = computed(() => `/profile?id=${userId}`)
           </svg>
         </div>
         <div class="open-interaction" @click="showInteraction">
-          <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="64" width="64">
+          <img src="../assets/img/profile-mr-light.png" alt="Wizard Logo" height="64" width="64">
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@ const profileLink = computed(() => `/profile?id=${userId}`)
             </svg>
           </div>
           <div class="sidebar-open-interaction" @click="showInteraction">
-            <img src="../assets/img/profile-male-red.png" alt="Wizard Logo" height="48" width="48">
+            <img src="../assets/img/profile-mr-light.png" alt="Wizard Logo" height="48" width="48">
           </div>
           <SVGClose class="sidebar-close" @click="toggleSidebar" />
         </div>

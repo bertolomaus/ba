@@ -55,11 +55,12 @@ const getHelpers = async () => {
     possibleHelpers.value = computed(() => possibleHelpers.value.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
     console.log(possibleHelpers.value)
 
-    for(let helper of possibleHelpers.value){
+    for(const helper of possibleHelpers.value){
+      console.log(helper)
       helper.name = getName(helper.id)
       helper.avatar = getAvatar(helper.id)
-      console.log(helper)
     }
+    console.log(possibleHelpers.value)
   }
   catch (error) {
     console.error(error)
@@ -119,7 +120,14 @@ onMounted(() => {
           <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Frage posten</button>
         </div>
       </form>
-      <div class="mt-8 btn w-max" @click="getHelpers">test get</div>
+      <div class="helpers grid grid-cols-4 gap-4">
+        <div v-for="(helper, index) in possibleHelpers" :key="index">
+          <p>id: {{ helper.id }}</p>
+          <p>name: {{ helper.name }}</p>
+          <p>common: {{ helper.commonSkills }}</p>
+          <img :src="'_nuxt/assets/img/profile-' + helper.avatar + '-light.png'" :alt="helper.name">
+        </div>
+      </div>
     </div>
   </div>
 </template>

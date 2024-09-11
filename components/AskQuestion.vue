@@ -5,14 +5,14 @@ import * as yup from 'yup'
 import Autocomplete from '../components/Autocomplete.vue'
 import Trash from '../components/Trash.vue'
 
-interface MatchingHelper{
+export interface MatchingHelper{
   id: number
   commonSkills: string[]
   name: string
   avatar: string
 }
 
-const { allSkills, listSkills, getName, getAvatar } = useData()
+const { allSkills, listSkills, getName, getAvatar, userData } = useData()
 const requiredSkills = ref<string[]>([])
 const possibleHelpers = ref<MatchingHelper[]>([])
 
@@ -43,24 +43,7 @@ const getHelpers = async () => {
         skills: requiredSkills.value
       }
     })
-
-    matchesRequest.matches.forEach((match) => {
-      if (possibleHelpers.value.some(helper => helper.id == match.id)){
-        possibleHelpers.value[(possibleHelpers.value.findIndex(helper => helper.id == match.id))].commonSkills = match.commonSkills
-      } else {
-        possibleHelpers.value.push(match)
-      }
-    })
-
-    possibleHelpers.value = computed(() => possibleHelpers.value.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
-    console.log(possibleHelpers.value)
-
-    for(const helper of possibleHelpers.value){
-      console.log(helper)
-      helper.name = getName(helper.id)
-      helper.avatar = getAvatar(helper.id)
-    }
-    console.log(possibleHelpers.value)
+    possibleHelpers.value = computed(() => matchesRequest.matches.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
   }
   catch (error) {
     console.error(error)
@@ -125,7 +108,7 @@ onMounted(() => {
           <p>id: {{ helper.id }}</p>
           <p>name: {{ helper.name }}</p>
           <p>common: {{ helper.commonSkills }}</p>
-          <img :src="'_nuxt/assets/img/profile-' + helper.avatar + '-light.png'" :alt="helper.name">
+          <img src="../assets/img/profile-mr-light.png" :alt="helper.name">
         </div>
       </div>
     </div>

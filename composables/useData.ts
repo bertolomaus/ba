@@ -27,7 +27,7 @@ interface UserDataWithId {
 }
 
 export const useData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", avatar: "~/assets/img/logo-dark-red.png", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}));
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}));
   const { userId } = useAuth()
   const allSkills = useState<string[]>('allSkills', () => [])
   const allHobbies = useState<string[]>('allHobbies', () => [])
@@ -79,8 +79,9 @@ export const useData = () => {
 
   // fetch userData & return name from the JSON
   const getName = (id = userId.value) => {
-    fetchData(id)
-    return userData.value.name
+    fetchData(id).then(() => {
+      return userData.value.name
+    })
   }
 
   // fetch userData & return avatar from the JSON

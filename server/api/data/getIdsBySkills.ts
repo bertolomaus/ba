@@ -1,6 +1,6 @@
 import { ref } from "vue"
 import { UserData } from "~/composables/useData"
-import { MatchingHelper } from "~/composables/useQuestion"
+import { MatchingHelper } from "~/components/AskQuestion.vue"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     let commonSkills = skills.filter(value => body.skills.includes(value))
 
     if(commonSkills.length > 0){
-      matches.push({id: result.id, commonSkills: commonSkills})
+      matches.push({id: result.id, commonSkills: commonSkills, name: data.name, avatar: data.avatar})
     }
   })
 

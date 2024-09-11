@@ -55,7 +55,7 @@ try{
       <div class="grid grid-cols-2 gap-16">
         <div>
           <div class="avatar">
-            <img src="~/assets/img/profile-male-red.png" alt="">
+            <img src="assets/img/profile-mr-light.png" alt="">
             <ul class="p-8 list-disc">
               <li>avatar editable machen</li>
               <li>wählen zwischen 4 avataren</li>

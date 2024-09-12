@@ -61,6 +61,7 @@ const postQuestion = () => {
 
 const removeSkill = (index: number) => {
   requiredSkills.value.splice(index, 1)
+  getHelpers()
 }
 
 onMounted(() => {
@@ -104,7 +105,10 @@ onMounted(() => {
         </div>
       </form>
       <div class="helpers grid grid-cols-4 gap-4">
-        <div v-for="(helper, index) in possibleHelpers" :key="index">
+        <div
+          v-for="(helper, index) in possibleHelpers.filter(helper => helper.commonSkills.length > requiredSkills.length / 2)"
+          :key="index"
+        >
           <p>id: {{ helper.id }}</p>
           <p>name: {{ helper.name }}</p>
           <p>common: {{ helper.commonSkills }}</p>

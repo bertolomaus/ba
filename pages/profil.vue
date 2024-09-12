@@ -8,6 +8,7 @@ const { userId } = useAuth()
 const profileId = route.query.wizard?.toString()
 const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies, updateUserData } = useData()
 const { showSidebar } = useToggleContent()
+const { showModal } = useModal()
 const isOwner = ref<boolean>(false)
 
 const addNewSkill = (eventPayload: { payload: string }) => {
@@ -29,8 +30,9 @@ const save = () => {
 }
 
 onMounted(async () => {
-showSidebar.value = false
-try{
+  showSidebar.value = false
+  showModal.value = false
+  try{
     if(profileId){
       fetchData(parseInt(profileId.toString()))
     } else{

@@ -1,5 +1,8 @@
 # Open Issues Report
 
+## where i stopped
+- how do i make a page reload when clicking a nuxtlink oder editing the profile's wizard query
+
 ## dashboard
 - [ ] replace bavaria ipsum with wizardly wording
 - [ ] quick buttons for most important features: questions & asking, projects & add new, profile
@@ -11,7 +14,7 @@
 - [ ] toggle edit mode
 
 ## frage stellen
-- [ ] suggestions id -> name, avatar & commonskills as card
+- [x] suggestions id -> name, avatar & commonskills as card
 - [ ] guide how do ask good questions
 - [ ] add postQuestion function: generate new json in content/frage/id.json
 

@@ -11,25 +11,30 @@ const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const isOwner = ref<boolean>(false)
 
+// add skill to userData array (not yet to database)
 const addNewSkill = (eventPayload: { payload: string }) => {
   userData.value.skills.push({name: eventPayload.payload, level: 0})
 }
 
+// add hobby to userData array (not yet to database)
 const addNewHobby = (eventPayload: { payload: string }) => {
   userData.value.hobbies.push(eventPayload.payload)
 }
 
+// remove skill from userData array (not yet from database)
 const removeSkill = (index: number) => {
   userData.value.skills.splice(index, 1)
 }
 
+// update database entry
 const save = () => {
   if(profileId != '0' && profileId == userId.toString()){
       updateUserData(parseInt(profileId), userData.value)
     }
 }
 
-onMounted(async () => {
+// fetch profile info, skills, hobbies, set isOwner and hide modal & sidebar
+const prepareContent = async () => {
   showSidebar.value = false
   showModal.value = false
   try{
@@ -43,6 +48,18 @@ onMounted(async () => {
     listHobbies()
   } catch (error){
     console.error(error)
+  }
+}
+
+// prepare displayed content on page load
+onMounted(async () => {
+  prepareContent()
+})
+
+// change displayed content whenever wizard id in url changes
+watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like watch gets value from first param and puts new/old values into 2nd
+  if (newWizard !== oldWizard) {
+    prepareContent()
   }
 })
 </script>
@@ -79,7 +96,7 @@ onMounted(async () => {
       </div>
       <div class="contact">
         <h3>Contact</h3>
-        <p>Abgesehen von Eulen und Gedankenlesen, wie können andere dich am einfachsten erreichen?</p>
+        <p>Abgesehen von Eulen und Gedankenlesen, wie möchtest du kontaktiert werden?</p>
         <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
         <input placeholder="Discord" name="discord" v-model="userData.contact[1]" />
         <input placeholder="Signal" name="signal" v-model="userData.contact[2]" />

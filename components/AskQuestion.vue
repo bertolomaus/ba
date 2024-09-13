@@ -12,7 +12,8 @@ export interface MatchingHelper{
   avatar: string
 }
 
-const { allSkills, listSkills, getName, getAvatar, userData } = useData()
+const { allSkills, listSkills, userData } = useData()
+const { userId } = useAuth()
 const requiredSkills = ref<string[]>([])
 const possibleHelpers = ref<MatchingHelper[]>([])
 
@@ -23,7 +24,10 @@ const registerSchema = toTypedSchema(
       .required('Gib einen aussagekräftigen Titel an.'),
     description: yup
       .string()
-      .required('Beschreib dein Problem.')
+      .required('Beschreib dein Problem.'),
+    solutions: yup
+      .string()
+      .required('Bechreib deine Ansätze, die nicht funktioniert haben.')
   }),
 )
 
@@ -33,6 +37,7 @@ const { values, errors, defineField, meta } = useForm({
 
 const [title, titleAttrs] = defineField('title')
 const [description, descriptionAttrs] = defineField('description')
+const [solutions, solutionsAttrs] = defineField('solutions')
 
 const getHelpers = async () => {
   try {
@@ -55,13 +60,33 @@ const addRequiredSkill = async (eventPayload: { payload: string }) => {
   await getHelpers()
 }
 
-const postQuestion = () => {
-  console.log('post question')
-}
-
 const removeSkill = (index: number) => {
   requiredSkills.value.splice(index, 1)
   getHelpers()
+}
+
+const postQuestion = async () => {
+  try {
+    // send data to api endpoint -- as the database schema requires it
+    const postQuestion = await $fetch('/api/postQuestion', {
+      method: 'POST',
+      body: {
+        id: 0,
+        owner: userId.value,
+        data: {
+          title: values.title,
+          requiredSkills: requiredSkills.value,
+          description: values.description,
+          attemptedSolutions: values.solutions,
+          isVisible: false,
+          isSolved: false,
+        }
+      }
+    })
+  }
+  catch (error) {
+    console.error(error)
+  }
 }
 
 onMounted(() => {
@@ -96,6 +121,16 @@ onMounted(() => {
           <div class="errors">
             {{ errors.description }}
             <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.description">
+              this is a dummy text to keep the stupid divs size.
+            </div>
+          </div>
+        </div>
+        <div class="field field-solutions" :class="[{'has-text': solutions}, {'has-error': errors.solutions}, {'is-acceptable': solutions && !errors.solutions}]">
+          <textarea v-model="solutions" v-bind="solutionsAttrs"  name="solutions" ></textarea>
+          <label for="description">Welche Lösungsansätze hast du schon versucht?</label>
+          <div class="errors">
+            {{ errors.solutions }}
+            <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.solutions">
               this is a dummy text to keep the stupid divs size.
             </div>
           </div>

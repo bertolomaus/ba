@@ -1,12 +1,13 @@
 import { drizzle } from "drizzle-orm/better-sqlite3"
 import Database from "better-sqlite3"
 import { sql } from "drizzle-orm"
-import { users } from "~/schema"
+import { users, projects, questions } from "~/schema"
 
 const sqlite = new Database("sqlite.db")
 export const db = drizzle(sqlite)
 
-// prepared statements
+// +++ prepared statements +++
+// users
 export const register = db
 .insert(users)
 .values({
@@ -47,7 +48,7 @@ export const updateUserData = db
   })
   .where(sql`${users.id} = ${sql.placeholder("id")}`)
 
-export const getAllIds = db
+export const getAllUserIds = db
   .select({
     id: users.id,
   })
@@ -59,3 +60,19 @@ export const getAllData = db
     data: users.data,
   })
   .from(users)
+
+
+// questions
+export const postQuestion = db
+.insert(questions)
+.values({
+  id: sql.placeholder('id'),
+  owner: sql.placeholder('owner'),
+  data: sql.placeholder('data'),
+})
+
+export const getAllQuestionIds = db
+  .select({
+    id: questions.id
+  })
+  .from(questions)

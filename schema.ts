@@ -5,16 +5,16 @@ export const users = sqliteTable("users", {
   email: text("email").notNull().unique(),
   password: text("password").notNull(),
   data: text("data").notNull(),
-});
+})
 
 export const projects = sqliteTable("projects", {
   id: integer("id").primaryKey(),
   owner: integer("owner").notNull(),
   data: text("data").notNull(),
-});
+})
 
 export const questions = sqliteTable("questions", {
   id: integer("id").primaryKey(),
   owner: integer("owner").notNull(),
   data: text("data").notNull(),
-});
+})

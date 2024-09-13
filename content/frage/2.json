@@ -1,0 +1,16 @@
+{
+  "id": 2,
+  "owner": 1,
+  "data": {
+    "title": "title 2",
+    "requiredSkills": [
+      "CSS",
+      "HTML",
+      "PHP"
+    ],
+    "description": "desc 2",
+    "attemptedSolutions": "sol 2",
+    "isVisible": false,
+    "isSolved": false
+  }
+}

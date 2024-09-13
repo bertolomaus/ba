@@ -16,7 +16,7 @@
 ## frage stellen
 - [x] suggestions id -> name, avatar & commonskills as card
 - [ ] guide how do ask good questions
-- [ ] add postQuestion function: generate new json in content/frage/id.json
+- [x] add postQuestion function: generate new json in content/frage/id.json
 
 ## projekte
 - [ ] title

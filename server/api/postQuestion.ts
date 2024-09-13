@@ -1,5 +1,3 @@
-import { promises as fs } from 'fs'
-import { join } from 'path'
 import { getAllQuestionIds, postQuestion } from '../utils/db'
 
 export default defineEventHandler(async (event) => {
@@ -10,19 +8,20 @@ export default defineEventHandler(async (event) => {
   let takenIds = getAllQuestionIds.all().map(q => q.id).length == 0 ? [0] : getAllQuestionIds.all().map(q => q.id)
   body.id = ++takenIds[takenIds.length - 1]
 
-  // construct file path for the new question json
-  const filePath = join(process.cwd(), 'content/frage', `${body.id}.json`)
-
-  // stringify json data
-  const jsonString = JSON.stringify(body, null, 2)
-
-  // write the json data to the file
   try {
-    await fs.writeFile(filePath, jsonString, 'utf-8')
-    postQuestion.run({ id: body.id, owner: body.owner, data: JSON.stringify(body.data)})
-    return { success: true, message: 'New wisdom lurks to be conceived.' }
+    postQuestion.run({ 
+      id: body.id,
+      owner: body.owner,
+      title: body.title,
+      requiredSkills: body.requiredSkills,
+      description: body.description,
+      attemptedSolutions: body.attemptedSolutions,
+      isVisible: body.isVisible,
+      isSolved: body.isSolved
+    })
+    return { success: true }
   } catch (error) {
-    console.error('Error writing file:', error);
-    return { success: false, message: 'This nonsense was deemed unworthy of this sacred archives!' }
+    console.error(error);
+    return { success: false }
   }
 })

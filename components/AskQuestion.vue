@@ -73,14 +73,12 @@ const postQuestion = async () => {
       body: {
         id: 0,
         owner: userId.value,
-        data: {
-          title: values.title,
-          requiredSkills: requiredSkills.value,
-          description: values.description,
-          attemptedSolutions: values.solutions,
-          isVisible: false,
-          isSolved: false,
-        }
+        title: values.title,
+        requiredSkills: JSON.stringify(requiredSkills.value),
+        description: values.description,
+        attemptedSolutions: values.solutions,
+        isVisible: 0,
+        isSolved: 0,
       }
     })
   }

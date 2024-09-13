@@ -68,7 +68,12 @@ export const postQuestion = db
 .values({
   id: sql.placeholder('id'),
   owner: sql.placeholder('owner'),
-  data: sql.placeholder('data'),
+  title: sql.placeholder('owner'),
+  requiredSkills: sql.placeholder('requiredSkills'),
+  description: sql.placeholder('description'),
+  attemptedSolutions: sql.placeholder('attemptedSolutions'),
+  isVisible: sql.placeholder('isVisible'),
+  isSolved: sql.placeholder('isSolved'),
 })
 
 export const getAllQuestionIds = db

@@ -16,5 +16,10 @@ export const projects = sqliteTable("projects", {
 export const questions = sqliteTable("questions", {
   id: integer("id").primaryKey(),
   owner: integer("owner").notNull(),
-  data: text("data").notNull(),
+  title: text("title").notNull(),
+  requiredSkills: text("requiredSkills").notNull(),
+  description: text("description").notNull(),
+  attemptedSolutions: text("attemptedSolutions").notNull(),
+  isVisible: integer("isVisible"),
+  isSolved: integer("isSolved"),
 })

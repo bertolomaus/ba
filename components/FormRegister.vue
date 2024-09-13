@@ -11,7 +11,7 @@ const registerSchema = toTypedSchema(
       .email('Gib eine gültige E-Mail Adresse an.')
       .test('isEmailAvailable', 'E-Mail Adresse wird bereits verwendet.', 
         async (email = yup.ref('email').toString()) => {
-          const requestUniqueKeys = await $fetch('/api/data/getUniqueKeys', {
+          const requestUniqueKeys = await $fetch('/api/data/getUsersUniqueKeys', {
             method: 'POST',
             body: {
               email: email,

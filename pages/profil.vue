@@ -6,7 +6,7 @@ import Trash from '../components/Trash.vue'
 const route = useRoute()
 const { userId } = useAuth()
 const profileId = route.query.wizard?.toString()
-const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies, updateUserData } = useData()
+const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies, updateUserData } = useUserData()
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const isOwner = ref<boolean>(false)

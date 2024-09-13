@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
+const { questionsList, updateQuestionsList } = useQuestionData()
 
 const loadQuestions = async () => {
-  
+  const list = await updateQuestionsList()
 }
 
 onMounted(() => {
   showSidebar.value = false
   showModal.value = false
+  loadQuestions()
 })
 </script>
 

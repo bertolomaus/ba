@@ -26,7 +26,7 @@ interface UserDataWithId {
   projekte: number[]
 }
 
-export const useData = () => {
+export const useUserData = () => {
   const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}));
   const { userId } = useAuth()
   const allSkills = useState<string[]>('allSkills', () => [])

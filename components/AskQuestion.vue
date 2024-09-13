@@ -12,7 +12,7 @@ export interface MatchingHelper{
   avatar: string
 }
 
-const { allSkills, listSkills, userData } = useData()
+const { allSkills, listSkills } = useUserData()
 const { userId } = useAuth()
 const requiredSkills = ref<string[]>([])
 const possibleHelpers = ref<MatchingHelper[]>([])
@@ -42,7 +42,7 @@ const [solutions, solutionsAttrs] = defineField('solutions')
 const getHelpers = async () => {
   try {
     // send credentials to api/data
-    const matchesRequest = await $fetch('/api/data/getIdsBySkills', {
+    const matchesRequest = await $fetch('/api/data/getUserIdsBySkills', {
       method: 'POST',
       body: {
         skills: requiredSkills.value

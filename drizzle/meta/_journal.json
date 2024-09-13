@@ -15,6 +15,13 @@
       "when": 1723976558977,
       "tag": "0001_eager_kid_colt",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1726266267077,
+      "tag": "0002_material_squadron_supreme",
+      "breakpoints": true
     }
   ]
 }

@@ -2,6 +2,10 @@
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 
+const loadQuestions = async () => {
+  
+}
+
 onMounted(() => {
   showSidebar.value = false
   showModal.value = false

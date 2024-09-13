@@ -54,7 +54,7 @@ export const getAllUserIds = db
   })
   .from(users)
 
-export const getAllData = db
+export const getAllUserData = db
   .select({
     id: users.id,
     data: users.data,
@@ -79,5 +79,15 @@ export const postQuestion = db
 export const getAllQuestionIds = db
   .select({
     id: questions.id
+  })
+  .from(questions)
+
+export const getAllQuestionListData = db
+  .select({
+    id: questions.id,
+    title: questions.title,
+    requiredSkills: questions.requiredSkills,
+    isVisible: questions.isVisible,
+    isSolved: questions.isSolved,
   })
   .from(questions)

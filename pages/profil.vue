@@ -28,7 +28,7 @@ const removeSkill = (index: number) => {
 
 // update database entry
 const save = () => {
-  if(profileId != '0' && profileId == userId.toString()){
+  if(profileId != '0' && profileId == userId.value.toString()){
       updateUserData(parseInt(profileId), userData.value)
     }
 }
@@ -120,7 +120,8 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
             <Trash @click="removeSkill(index)" class="ml-4" />
           </li>
         </ul>
-        <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
+        <!-- <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" /> -->
+        <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="[]" @submit-input="addNewSkill" />
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
@@ -129,7 +130,8 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
             <div class="w-max">{{ hobby }}</div>
           </li>
         </ul>
-        <Autocomplete :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
+        <!-- <Autocomplete :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" /> -->
+        <Autocomplete :label="'Hobby hinzufügen'" :suggestions="[]" @submit-input="addNewHobby" />
       </div>
       <div class="bio">
         <h3>Bio</h3>

@@ -98,6 +98,7 @@ export const useUserData = () => {
         body: {}
       })
       if(dataRequest.success && dataRequest.result){
+        console.log(dataRequest.result)
         return dataRequest.result
       } else {
         throw createError({

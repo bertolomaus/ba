@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1723933482380,
-      "tag": "0000_short_mulholland_black",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1723976558977,
-      "tag": "0001_eager_kid_colt",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1726266267077,
-      "tag": "0002_material_squadron_supreme",
+      "when": 1726348005989,
+      "tag": "0000_fresh_king_cobra",
       "breakpoints": true
     }
   ]

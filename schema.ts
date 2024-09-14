@@ -23,3 +23,7 @@ export const questions = sqliteTable("questions", {
   isVisible: integer("isVisible"),
   isSolved: integer("isSolved"),
 })
+
+export const skills = sqliteTable("skills", {
+  name: integer("name").primaryKey(),
+})

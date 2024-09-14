@@ -30,16 +30,16 @@ const registerSchema = toTypedSchema(
       .required('Bestätige dein Passwort.'),
   }),
 )
-
-const router = useRouter()
-const { toggleAuthForm } = useToggleContent()
 const { values, errors, defineField, meta } = useForm({
   validationSchema: registerSchema,
-});
-
+})
 const [email, emailAttrs] = defineField('email')
 const [password, passwordAttrs] = defineField('password')
 const [passwordConfirm, passwordConfirmAttrs] = defineField('passwordConfirm')
+
+const router = useRouter()
+const { toggleAuthForm } = useToggleContent()
+const { login, userId } = useAuth()
 
 const register = async () => {
   // insert a new user into table 'users'
@@ -53,7 +53,8 @@ const register = async () => {
       }
     })
     if(registerRequest.success){
-      router.push('/profil')
+      login(registerRequest.id)
+      router.push({path: '/profil', query: {wizard: userId.value}})
     } else {
       throw createError({
         statusCode: 500,

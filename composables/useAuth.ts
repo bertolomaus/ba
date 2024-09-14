@@ -7,13 +7,13 @@ export const useAuth = () => {
   const login = (id: number) => {
     isLoggedIn.value = true
     userId.value = id
-  };
+  }
 
   const logout = () => {
     isLoggedIn.value = false
     userId.value = 0
     showLogin.value = true
-  };
+  }
 
   return { isLoggedIn, userId, login, logout }
-};
+}

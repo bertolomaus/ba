@@ -24,7 +24,7 @@ export const getLoginData = db
   data: users.data,
 })
 .from(users)
-.where(sql`${users.email} = ${sql.placeholder("username")}`)
+.where(sql`${users.email} = ${sql.placeholder("email")}`)
 
 export const getUserDataById = db
   .select({

@@ -35,6 +35,9 @@ const handleLogin = async () => {
         password: values.password
       }
     })
+    if(loginRequest.success){
+      login(loginRequest.userId)
+    }
   }
   catch (error) {
     // console.error(error.statusMessage);

@@ -1,7 +1,7 @@
 import { register, getAllUserIds } from "../../utils/db"
 import { generateNumber } from '~/composables/generateRandomNumber'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: any) => {
   const body = await readBody(event)
   // const { login } = useAuth()
 

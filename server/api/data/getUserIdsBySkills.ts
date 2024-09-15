@@ -2,7 +2,7 @@ import { ref } from "vue"
 import { UserData } from "~/composables/useUserData"
 import { MatchingHelper } from "~/components/AskQuestion.vue"
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: any) => {
   const body = await readBody(event);
   // get the id of all users that have at least 1 matching skill
   // prepared statements -> ~/server/utils/db.ts

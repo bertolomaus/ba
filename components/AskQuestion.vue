@@ -138,7 +138,7 @@ onMounted(() => {
         </div>
       </form>
       <div class="helpers grid grid-cols-4 gap-4">
-        <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.commonSkills.length > requiredSkills.length / 2 && requiredSkills.length > 1)" :key="index">
+        <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.commonSkills.length >= requiredSkills.length / 2)" :key="index">
           <p>id: {{ helper.id }}</p>
           <p>name: {{ helper.name }}</p>
           <p>common: {{ helper.commonSkills }}</p>

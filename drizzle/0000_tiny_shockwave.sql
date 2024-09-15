@@ -16,7 +16,7 @@ CREATE TABLE `questions` (
 );
 --> statement-breakpoint
 CREATE TABLE `skills` (
-	`name` integer PRIMARY KEY NOT NULL
+	`name` text PRIMARY KEY NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `users` (

@@ -1,6 +1,6 @@
 import { getLoginData } from "../../utils/db"
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: any) => {
   const body = await readBody(event)
 
   // prepared statements -> ~/server/utils/db.ts

@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/better-sqlite3"
 import Database from "better-sqlite3"
 import { sql } from "drizzle-orm"
-import { users, projects, questions } from "~/schema"
+import { users, projects, questions, skills } from "~/schema"
 
 const sqlite = new Database("sqlite.db")
 export const db = drizzle(sqlite)
@@ -27,39 +27,39 @@ export const getLoginData = db
 .where(sql`${users.email} = ${sql.placeholder("email")}`)
 
 export const getUserDataById = db
-  .select({
-    data: users.data,
-  })
-  .from(users)
-  .where(sql`${users.id} = ${sql.placeholder("id")}`)
+.select({
+  data: users.data,
+})
+.from(users)
+.where(sql`${users.id} = ${sql.placeholder("id")}`)
 
 export const getUniqueKeys = db
-  .select({
-    id: users.id,
-    email: users.email,
-  })
-  .from(users)
-  .where(sql`${users.email} = ${sql.placeholder("email")} OR ${users.id} = ${sql.placeholder("id")}`)
+.select({
+  id: users.id,
+  email: users.email,
+})
+.from(users)
+.where(sql`${users.email} = ${sql.placeholder("email")} OR ${users.id} = ${sql.placeholder("id")}`)
 
 export const updateUserData = db
-  .update(users)
-  .set({
-    data: sql`${sql.placeholder("data")}`
-  })
-  .where(sql`${users.id} = ${sql.placeholder("id")}`)
+.update(users)
+.set({
+  data: sql`${sql.placeholder("data")}`
+})
+.where(sql`${users.id} = ${sql.placeholder("id")}`)
 
 export const getAllUserIds = db
-  .select({
-    id: users.id,
-  })
-  .from(users)
+.select({
+  id: users.id,
+})
+.from(users)
 
 export const getAllUserData = db
-  .select({
-    id: users.id,
-    data: users.data,
-  })
-  .from(users)
+.select({
+  id: users.id,
+  data: users.data,
+})
+.from(users)
 
 
 // questions
@@ -77,17 +77,32 @@ export const postQuestion = db
 })
 
 export const getAllQuestionIds = db
-  .select({
-    id: questions.id
-  })
-  .from(questions)
+.select({
+  id: questions.id
+})
+.from(questions)
 
 export const getAllQuestionListData = db
-  .select({
-    id: questions.id,
-    title: questions.title,
-    requiredSkills: questions.requiredSkills,
-    isVisible: questions.isVisible,
-    isSolved: questions.isSolved,
-  })
-  .from(questions)
+.select({
+  id: questions.id,
+  title: questions.title,
+  requiredSkills: questions.requiredSkills,
+  isVisible: questions.isVisible,
+  isSolved: questions.isSolved,
+})
+.from(questions)
+
+// skills
+
+export const getSkills = db
+.select({
+  name: skills.name
+})
+.from(skills)
+
+
+export const setSkill = db
+.insert(skills)
+.values({
+  name: sql.placeholder('name'),
+})

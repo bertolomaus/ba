@@ -1,6 +1,6 @@
 import { getUserDataById } from "../../utils/db";
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event: any) => {
   const body = await readBody(event);
 
   // check if valid id is requesten. 0 is not valid.

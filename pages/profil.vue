@@ -6,10 +6,16 @@ import Trash from '../components/Trash.vue'
 const route = useRoute()
 const { userId } = useAuth()
 const profileId = route.query.wizard?.toString()
-const { userData, fetchData, listSkills, listHobbies, allSkills, allHobbies, updateUserData } = useUserData()
+const { userData, fetchData, updateUserData } = useUserData()
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const isOwner = ref<boolean>(false)
+const allSkills = ref<string[]>([])
+const allHobbies = ref<string[]>([])
+
+const getAllSkills = async () => {
+  allSkills.value = await $fetch('/api/data/getSkills')
+}
 
 // add skill to userData array (not yet to database)
 const addNewSkill = (eventPayload: { payload: string }) => {
@@ -27,10 +33,22 @@ const removeSkill = (index: number) => {
 }
 
 // update database entry
-const save = () => {
+const save = async () => {
   if(profileId != '0' && profileId == userId.value.toString()){
-      updateUserData(parseInt(profileId), userData.value)
-    }
+    updateUserData(parseInt(profileId), userData.value)
+
+    let skills: string[] = []
+    userData.value.skills.forEach((skill) => {
+      skills.push(skill.name)
+    })
+    console.log(skills)
+    await $fetch('/api/data/setSkills', {
+      method: 'POST',
+      body: {
+        skills: [1,2,3]
+      }
+    })
+  }
 }
 
 // fetch profile info, skills, hobbies, set isOwner and hide modal & sidebar
@@ -44,8 +62,8 @@ const prepareContent = async () => {
       fetchData()
     }
     profileId == userId.value.toString() ? isOwner.value = true : isOwner.value = false
-    listSkills()
-    listHobbies()
+    getAllSkills()
+    // listHobbies()
   } catch (error){
     console.error(error)
   }
@@ -106,7 +124,7 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
       <div class="skills">
         <h3>Prepared Spells</h3>
         <ul class="list-skills">
-          <li class="item-skills flex" v-for="(skill, index) in userData.skills" :key="skill.name">
+          <li class="item-skills flex" v-for="(skill, index) in userData.skills.sort((a, b) => b.level - a.level)" :key="skill.name">
             <div class="skill-name">{{ skill.name }}</div>
             <div class="flex skill-level">
               <Star
@@ -126,7 +144,7 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
       <div class="personal">
         <h3>Hobbies</h3>
         <ul class="list-skills">
-          <li class="item-skills" v-for="hobby in userData.hobbies" :key="hobby">
+          <li class="item-skills" v-for="hobby in userData.hobbies.sort()" :key="hobby">
             <div class="w-max">{{ hobby }}</div>
           </li>
         </ul>

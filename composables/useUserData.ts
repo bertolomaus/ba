@@ -98,7 +98,6 @@ export const useUserData = () => {
         body: {}
       })
       if(dataRequest.success && dataRequest.result){
-        console.log(dataRequest.result)
         return dataRequest.result
       } else {
         throw createError({
@@ -112,18 +111,7 @@ export const useUserData = () => {
     }
   }
 
-  const listSkills = async () => {
-    const data = await fetchAllData()
-    data?.forEach((item: UserDataWithId) => {
-      item.skills.forEach((skill: Skill) => {
-        if (!allSkills.value.includes(skill.name)) {
-          allSkills.value.push(skill.name);
-        }
-      })
-    })
-  }
-
-  const listHobbies = async () => {
+  const getHobbies = async () => {
     const data = await fetchAllData()
     data?.forEach((item: UserDataWithId) => {
       item.hobbies.forEach((hobby: string) => {
@@ -134,5 +122,5 @@ export const useUserData = () => {
     })
   }
 
-  return { getName, getAvatar, updateUserData, fetchData, userData, listSkills, allSkills, listHobbies, allHobbies }
+  return { getName, getAvatar, updateUserData, fetchData, userData, getHobbies, allHobbies }
 }

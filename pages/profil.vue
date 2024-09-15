@@ -6,15 +6,15 @@ import Trash from '../components/Trash.vue'
 const route = useRoute()
 const { userId } = useAuth()
 const profileId = route.query.wizard?.toString()
-const { userData, fetchData, updateUserData } = useUserData()
+const { userData, fetchData, updateUserData, getHobbies, allHobbies } = useUserData()
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const isOwner = ref<boolean>(false)
 const allSkills = ref<string[]>([])
-const allHobbies = ref<string[]>([])
 
 const getAllSkills = async () => {
-  allSkills.value = await $fetch('/api/data/getSkills')
+  const skillsRequest = await $fetch('/api/data/getSkills')
+  allSkills.value = skillsRequest.result
 }
 
 // add skill to userData array (not yet to database)
@@ -41,11 +41,10 @@ const save = async () => {
     userData.value.skills.forEach((skill) => {
       skills.push(skill.name)
     })
-    console.log(skills)
     await $fetch('/api/data/setSkills', {
       method: 'POST',
       body: {
-        skills: [1,2,3]
+        skills: skills
       }
     })
   }
@@ -63,7 +62,7 @@ const prepareContent = async () => {
     }
     profileId == userId.value.toString() ? isOwner.value = true : isOwner.value = false
     getAllSkills()
-    // listHobbies()
+    getHobbies()
   } catch (error){
     console.error(error)
   }
@@ -124,7 +123,7 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
       <div class="skills">
         <h3>Prepared Spells</h3>
         <ul class="list-skills">
-          <li class="item-skills flex" v-for="(skill, index) in userData.skills.sort((a, b) => b.level - a.level)" :key="skill.name">
+          <li class="item-skills flex" v-for="(skill, index) in userData.skills.sort((a, b) => {if(b.level != a.level){return b.level - a.level} return a.name.localeCompare(b.name)})" :key="skill.name">
             <div class="skill-name">{{ skill.name }}</div>
             <div class="flex skill-level">
               <Star
@@ -138,8 +137,7 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
             <Trash @click="removeSkill(index)" class="ml-4" />
           </li>
         </ul>
-        <!-- <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" /> -->
-        <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="[]" @submit-input="addNewSkill" />
+        <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
@@ -148,8 +146,7 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
             <div class="w-max">{{ hobby }}</div>
           </li>
         </ul>
-        <!-- <Autocomplete :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" /> -->
-        <Autocomplete :label="'Hobby hinzufügen'" :suggestions="[]" @submit-input="addNewHobby" />
+        <Autocomplete :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
       </div>
       <div class="bio">
         <h3>Bio</h3>

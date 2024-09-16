@@ -6,16 +6,11 @@ import Trash from '../components/Trash.vue'
 const route = useRoute()
 const { userId } = useAuth()
 const profileId = route.query.wizard?.toString()
-const { userData, fetchData, updateUserData, getHobbies, allHobbies } = useUserData()
+const { userData, fetchUserData, updateUserData, getHobbies, allHobbies } = useUserData()
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
+const { getSkills, allSkills, setSkills } = useSkills()
 const isOwner = ref<boolean>(false)
-const allSkills = ref<string[]>([])
-
-const getAllSkills = async () => {
-  const skillsRequest = await $fetch('/api/data/getSkills')
-  allSkills.value = skillsRequest.result
-}
 
 // add skill to userData array (not yet to database)
 const addNewSkill = (eventPayload: { payload: string }) => {
@@ -41,12 +36,8 @@ const save = async () => {
     userData.value.skills.forEach((skill) => {
       skills.push(skill.name)
     })
-    await $fetch('/api/data/setSkills', {
-      method: 'POST',
-      body: {
-        skills: skills
-      }
-    })
+    
+    setSkills(skills)
   }
 }
 
@@ -56,12 +47,12 @@ const prepareContent = async () => {
   showModal.value = false
   try{
     if(profileId){
-      fetchData(parseInt(profileId.toString()))
+      fetchUserData(parseInt(profileId.toString()))
     } else{
-      fetchData()
+      fetchUserData()
     }
     profileId == userId.value.toString() ? isOwner.value = true : isOwner.value = false
-    getAllSkills()
+    getSkills()
     getHobbies()
   } catch (error){
     console.error(error)

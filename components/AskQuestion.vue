@@ -12,7 +12,7 @@ export interface MatchingHelper{
   avatar: string
 }
 
-const { allSkills, listSkills } = useUserData()
+const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
 const requiredSkills = ref<string[]>([])
 const possibleHelpers = ref<MatchingHelper[]>([])
@@ -81,6 +81,7 @@ const postQuestion = async () => {
         isSolved: 0,
       }
     })
+    setSkills(requiredSkills.value)
   }
   catch (error) {
     console.error(error)
@@ -88,7 +89,7 @@ const postQuestion = async () => {
 }
 
 onMounted(() => {
-  listSkills()
+  getSkills()
 })
 </script>
 

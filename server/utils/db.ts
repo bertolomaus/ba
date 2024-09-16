@@ -68,7 +68,7 @@ export const postQuestion = db
 .values({
   id: sql.placeholder('id'),
   owner: sql.placeholder('owner'),
-  title: sql.placeholder('owner'),
+  title: sql.placeholder('title'),
   requiredSkills: sql.placeholder('requiredSkills'),
   description: sql.placeholder('description'),
   attemptedSolutions: sql.placeholder('attemptedSolutions'),
@@ -85,12 +85,29 @@ export const getAllQuestionIds = db
 export const getAllQuestionListData = db
 .select({
   id: questions.id,
+  owner: questions.owner,
   title: questions.title,
   requiredSkills: questions.requiredSkills,
+  description: questions.description,
+  attemptedSolutions: questions.attemptedSolutions,
   isVisible: questions.isVisible,
   isSolved: questions.isSolved,
 })
 .from(questions)
+
+export const getQuestionData = db
+.select({
+  id: questions.id,
+  owner: questions.owner,
+  title: questions.title,
+  requiredSkills: questions.requiredSkills,
+  description: questions.description,
+  attemptedSolutions: questions.attemptedSolutions,
+  isVisible: questions.isVisible,
+  isSolved: questions.isSolved,
+})
+.from(questions)
+.where(sql`${questions.id} = ${sql.placeholder("id")}`)
 
 // skills
 

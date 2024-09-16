@@ -27,13 +27,12 @@ interface UserDataWithId {
 }
 
 export const useUserData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}));
-  const { userId } = useAuth()
-  const allSkills = useState<string[]>('allSkills', () => [])
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}))
   const allHobbies = useState<string[]>('allHobbies', () => [])
+  const { userId } = useAuth()
   
   // login with credentials
-  const fetchData = async (id = userId.value) => {
+  const fetchUserData = async (id = userId.value) => {
     try {
       // send request to api/data
       const dataRequest = await $fetch('/api/data/getUserData', {
@@ -79,14 +78,14 @@ export const useUserData = () => {
 
   // fetch userData & return name from the JSON
   const getName = (id = userId.value) => {
-    fetchData(id).then(() => {
+    fetchUserData(id).then(() => {
       return userData.value.name
     })
   }
 
   // fetch userData & return avatar from the JSON
   const getAvatar = (id = userId.value) => {
-    fetchData(id)
+    fetchUserData(id)
     return userData.value.avatar
   }
 
@@ -122,5 +121,5 @@ export const useUserData = () => {
     })
   }
 
-  return { getName, getAvatar, updateUserData, fetchData, userData, getHobbies, allHobbies }
+  return { getName, getAvatar, updateUserData, fetchUserData, userData, getHobbies, allHobbies }
 }

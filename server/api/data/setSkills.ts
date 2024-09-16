@@ -7,7 +7,6 @@ export default defineEventHandler(async (event: any) => {
     try{
       setSkill.run({name: skill})
     } catch (error){
-      console.error(error)
     }
   })
 })

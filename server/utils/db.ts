@@ -109,6 +109,60 @@ export const getQuestionData = db
 .from(questions)
 .where(sql`${questions.id} = ${sql.placeholder("id")}`)
 
+
+// projects
+export const createProject = db
+.insert(projects)
+.values({
+  id: sql.placeholder('id'),
+  owner: sql.placeholder('owner'),
+  title: sql.placeholder('title'),
+  requiredSkills: sql.placeholder('requiredSkills'),
+  description: sql.placeholder('description'),
+  members: sql.placeholder('members'),
+  resources: sql.placeholder('resources'),
+  isLookingForMembers: sql.placeholder('isLookingForMembers'),
+  isVisible: sql.placeholder('isVisible'),
+  isDone: sql.placeholder('isSolved'),
+})
+
+export const getAllProjectIds = db
+.select({
+  id: projects.id
+})
+.from(projects)
+
+export const getAllProjectsListData = db
+.select({
+  id: projects.id,
+  owner: projects.owner,
+  title: projects.title,
+  requiredSkills: projects.requiredSkills,
+  description: projects.description,
+  members: projects.members,
+  resources: projects.resources,
+  isLookingForMembers: projects.isVisible,
+  isVisible: projects.isVisible,
+  isDone: projects.isDone,
+})
+.from(questions)
+
+export const getProjectData = db
+.select({
+  id: projects.id,
+  owner: projects.owner,
+  title: projects.title,
+  requiredSkills: projects.requiredSkills,
+  description: projects.description,
+  members: projects.members,
+  resources: projects.resources,
+  isLookingForMembers: projects.isVisible,
+  isVisible: projects.isVisible,
+  isDone: projects.isDone,
+})
+.from(projects)
+.where(sql`${projects.id} = ${sql.placeholder("id")}`)
+
 // skills
 
 export const getSkills = db

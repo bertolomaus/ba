@@ -25,6 +25,12 @@ interface UserDataWithId {
   bio: string
   projekte: number[]
 }
+export interface UserDataShort {
+  id: number,
+  avatar: string,
+  name: string,
+  skills: Skill[]
+}
 
 export const useUserData = () => {
   const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}))

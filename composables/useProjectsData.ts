@@ -1,22 +1,24 @@
-import { desc } from "drizzle-orm";
+import type { UserDataShort } from '~/composables/useUserData'
 
-export interface Question{
+export interface Project{
   id: number,
   owner: number,
   title: string,
   requiredSkills: string[],
   description: string,
-  attemptedSolutions: string,
+  members: UserDataShort[],
+  resources: object[]
+  isLookingForMembers: boolean,
   isVisible: boolean,
-  isSolved: boolean,
+  isDone: boolean,
 }
 
-export const useQuestionData = () => {
-  const questionsList = useState<Question[]>('questionsList', () => [])
+export const useProjectsData = () => {
+  const projectsList = useState<Project[]>('projectsList', () => [])
 
-  const fetchQuestionData = async (id: number) => {
+  const fetchProjectData = async (id: number) => {
     try {
-      const dataRequest = await $fetch('/api/data/getQuestionData', {
+      const dataRequest = await $fetch('/api/data/getProjectData', {
         method: 'POST',
         body: {
           id: id
@@ -24,15 +26,17 @@ export const useQuestionData = () => {
       })
       if(dataRequest.success && dataRequest.result){
         return { 
-          question: ({
+          project: ({
             id: dataRequest.result.id,
             owner: dataRequest.result.owner,
             title: dataRequest.result.title,
             requiredSkills: JSON.parse(dataRequest.result.requiredSkills),
             description: dataRequest.result.description,
-            attemptedSolutions: dataRequest.result.attemptedSolutions,
+            members: JSON.parse(dataRequest.result.members),
+            resources: JSON.parse(dataRequest.result.resources),
+            isLookingForMembers: !!dataRequest.result.isLookingForMembers,
             isVisible: !!dataRequest.result.isVisible,
-            isSolved: !!dataRequest.result.isSolved
+            isDone: !!dataRequest.result.isDone
           })
         }
       } else {

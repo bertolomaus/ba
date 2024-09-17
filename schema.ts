@@ -10,7 +10,14 @@ export const users = sqliteTable("users", {
 export const projects = sqliteTable("projects", {
   id: integer("id").primaryKey(),
   owner: integer("owner").notNull(),
-  data: text("data").notNull(),
+  title: text("title").notNull(),
+  requiredSkills: text("requiredSkills").notNull(),
+  description: text("description").notNull(),
+  members: text("members").notNull(),
+  resources: text("resources").notNull(),
+  isLookingForMembers: integer("isLookingForMembers"),
+  isVisible: integer("isVisible"),
+  isDone: integer("isDone"),
 })
 
 export const questions = sqliteTable("questions", {

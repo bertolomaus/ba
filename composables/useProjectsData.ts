@@ -6,6 +6,11 @@ export interface Project{
   title: string,
   requiredSkills: string[],
   description: string,
+  goal: string,
+  winCondition: string,
+  whyAchieveable: string,
+  whyRelevant: string,
+  deadline: string,
   members: UserDataShort[],
   resources: object[]
   isLookingForMembers: boolean,
@@ -18,7 +23,7 @@ export const useProjectsData = () => {
 
   const fetchProjectData = async (id: number) => {
     try {
-      const dataRequest = await $fetch('/api/data/getProjectData', {
+      const dataRequest: any = await $fetch('/api/data/getProjectData', {
         method: 'POST',
         body: {
           id: id
@@ -32,6 +37,11 @@ export const useProjectsData = () => {
             title: dataRequest.result.title,
             requiredSkills: JSON.parse(dataRequest.result.requiredSkills),
             description: dataRequest.result.description,
+            goal: dataRequest.result.goal,
+            winCondition: dataRequest.result.winCondition,
+            whyAchieveable: dataRequest.result.whyAchieveable,
+            whyRelevant: dataRequest.result.WhyRelevant,
+            deadline: dataRequest.result.deadline,
             members: JSON.parse(dataRequest.result.members),
             resources: JSON.parse(dataRequest.result.resources),
             isLookingForMembers: !!dataRequest.result.isLookingForMembers,
@@ -53,7 +63,7 @@ export const useProjectsData = () => {
 
   const updateProjectsList = async () => {
     try {
-      const dataRequest = await $fetch('/api/data/getAllQuestionData', {
+      const dataRequest: any = await $fetch('/api/data/getAllQuestionData', {
         method: 'POST',
         body: {}
       })
@@ -64,6 +74,11 @@ export const useProjectsData = () => {
           title: p.result.title,
           requiredSkills: JSON.parse(p.result.requiredSkills),
           description: p.result.description,
+          goal: p.result.goal,
+          winCondition: p.result.winCondition,
+          whyAchieveable: p.result.whyAchieveable,
+          whyRelevant: p.result.WhyRelevant,
+          deadline: p.result.deadline,
           members: JSON.parse(p.result.members),
           resources: JSON.parse(p.result.resources),
           isLookingForMembers: !!p.result.isLookingForMembers,

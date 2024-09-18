@@ -16,7 +16,7 @@ export const useQuestionData = () => {
 
   const fetchQuestionData = async (id: number) => {
     try {
-      const dataRequest = await $fetch('/api/data/getQuestionData', {
+      const dataRequest: any = await $fetch('/api/data/getQuestionData', {
         method: 'POST',
         body: {
           id: id
@@ -49,7 +49,7 @@ export const useQuestionData = () => {
 
   const updateQuestionsList = async () => {
     try {
-      const dataRequest = await $fetch('/api/data/getAllQuestionData', {
+      const dataRequest: any = await $fetch('/api/data/getAllQuestionData', {
         method: 'POST',
         body: {}
       })

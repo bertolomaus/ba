@@ -51,22 +51,24 @@ export const useProjectsData = () => {
     }
   }
 
-  const updateQuestionsList = async () => {
+  const updateProjectsList = async () => {
     try {
       const dataRequest = await $fetch('/api/data/getAllQuestionData', {
         method: 'POST',
         body: {}
       })
       if(dataRequest.success && dataRequest.result){
-        questionsList.value = dataRequest.result.map((q: any) => ({
-          id: q.id,
-          owner: q.owner,
-          title: q.title,
-          requiredSkills: JSON.parse(q.requiredSkills),
-          description: q.description,
-          attemptedSolutions: q.attemptedSolutions,
-          isVisible: !!q.isVisible,
-          isSolved: !!q.isSolved
+        projectsList.value = dataRequest.result.map((p: any) => ({
+          id: p.result.id,
+          owner: p.result.owner,
+          title: p.result.title,
+          requiredSkills: JSON.parse(p.result.requiredSkills),
+          description: p.result.description,
+          members: JSON.parse(p.result.members),
+          resources: JSON.parse(p.result.resources),
+          isLookingForMembers: !!p.result.isLookingForMembers,
+          isVisible: !!p.result.isVisible,
+          isDone: !!p.result.isDone
         }))
       } else {
         throw createError({
@@ -81,7 +83,7 @@ export const useProjectsData = () => {
   }
 
   return {
-    questionsList, updateQuestionsList,
-    fetchQuestionData
+    projectsList, updateProjectsList,
+    fetchProjectData
   }
 };

@@ -1,30 +1,30 @@
 <script lang="ts" setup>
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
-const { questionsList, updateQuestionsList } = useQuestionData()
+const { projectsList, updateProjectsList } = useProjectsData()
 const { userId } = useAuth()
 
-const loadQuestions = async () => {
-  updateQuestionsList()
+const loadProjects = async () => {
+  updateProjectsList()
 }
 
 onMounted(async () => {
   showSidebar.value = false
   showModal.value = false
-  await loadQuestions()
+  await loadProjects()
 })
 </script>
 
 <template>
   <div>
     <h1 class="">Projekte</h1>
-    <pre v-if="questionsList.filter(q => q.isVisible || !q.isVisible && q.owner == userId).length == 0">Logg dich ein, alle Fragen sind isVisible = false</pre>
+    <pre v-if="projectsList.filter(p => p.isVisible || !p.isVisible && p.owner == userId).length == 0">Logg dich ein, alle Fragen sind isVisible = false</pre>
     <ul class="questions-list gap-4 grid grid-cols-1">
-      <li class="ql-item card" v-for="(q, index) of questionsList.filter(q => q.isVisible || !q.isVisible && q.owner == userId)" :key="index">
-        <NuxtLink :to="{path: 'frage', query: {id: q.id}}">
-          <h3>{{ q.title }}</h3>
-          <ul class="ql-tags tags">
-            <li class="ql-tags-item" v-for="(skill) of q.requiredSkills">
+      <li class="ql-item card" v-for="(p, index) of projectsList.filter(p => p.isVisible || !p.isVisible && p.owner == userId)" :key="index">
+        <NuxtLink :to="{path: 'projekt', query: {id: p.id}}">
+          <h3>{{ p.title }}</h3>
+          <ul class="pl-tags tags">
+            <li class="pl-tags-item" v-for="(skill) of p.requiredSkills">
               {{ skill }}
             </li>
           </ul>

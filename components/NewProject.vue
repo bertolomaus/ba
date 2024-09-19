@@ -134,11 +134,22 @@ onMounted(() => {
         </div>
 
         <div class="field field-goal" :class="[{'has-text': goal}, {'has-error': errors.goal}, {'is-acceptable': goal && !errors.goal}]">
-          <textarea v-model="goal" v-bind="goalAttrs"  name="solutions" ></textarea>
+          <textarea v-model="goal" v-bind="goalAttrs"  name="goal" ></textarea>
           <label for="goal">Was ist ein konkretes Ziel?</label>
           <div class="errors">
             {{ errors.goal }}
             <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.goal">
+              this is a dummy text to keep the stupid divs size.
+            </div>
+          </div>
+        </div>
+
+        <div class="field field-description" :class="[{'has-text': description}, {'has-error': errors.description}, {'is-acceptable': description && !errors.description}]">
+          <textarea v-model="description" v-bind="descriptionAttrs"  name="description" ></textarea>
+          <label for="description">Beschreib dein Projekt</label>
+          <div class="errors">
+            {{ errors.description }}
+            <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.description">
               this is a dummy text to keep the stupid divs size.
             </div>
           </div>
@@ -193,6 +204,16 @@ onMounted(() => {
               this is a dummy text to keep the stupid divs size.
             </div>
           </div>
+        </div>
+
+        <div class="field field-isLFM">
+          <input v-model="isLFM" type="checkbox" name="isLFM" >
+          <label for="isLFM">Suchst du nach Partnern für dein Projekt?</label>
+        </div>
+
+        <div class="field field-isVisible">
+          <input v-model="isVisible" type="checkbox" name="isVisible" >
+          <label for="isVisible">Projekt soll für alle sichtbar sein</label>
         </div>
 
         <div class="field field-submit">

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import AskQuestion from './AskQuestion.vue'
+import NewQuestion from './NewQuestion.vue'
+import NewProject from './NewProject.vue'
 import SVGClose from './SVGClose.vue'
 
-const { modalAskQuestion, toggleModal, showModal } = useModal()
+const { modalNewProject, modalNewQuestion, toggleModal, showModal } = useModal()
 </script>
 
 <template>
@@ -10,7 +11,8 @@ const { modalAskQuestion, toggleModal, showModal } = useModal()
     <div class="modal-overlay" @click="toggleModal"></div>
     <SVGClose class="modal-close" @click="toggleModal" />
     <div class="modal-content">
-      <AskQuestion v-if="modalAskQuestion" />
+      <NewQuestion v-if="modalNewQuestion" />
+      <NewProject v-if="modalNewProject" />
     </div>
   </div>
 </template>

@@ -4,18 +4,12 @@ import { toTypedSchema } from '@vee-validate/yup'
 import * as yup from 'yup'
 import Autocomplete from '../components/Autocomplete.vue'
 import Trash from '../components/Trash.vue'
-
-export interface MatchingHelper{
-  id: number
-  commonSkills: string[]
-  name: string
-  avatar: string
-}
+import type { UserDataShort } from '~/composables/useUserData'
 
 const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
 const requiredSkills = ref<string[]>([])
-const possibleHelpers = ref<MatchingHelper[]>([])
+const possibleHelpers = ref<UserDataShort[]>([])
 
 const registerSchema = toTypedSchema(
   yup.object({
@@ -139,10 +133,10 @@ onMounted(() => {
         </div>
       </form>
       <div class="helpers grid grid-cols-4 gap-4">
-        <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.commonSkills.length >= requiredSkills.length / 2)" :key="index">
+        <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= requiredSkills.length / 2)" :key="index">
           <p>id: {{ helper.id }}</p>
           <p>name: {{ helper.name }}</p>
-          <p>common: {{ helper.commonSkills }}</p>
+          <p>common: {{ helper.skills }}</p>
           <img src="../assets/img/profile-mr-light.png" :alt="helper.name">
           <NuxtLink :to="{path: 'profil', query: {wizard: helper.id}}">Mehr erfahren</NuxtLink>
         </div>

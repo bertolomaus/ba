@@ -3,7 +3,7 @@ import UserAuthentication from '../components/UserAuthentication.vue'
 import BavariaIpsum from '../components/BavariaIpsum.vue'
 
 const { isLoggedIn } = useAuth()
-const { modalShowAskQuestion } = useModal()
+const { modalShowNewQuestion, modalShowNewProject } = useModal()
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 
@@ -20,11 +20,12 @@ onMounted(() => {
         <h1>Willkommen im Freiraum</h1>
       </div>
       <div class="el-text columns-2 gap-8">
-        <BavariaIpsum :paragraphs="3" />
+        <BavariaIpsum />
       </div>
     </div>
     
     <UserAuthentication v-if="!isLoggedIn" />
-    <div class="btn mx-auto w-max mt-8" @click="modalShowAskQuestion">Frage Stellen</div>
+    <div class="btn mx-auto w-max mt-8" @click="modalShowNewQuestion">Frage Stellen</div>
+    <div class="btn mx-auto w-max mt-8" @click="modalShowNewProject">Neues Projekt</div>
   </div>
 </template>

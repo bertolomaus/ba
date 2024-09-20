@@ -12,13 +12,12 @@ export interface Resource{
 
 const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
+const { fetchMembers } = useProjectsData()
 const requiredSkills = ref<string[]>([])
 const possibleHelpers = ref<UserDataShort[]>([])
-const members = ref<UserDataShort[]>([])
 const resources = ref<Resource[]>([])
-const isLFM = ref<boolean>()
+const isLookingForMembers = ref<boolean>()
 const isVisible = ref<boolean>()
-const isDone = ref<boolean>()
 
 const registerSchema = toTypedSchema(
   yup.object({
@@ -27,22 +26,22 @@ const registerSchema = toTypedSchema(
       .required('Gib einen aussagekräftigen Titel an.'),
     goal: yup
       .string()
-      .required('Beschreib dein Problem.'),
+      .required('Beschreib dein konkretes Ziel.'),
     description: yup
       .string()
-      .required('Beschreib dein Problem.'),
+      .required('Beschreib deine Idee.'),
     winCondition: yup
       .string()
-      .required('Beschreib dein Problem.'),
+      .required('Beschreibe, wann dein Ziel erreicht ist.'),
     whyAchieveable: yup
       .string()
-      .required('Beschreib dein Problem.'),
+      .required('Beschreibe, wie oder warum du dein Ziel erreichen willst.'),
     whyRelevant: yup
       .string()
-      .required('Beschreib dein Problem.'),
+      .required('Beschreibe, warum dein Projekt relevant ist.'),
     deadline: yup
       .string()
-      .required('Beschreib dein Problem.')
+      .required('Gib eine realistische Deadline an.')
   }),
 )
 
@@ -67,7 +66,7 @@ const getHelpers = async () => {
         skills: requiredSkills.value
       }
     })
-    possibleHelpers.value = computed(() => matchesRequest.matches.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
+    possibleHelpers.value = computed(() => matchesRequest.matches.sort((a, b) => b.skills.length - a.skills.length)).value
   }
   catch (error) {
     console.error(error)
@@ -86,8 +85,11 @@ const removeSkill = async (index: number) => {
 
 const createProject = async () => {
   try {
+    // fetch members data
+    const members = await fetchMembers([userId.value != 0 ? userId.value : 1])
+    
     // send data to api endpoint -- as the database schema requires it
-    const newProject = await $fetch('/api/createProject', {
+    await $fetch('/api/createProject', {
       method: 'POST',
       body: {
         id: 0,
@@ -99,8 +101,11 @@ const createProject = async () => {
         winCondition: values.winCondition,
         whyAchieveable: values.whyAchieveable,
         whyRelevant: values.whyRelevant,
-        isLookingForMembers: isLFM.value ? 1 : 0,
-        isVisible: isVisible ? 1: 0,
+        deadline: values.deadline,
+        members: JSON.stringify(members),
+        resources: JSON.stringify([]),
+        isLookingForMembers: isLookingForMembers.value ? 1 : 0,
+        isVisible: isVisible.value ? 1: 0,
         isDone: 0,
       }
     })
@@ -206,9 +211,9 @@ onMounted(() => {
           </div>
         </div>
 
-        <div class="field field-isLFM">
-          <input v-model="isLFM" type="checkbox" name="isLFM" >
-          <label for="isLFM">Suchst du nach Partnern für dein Projekt?</label>
+        <div class="field field-isLookingForMembers">
+          <input v-model="isLookingForMembers" type="checkbox" name="isLookingForMembers" >
+          <label for="isLookingForMembers">Suchst du nach Partnern für dein Projekt?</label>
         </div>
 
         <div class="field field-isVisible">
@@ -217,7 +222,7 @@ onMounted(() => {
         </div>
 
         <div class="field field-submit">
-          <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Frage posten</button>
+          <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Projekt erstellen</button>
         </div>
       </form>
       <div class="helpers grid grid-cols-4 gap-4">

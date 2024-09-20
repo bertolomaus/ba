@@ -117,6 +117,7 @@ export const createProject = db
   id: sql.placeholder('id'),
   owner: sql.placeholder('owner'),
   title: sql.placeholder('title'),
+  goal: sql.placeholder('goal'),
   requiredSkills: sql.placeholder('requiredSkills'),
   description: sql.placeholder('description'),
   winCondition: sql.placeholder('winCondition'),
@@ -127,7 +128,7 @@ export const createProject = db
   resources: sql.placeholder('resources'),
   isLookingForMembers: sql.placeholder('isLookingForMembers'),
   isVisible: sql.placeholder('isVisible'),
-  isDone: sql.placeholder('isSolved'),
+  isDone: sql.placeholder('isDone'),
 })
 
 export const getAllProjectIds = db
@@ -153,7 +154,7 @@ export const getAllProjectsListData = db
   isVisible: projects.isVisible,
   isDone: projects.isDone,
 })
-.from(questions)
+.from(projects)
 
 export const getProjectData = db
 .select({

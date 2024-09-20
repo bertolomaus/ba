@@ -5,19 +5,26 @@ export default defineEventHandler(async (event) => {
   let body = await readBody(event)
 
   // set new id for the question: last used id + 1 or start at id 1
-  let takenIds = getAllQuestionIds.all().map(q => q.id).length == 0 ? [0] : getAllQuestionIds.all().map(q => q.id)
+  let takenIds = getAllProjectIds.all().map(q => q.id).length == 0 ? [0] : getAllProjectIds.all().map(q => q.id)
   body.id = ++takenIds[takenIds.length - 1]
 
   try {
-    postQuestion.run({ 
+    createProject.run({
       id: body.id,
       owner: body.owner,
       title: body.title,
-      requiredSkills: body.requiredSkills,
+      goal: body.goal,
       description: body.description,
-      attemptedSolutions: body.attemptedSolutions,
+      requiredSkills: body.requiredSkills,
+      winCondition: body.winCondition,
+      whyAchieveable: body.whyAchieveable,
+      whyRelevant: body.whyRelevant,
+      deadline: body.deadline,
+      members: body.members,
+      resources: body.resources,
+      isLookingForMembers: body.isLookingForMembers,
       isVisible: body.isVisible,
-      isSolved: body.isSolved
+      isDone: body.isDone,
     })
     return { success: true }
   } catch (error) {

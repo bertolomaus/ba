@@ -5,7 +5,7 @@ import SVGClose from './SVGClose.vue'
 
 const { isLoggedIn, userId } = useAuth()
 const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
-const { modalShowAskQuestion } = useModal()
+const {  modalShowNewQuestion, modalShowNewProject } = useModal()
 const profileLink = computed(() => `/profile?id=${userId}`)
 </script>
 
@@ -83,7 +83,8 @@ const profileLink = computed(() => `/profile?id=${userId}`)
             <p class="h4">Interaktion</p>
             <UserAuthentication v-if="!isLoggedIn" />
             <div v-else>
-              <p class="btn" @click="modalShowAskQuestion">Frage stellen</p>
+              <a href="#" class="btn-link mb-2 block" @click="modalShowNewQuestion">Frage stellen</a>
+              <a href="#" class="btn-link mb-2 block" @click="modalShowNewProject">Neues Projekt</a>
               <FormLogout />
             </div>
           </div>

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event: any) => {
   if(body.id != 0){
     // prepared statements -> ~/server/utils/db.ts
     const result = getUserDataById.get({ id: body.id })
-    return { result, success: true };   
+    return { result, success: true }
   } else {
     // Invalid user id
     throw createError({

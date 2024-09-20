@@ -9,16 +9,22 @@ export const useModal = () => {
     showSidebar.value = false
   }
 
-  const modalShowNewQuestion = () => {
+  const openBlank = () => {
     showModal.value = true
-    modalNewQuestion.value = true
     showSidebar.value = false
+    modalNewProject.value = false
+    modalNewQuestion.value = false
+
+  }
+
+  const modalShowNewQuestion = () => {
+    openBlank()
+    modalNewQuestion.value = true
   }
 
   const modalShowNewProject = () => {
-    showModal.value = true
+    openBlank()
     modalNewProject.value = true
-    showSidebar.value = false
   }
 
   return {

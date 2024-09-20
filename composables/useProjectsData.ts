@@ -20,6 +20,7 @@ export interface Project{
 
 export const useProjectsData = () => {
   const projectsList = useState<Project[]>('projectsList', () => [])
+  const members = ref<UserDataShort[]>([])
 
   const fetchProjectData = async (id: number) => {
     try {
@@ -97,8 +98,32 @@ export const useProjectsData = () => {
     }
   }
 
+  const fetchMembers = async (ids: number[] = []) => {
+    for(let id of ids){
+      try{
+        let memberRequest: any = await $fetch('/api/data/getUserData', {
+          method: 'POST',
+          body: {
+            id: id,
+          }
+        })
+        memberRequest = JSON.parse(memberRequest.result.data)
+        members.value.push({
+          name: memberRequest.name,
+          id: memberRequest.id,
+          avatar: memberRequest.avatar,
+          skills: memberRequest.skills,
+        })
+      } catch (error){
+        console.error(error)
+      }
+    }
+    return members.value
+  }
+
   return {
     projectsList, updateProjectsList,
-    fetchProjectData
+    fetchProjectData,
+    fetchMembers
   }
 };

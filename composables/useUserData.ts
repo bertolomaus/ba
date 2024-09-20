@@ -29,7 +29,7 @@ export interface UserDataShort {
   id: number,
   avatar: string,
   name: string,
-  skills: Skill[]
+  skills: string[]
 }
 
 export const useUserData = () => {

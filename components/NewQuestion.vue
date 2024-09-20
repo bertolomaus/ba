@@ -42,7 +42,7 @@ const getHelpers = async () => {
         skills: requiredSkills.value
       }
     })
-    possibleHelpers.value = computed(() => matchesRequest.matches.sort((a, b) => b.commonSkills.length - a.commonSkills.length)).value
+    possibleHelpers.value = computed(() => matchesRequest.matches.sort((a, b) => b.skills.length - a.skills.length)).value
   }
   catch (error) {
     console.error(error)

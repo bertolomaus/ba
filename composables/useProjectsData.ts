@@ -64,27 +64,27 @@ export const useProjectsData = () => {
 
   const updateProjectsList = async () => {
     try {
-      const dataRequest: any = await $fetch('/api/data/getAllQuestionData', {
+      const dataRequest: any = await $fetch('/api/data/getAllProjectsData', {
         method: 'POST',
         body: {}
       })
       if(dataRequest.success && dataRequest.result){
         projectsList.value = dataRequest.result.map((p: any) => ({
-          id: p.result.id,
-          owner: p.result.owner,
-          title: p.result.title,
-          requiredSkills: JSON.parse(p.result.requiredSkills),
-          description: p.result.description,
-          goal: p.result.goal,
-          winCondition: p.result.winCondition,
-          whyAchieveable: p.result.whyAchieveable,
-          whyRelevant: p.result.WhyRelevant,
-          deadline: p.result.deadline,
-          members: JSON.parse(p.result.members),
-          resources: JSON.parse(p.result.resources),
-          isLookingForMembers: !!p.result.isLookingForMembers,
-          isVisible: !!p.result.isVisible,
-          isDone: !!p.result.isDone
+          id: p.id,
+          owner: p.owner,
+          title: p.title,
+          requiredSkills: JSON.parse(p.requiredSkills),
+          description: p.description,
+          goal: p.goal,
+          winCondition: p.winCondition,
+          whyAchieveable: p.whyAchieveable,
+          whyRelevant: p.WhyRelevant,
+          deadline: p.deadline,
+          members: JSON.parse(p.members),
+          resources: JSON.parse(p.resources),
+          isLookingForMembers: !!p.isLookingForMembers,
+          isVisible: !!p.isVisible,
+          isDone: !!p.isDone
         }))
       } else {
         throw createError({

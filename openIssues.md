@@ -1,7 +1,7 @@
 # Open Issues Report
 
 ## where i stopped
-- how do i make a page reload when clicking a nuxtlink oder editing the profile's wizard query
+- how tf can i differentiate between creating and editing a project? component props?
 
 ## dashboard
 - [ ] replace bavaria ipsum with wizardly wording

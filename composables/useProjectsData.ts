@@ -18,6 +18,12 @@ export interface Project{
   isDone: boolean,
 }
 
+export interface ProjectShort{
+  id: number,
+  owner: number,
+  title: string,
+}
+
 export const useProjectsData = () => {
   const projectsList = useState<Project[]>('projectsList', () => [])
   const members = ref<UserDataShort[]>([])
@@ -41,7 +47,7 @@ export const useProjectsData = () => {
             goal: dataRequest.result.goal,
             winCondition: dataRequest.result.winCondition,
             whyAchieveable: dataRequest.result.whyAchieveable,
-            whyRelevant: dataRequest.result.WhyRelevant,
+            whyRelevant: dataRequest.result.whyRelevant,
             deadline: dataRequest.result.deadline,
             members: JSON.parse(dataRequest.result.members),
             resources: JSON.parse(dataRequest.result.resources),

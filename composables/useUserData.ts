@@ -11,7 +11,7 @@ export interface UserData {
   skills: Skill[]
   hobbies: string[]
   bio: string
-  projekte: number[]
+  projekte: Project[]
 }
 
 interface UserDataWithId {
@@ -23,7 +23,7 @@ interface UserDataWithId {
   skills: Skill[]
   hobbies: string[]
   bio: string
-  projekte: number[]
+  projekte: Project[]
 }
 export interface UserDataShort {
   id: number,
@@ -91,8 +91,9 @@ export const useUserData = () => {
 
   // fetch userData & return avatar from the JSON
   const getAvatar = (id = userId.value) => {
-    fetchUserData(id)
-    return userData.value.avatar
+    fetchUserData(id).then(() => {
+      return userData.value.avatar
+    })
   }
 
   const fetchAllData = async () => {

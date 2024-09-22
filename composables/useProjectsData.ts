@@ -26,6 +26,7 @@ export interface ProjectShort{
 
 export const useProjectsData = () => {
   const projectsList = useState<Project[]>('projectsList', () => [])
+  const project = useState<Project>('project')
   const members = ref<UserDataShort[]>([])
 
   const fetchProjectData = async (id: number) => {
@@ -128,6 +129,7 @@ export const useProjectsData = () => {
   }
 
   return {
+    project,
     projectsList, updateProjectsList,
     fetchProjectData,
     fetchMembers

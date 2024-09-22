@@ -177,6 +177,26 @@ export const getProjectData = db
 .from(projects)
 .where(sql`${projects.id} = ${sql.placeholder("id")}`)
 
+export const updateProject = db
+.update(projects)
+.set({
+  owner: sql`${sql.placeholder("owner")}`,
+  title: sql`${sql.placeholder("title")}`,
+  requiredSkills: sql`${sql.placeholder("requiredSkills")}`,
+  description: sql`${sql.placeholder("description")}`,
+  goal: sql`${sql.placeholder("goal")}`,
+  winCondition: sql`${sql.placeholder("winCondition")}`,
+  whyAchieveable: sql`${sql.placeholder("whyAchieveable")}`,
+  whyRelevant: sql`${sql.placeholder("whyRelevant")}`,
+  deadline: sql`${sql.placeholder("deadline")}`,
+  members: sql`${sql.placeholder("members")}`,
+  resources: sql`${sql.placeholder("resources")}`,
+  isLookingForMembers: sql`${sql.placeholder("isLookingForMembers")}`,
+  isVisible: sql`${sql.placeholder("isVisible")}`,
+  isDone: sql`${sql.placeholder("isDone")}`,
+})
+.where(sql`${projects.id} = ${sql.placeholder("id")}`)
+
 // skills
 
 export const getSkills = db

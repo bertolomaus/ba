@@ -10,17 +10,19 @@ export interface Resource{
   src: string
 }
 
+interface Props {
+  id?: number,
+  updateOnSave: boolean,
+}
+const props = defineProps<Props>()
 const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
 const { fetchMembers } = useProjectsData()
 const { userData, fetchUserData, updateUserData } = useUserData()
-const requiredSkills = ref<string[]>([])
+const { project } = useProjectsData()
 const possibleHelpers = ref<UserDataShort[]>([])
-const resources = ref<Resource[]>([])
 const resourceName = ref<string>('')
 const resourceSrc = ref<string>('')
-const isLookingForMembers = ref<boolean>()
-const isVisible = ref<boolean>()
 const showResourceDetails = ref<boolean>(false)
 
 const registerSchema = toTypedSchema(
@@ -67,7 +69,7 @@ const getHelpers = async () => {
     const matchesRequest = await $fetch('/api/data/getUserIdsBySkills', {
       method: 'POST',
       body: {
-        skills: requiredSkills.value
+        skills: project.value.requiredSkills
       }
     })
     possibleHelpers.value = computed(() => matchesRequest.matches.sort((a, b) => b.skills.length - a.skills.length)).value
@@ -78,12 +80,12 @@ const getHelpers = async () => {
 }
 
 const addRequiredSkill = async (eventPayload: { payload: string }) => {
-  requiredSkills.value.push(eventPayload.payload)
+  project.value.requiredSkills.push(eventPayload.payload)
   await getHelpers()
 }
 
 const removeSkill = async (index: number) => {
-  requiredSkills.value.splice(index, 1)
+  project.value.requiredSkills.splice(index, 1)
   await getHelpers()
 }
 
@@ -92,7 +94,7 @@ const newResource = () => {
 }
 
 const addResource = () => {
-  resources.value.push({name: resourceName.value, src: resourceSrc.value})
+  project.value.resources.push({name: resourceName.value, src: resourceSrc.value})
   closeResource()
 }
 
@@ -102,36 +104,50 @@ const closeResource = () => {
   resourceSrc.value = ""
 }
 
-const saveProject = async () => {
+const onSubmit = async () => {
   try {
     // fetch members data
-    const members = await fetchMembers([userId.value != 0 ? userId.value : 1])
-    await fetchUserData()
+    project.value.members = await fetchMembers([userId.value])
     
-    // send data to api endpoint -- as the database schema requires it
-    await $fetch('/api/saveProject', {
-      method: 'POST',
-      body: {
-        id: 0,
-        owner: userId.value,
-        title: values.title,
-        goal: values.goal,
-        description: values.description,
-        requiredSkills: JSON.stringify(requiredSkills.value),
-        winCondition: values.winCondition,
-        whyAchieveable: values.whyAchieveable,
-        whyRelevant: values.whyRelevant,
-        deadline: values.deadline,
-        members: JSON.stringify(members),
-        resources: JSON.stringify([]),
-        isLookingForMembers: isLookingForMembers.value ? 1 : 0,
-        isVisible: isVisible.value ? 1: 0,
-        isDone: 0,
-      }
-    })
-    setSkills(requiredSkills.value)
-  }
-  catch (error) {
+    // fill the project useState with entered data
+    project.value = {
+      id: 0,
+      owner: userId.value,
+      title: values.title ? values.title : "",
+      goal: values.goal ? values.goal : "",
+      description: values.description ? values.description : "",
+      requiredSkills: project.value.requiredSkills,
+      winCondition: values.winCondition ? values.winCondition : "",
+      whyAchieveable: values.whyAchieveable ? values.whyAchieveable : "",
+      whyRelevant: values.whyRelevant ? values.whyRelevant : "",
+      deadline: values.deadline ? values.deadline : "",
+      members: project.value.members,
+      resources: project.value.resources,
+      isLookingForMembers: project.value.isLookingForMembers,
+      isVisible: project.value.isVisible,
+      isDone: false,
+    }
+
+    // send project to api endpoint -- depending on whether a new project is created or an existing project is edited
+    if(props.updateOnSave){
+      await $fetch('/api/updateProject', {
+        method: 'POST',
+        body: {
+          id: props.id,
+          data: project.value
+        }
+      })
+    } else {
+      await $fetch('/api/createProject', {
+        method: 'POST',
+        body: {
+          id: props.id,
+          data: project.value
+        }
+      })
+    }
+    setSkills(project.value.requiredSkills)
+  } catch (error) {
     console.error(error)
   }
 }
@@ -143,7 +159,7 @@ onMounted(() => {
 
 <template>
   <div class="form-project">
-    <form @submit.prevent="saveProject">
+    <form @submit.prevent="onSubmit">
 
       <div class="field field-title" :class="[{'has-text': title}, {'has-error': errors.title}, {'is-acceptable': title && !errors.title}]">
         <input v-model="title" v-bind="titleAttrs" name="title" />
@@ -179,8 +195,8 @@ onMounted(() => {
       </div>
 
       <div class="field field-tags">
-        <ul class="tags" v-if="requiredSkills.length > 0">
-          <li v-for="(skill, index) in requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}<Trash /></li>
+        <ul class="tags" v-if="project.requiredSkills.length > 0">
+          <li v-for="(skill, index) in project.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}<Trash /></li>
         </ul>
         <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()" @submit-input="addRequiredSkill" />
       </div>
@@ -251,21 +267,24 @@ onMounted(() => {
       </div>
 
       <div class="field field-isLookingForMembers">
-        <input v-model="isLookingForMembers" type="checkbox" name="isLookingForMembers" >
+        <input v-model="project.isLookingForMembers" type="checkbox" name="isLookingForMembers" >
         <label for="isLookingForMembers">Suchst du nach Partnern für dein Projekt?</label>
       </div>
 
       <div class="field field-isVisible">
-        <input v-model="isVisible" type="checkbox" name="isVisible" >
+        <input v-model="project.isVisible" type="checkbox" name="isVisible" >
         <label for="isVisible">Projekt soll für alle sichtbar sein</label>
       </div>
 
       <div class="field field-submit">
-        <button class="btn btn-submit" type="submit" :disabled="!meta.valid">Projekt erstellen</button>
+        <button class="btn btn-submit" type="submit" :disabled="!meta.valid">
+          <span v-if="!props.updateOnSave">Projekt erstellen</span>
+          <span v-else>Änderungen speichern</span>
+        </button>
       </div>
     </form>
     <div class="helpers grid grid-cols-4 gap-4">
-      <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= requiredSkills.length / 2)" :key="index">
+      <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= project.requiredSkills.length / 2)" :key="index">
         <p>id: {{ helper.id }}</p>
         <p>name: {{ helper.name }}</p>
         <p>common: {{ helper.skills }}</p>

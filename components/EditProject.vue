@@ -12,8 +12,9 @@ export interface Resource{
 
 interface Props {
   id?: number,
-  updateOnSave: boolean,
+  updateOnSave: boolean
 }
+
 const props = defineProps<Props>()
 const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
@@ -89,8 +90,8 @@ const removeSkill = async (index: number) => {
   await getHelpers()
 }
 
-const newResource = () => {
-  showResourceDetails.value = true
+const toggleNewResource = () => {
+  showResourceDetails.value = !showResourceDetails.value
 }
 
 const addResource = () => {
@@ -246,8 +247,8 @@ onMounted(() => {
       </div>
 
       <div class="field field-resource">
-        <div class="add-resource flex gap-2 cursor-pointer w-max" @click="newResource">
-          <AddCircle class="w-6" />
+        <div class="add-resource flex gap-2 cursor-pointer w-max" @click="toggleNewResource">
+          <AddCircle class="w-5" :is-open="showResourceDetails"/>
           <p>Ressource hinzufügen</p>
         </div>
         <div class="resource-details ml-8" v-if="showResourceDetails">

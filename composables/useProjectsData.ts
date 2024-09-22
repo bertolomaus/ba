@@ -26,7 +26,23 @@ export interface ProjectShort{
 
 export const useProjectsData = () => {
   const projectsList = useState<Project[]>('projectsList', () => [])
-  const project = useState<Project>('project')
+  const project = useState<Project>('project', () => ({
+    id: 0,
+    owner: 0,
+    title: "",
+    requiredSkills: [],
+    description: "",
+    goal: "",
+    winCondition: "",
+    whyAchieveable: "",
+    whyRelevant: "",
+    deadline: "",
+    members: [],
+    resources: [],
+    isLookingForMembers: false,
+    isVisible: false,
+    isDone: false
+  }))
   const members = ref<UserDataShort[]>([])
 
   const fetchProjectData = async (id: number) => {

@@ -15,16 +15,18 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>
-    <h1 class="">{{ question?.title }}</h1>
-    <h2 class="h3">Worum geht es?</h2>
-    <ul class="tags">
-      <li v-for="(skill, index) of question?.requiredSkills" :key="index">{{ skill }}</li>
-    </ul>
-    <h3 class="h3">Beschreibung</h3>
-    <p>{{ question?.description }}</p>
-    <h3 class="h3">Lösungsansätze</h3>
-    <p>{{ question?.attemptedSolutions }}</p>
-    <pre>{{ question }}</pre>
+  <div class="frage">
+    <div class="container">
+      <h1 class="">{{ question?.title }}</h1>
+      <h2 class="h3">Worum geht es?</h2>
+      <ul class="tags">
+        <li v-for="(skill, index) of question?.requiredSkills" :key="index">{{ skill }}</li>
+      </ul>
+      <h3 class="h3">Beschreibung</h3>
+      <p>{{ question?.description }}</p>
+      <h3 class="h3">Lösungsansätze</h3>
+      <p>{{ question?.attemptedSolutions }}</p>
+      <pre class="mt-16">{{ question }}</pre>
+    </div>
   </div>
 </template>

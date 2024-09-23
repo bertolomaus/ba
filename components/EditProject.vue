@@ -147,6 +147,13 @@ const onSubmit = async () => {
         }
       })
     }
+
+    // update userData > add project to data
+    await fetchUserData(userId.value)
+    userData.value.projects.push(project.value)
+    console.log(userData.value)
+
+    // add project's requiredSkills to skills table
     setSkills(project.value.requiredSkills)
   } catch (error) {
     console.error(error)

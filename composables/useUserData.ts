@@ -11,7 +11,7 @@ export interface UserData {
   skills: Skill[]
   hobbies: string[]
   bio: string
-  projekte: Project[]
+  projects: Project[]
 }
 
 interface UserDataWithId {
@@ -23,7 +23,7 @@ interface UserDataWithId {
   skills: Skill[]
   hobbies: string[]
   bio: string
-  projekte: Project[]
+  projects: Project[]
 }
 export interface UserDataShort {
   id: number,
@@ -33,7 +33,7 @@ export interface UserDataShort {
 }
 
 export const useUserData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projekte: []}))
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projects: []}))
   const allHobbies = useState<string[]>('allHobbies', () => [])
   const { userId } = useAuth()
   

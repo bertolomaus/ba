@@ -11,6 +11,7 @@ export interface UserData {
   skills: Skill[]
   hobbies: string[]
   bio: string
+  questions: Question[]
   projects: Project[]
 }
 
@@ -23,6 +24,7 @@ interface UserDataWithId {
   skills: Skill[]
   hobbies: string[]
   bio: string
+  questions: Question[]
   projects: Project[]
 }
 export interface UserDataShort {
@@ -33,7 +35,7 @@ export interface UserDataShort {
 }
 
 export const useUserData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", projects: []}))
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", questions: [], projects: []}))
   const allHobbies = useState<string[]>('allHobbies', () => [])
   const { userId } = useAuth()
   
@@ -78,7 +80,7 @@ export const useUserData = () => {
       }
     }
     catch (error) {
-      // console.error(error.statusMessage);
+      console.error(error);
     }
   }
 

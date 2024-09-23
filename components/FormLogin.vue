@@ -77,5 +77,8 @@ const handleLogin = async () => {
       Du hast noch keinen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span class="btn-text">Registrieren</span></a>
     </p>
     <button v-if="!isLoggedIn" class="btn mt-8 btn-dev" @click="login(1)">Login as Dev</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(85355566)">Login as Albus</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(92664339)">Login as Elminster</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(49831990)">Login as Gandalf</button>
   </div>
 </template>

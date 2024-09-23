@@ -12,7 +12,7 @@ export interface Project{
   whyRelevant: string,
   deadline: string,
   members: UserDataShort[],
-  resources: object[]
+  resources: Resource[],
   isLookingForMembers: boolean,
   isVisible: boolean,
   isDone: boolean,
@@ -22,6 +22,11 @@ export interface ProjectShort{
   id: number,
   owner: number,
   title: string,
+}
+
+export interface Resource{
+  name: string,
+  src: string
 }
 
 export const useProjectsData = () => {
@@ -133,7 +138,7 @@ export const useProjectsData = () => {
         memberRequest = JSON.parse(memberRequest.result.data)
         members.value.push({
           name: memberRequest.name,
-          id: memberRequest.id,
+          id: id,
           avatar: memberRequest.avatar,
           skills: memberRequest.skills,
         })

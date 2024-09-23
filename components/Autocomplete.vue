@@ -28,6 +28,13 @@ const nextSuggestion = () => {
   }
 }
 
+const handleTabKey = (event: KeyboardEvent) => {
+  if(inputValue.value != '') {
+    event.preventDefault()
+    nextSuggestion()
+  }
+}
+
 const prevSuggestion = () => {
   if (activeSuggestionIndex.value > 0) {
     activeSuggestionIndex.value--
@@ -57,10 +64,11 @@ const selectSuggestion = (index: number) => {
       v-model="inputValue"
       @input="onInput"
       @keydown.down.prevent="nextSuggestion"
-      @keydown.tab.prevent="nextSuggestion"
+      @keydown.tab="handleTabKey"
       @keydown.up.prevent="prevSuggestion"
       @keydown.enter.prevent="onEnter"
       ref="inputField"
+      placeholder=""
     />
     <label for="inputField">{{ props.label }}</label>
     <ul v-if="filteredSuggestions.length > 0" class="suggestions-list">

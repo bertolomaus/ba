@@ -1,14 +1,7 @@
 <script lang="ts" setup>
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/yup'
-import * as yup from 'yup'
 import Autocomplete from '../components/Autocomplete.vue'
 import Trash from '../components/Trash.vue'
-
-export interface Resource{
-  name: string,
-  src: string
-}
+import type { Project } from '~/composables/useProjectsData'
 
 interface Props {
   id?: number,
@@ -18,51 +11,12 @@ interface Props {
 const props = defineProps<Props>()
 const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
-const { fetchMembers } = useProjectsData()
+const { fetchMembers, fetchProjectData, project } = useProjectsData()
 const { userData, fetchUserData, updateUserData } = useUserData()
-const { project } = useProjectsData()
 const possibleHelpers = ref<UserDataShort[]>([])
 const resourceName = ref<string>('')
 const resourceSrc = ref<string>('')
 const showResourceDetails = ref<boolean>(false)
-
-const registerSchema = toTypedSchema(
-  yup.object({
-    title: yup
-      .string()
-      .required('Gib einen aussagekräftigen Titel an.'),
-    goal: yup
-      .string()
-      .required('Beschreib dein konkretes Ziel.'),
-    description: yup
-      .string()
-      .required('Beschreib deine Idee.'),
-    winCondition: yup
-      .string()
-      .required('Beschreibe, wann dein Ziel erreicht ist.'),
-    whyAchieveable: yup
-      .string()
-      .required('Beschreibe, wie oder warum du dein Ziel erreichen willst.'),
-    whyRelevant: yup
-      .string()
-      .required('Beschreibe, warum dein Projekt relevant ist.'),
-    deadline: yup
-      .string()
-      .required('Gib eine realistische Deadline an.')
-  }),
-)
-
-const { values, errors, defineField, meta } = useForm({
-  validationSchema: registerSchema,
-});
-
-const [title, titleAttrs] = defineField('title')
-const [goal, goalAttrs] = defineField('goal')
-const [description, descriptionAttrs] = defineField('description')
-const [winCondition, winConditionAttrs] = defineField('winCondition')
-const [whyAchieveable, whyAchieveableAttrs] = defineField('whyAchieveable')
-const [whyRelevant, whyRelevantAttrs] = defineField('whyRelevant')
-const [deadline, deadlineAttrs] = defineField('deadline')
 
 const getHelpers = async () => {
   try {
@@ -99,6 +53,10 @@ const addResource = () => {
   closeResource()
 }
 
+const removeResource = (index: number) => {
+  project.value.resources.splice(index, 1)
+}
+
 const closeResource = () => {
   showResourceDetails.value = false
   resourceName.value = ""
@@ -109,25 +67,6 @@ const onSubmit = async () => {
   try {
     // fetch members data
     project.value.members = await fetchMembers([userId.value])
-    
-    // fill the project useState with entered data
-    project.value = {
-      id: 0,
-      owner: userId.value,
-      title: values.title ? values.title : "",
-      goal: values.goal ? values.goal : "",
-      description: values.description ? values.description : "",
-      requiredSkills: project.value.requiredSkills,
-      winCondition: values.winCondition ? values.winCondition : "",
-      whyAchieveable: values.whyAchieveable ? values.whyAchieveable : "",
-      whyRelevant: values.whyRelevant ? values.whyRelevant : "",
-      deadline: values.deadline ? values.deadline : "",
-      members: project.value.members,
-      resources: project.value.resources,
-      isLookingForMembers: project.value.isLookingForMembers,
-      isVisible: project.value.isVisible,
-      isDone: false,
-    }
 
     // send project to api endpoint -- depending on whether a new project is created or an existing project is edited
     if(props.updateOnSave){
@@ -138,6 +77,14 @@ const onSubmit = async () => {
           data: project.value
         }
       })
+
+      // update userData > update project in data
+      await fetchUserData(userId.value)
+      const projectIndex = userData.value.projects.findIndex(p => p.id === project.value.id)
+      if (projectIndex !== -1) {
+        userData.value.projects[projectIndex] = { ...project.value }
+      }
+      await updateUserData(userId.value, userData.value)
     } else {
       await $fetch('/api/createProject', {
         method: 'POST',
@@ -146,12 +93,12 @@ const onSubmit = async () => {
           data: project.value
         }
       })
-    }
 
-    // update userData > add project to data
-    await fetchUserData(userId.value)
-    userData.value.projects.push(project.value)
-    console.log(userData.value)
+      // update userData > add new project to data
+      await fetchUserData(userId.value)
+      userData.value.projects.push(project.value)
+      await updateUserData(userId.value, userData.value)
+    }
 
     // add project's requiredSkills to skills table
     setSkills(project.value.requiredSkills)
@@ -160,46 +107,33 @@ const onSubmit = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   getSkills()
+  if(props.id){
+    const request = await fetchProjectData(props.id)
+    if(request){
+      project.value = request.project
+    }
+  }
 })
 </script>
 
 <template>
   <div class="form-project">
     <form @submit.prevent="onSubmit">
-
-      <div class="field field-title" :class="[{'has-text': title}, {'has-error': errors.title}, {'is-acceptable': title && !errors.title}]">
-        <input v-model="title" v-bind="titleAttrs" name="title" />
+      <div class="field field-title">
+        <input v-model="project.title" name="title" placeholder="" />
         <label for="title">Titel</label>
-        <div class="errors">
-          {{ errors.title }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.title">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
       </div>
 
-      <div class="field field-goal" :class="[{'has-text': goal}, {'has-error': errors.goal}, {'is-acceptable': goal && !errors.goal}]">
-        <textarea v-model="goal" v-bind="goalAttrs"  name="goal" ></textarea>
+      <div class="field field-goal">
+        <textarea v-model="project.goal" name="goal" placeholder=""></textarea>
         <label for="goal">Was ist ein konkretes Ziel?</label>
-        <div class="errors">
-          {{ errors.goal }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.goal">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
       </div>
 
-      <div class="field field-description" :class="[{'has-text': description}, {'has-error': errors.description}, {'is-acceptable': description && !errors.description}]">
-        <textarea v-model="description" v-bind="descriptionAttrs"  name="description" ></textarea>
+      <div class="field field-description">
+        <textarea v-model="project.description" name="description" placeholder=""></textarea>
         <label for="description">Beschreib dein Projekt</label>
-        <div class="errors">
-          {{ errors.description }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.description">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
       </div>
 
       <div class="field field-tags">
@@ -209,62 +143,55 @@ onMounted(() => {
         <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()" @submit-input="addRequiredSkill" />
       </div>
 
-      <div class="field field-winCondition" :class="[{'has-text': winCondition}, {'has-error': errors.winCondition}, {'is-acceptable': winCondition && !errors.winCondition}]">
-        <textarea v-model="winCondition" v-bind="winConditionAttrs"  name="description" ></textarea>
+      <div class="field field-winCondition">
+        <textarea v-model="project.winCondition" name="winCondition" placeholder=""></textarea>
         <label for="winCondition">Wann ist dein Ziel erreicht?</label>
-        <div class="errors">
-          {{ errors.winCondition }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.winCondition">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
       </div>
 
-      <div class="field field-whyAchieveable" :class="[{'has-text': whyAchieveable}, {'has-error': errors.whyAchieveable}, {'is-acceptable': whyAchieveable && !errors.whyAchieveable}]">
-        <textarea v-model="whyAchieveable" v-bind="whyAchieveableAttrs"  name="whyAchieveable" ></textarea>
-        <label for="whyAchieveable">Dein Ziel ist erreichbar, weil:</label>
-        <div class="errors">
-          {{ errors.whyAchieveable }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.whyAchieveable">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
+      <div class="field field-whyAchieveable">
+        <textarea v-model="project.whyAchieveable" name="whyAchieveable" placeholder=""></textarea>
+        <label for="whyAchieveable">Dein Ziel ist erreichbar, weil</label>
       </div>
 
-      <div class="field field-whyRelevant" :class="[{'has-text': whyRelevant}, {'has-error': errors.whyRelevant}, {'is-acceptable': whyRelevant && !errors.whyRelevant}]">
-        <textarea v-model="whyRelevant" v-bind="whyRelevantAttrs"  name="whyRelevant" ></textarea>
-        <label for="whyRelevant">Dein Ziel ist relevant, weil:</label>
-        <div class="errors">
-          {{ errors.whyRelevant }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.whyRelevant">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
+      <div class="field field-whyRelevant">
+        <textarea v-model="project.whyRelevant" name="whyRelevant" placeholder=""></textarea>
+        <label for="whyRelevant">Dein Ziel ist relevant, weil</label>
       </div>
 
-      <div class="field field-deadline" :class="[{'has-text': deadline}, {'has-error': errors.deadline}, {'is-acceptable': deadline && !errors.deadline}]">
-        <input v-model="deadline" v-bind="deadlineAttrs"  name="deadline" >
+      <div class="field field-deadline">
+        <input v-model="project.deadline" name="deadline" placeholder="" />
         <label for="deadline">Realistische Deadline</label>
-        <div class="errors">
-          {{ errors.deadline }}
-          <div class="error-placeholder opacity-0 pointer-events-none" v-if="!errors.deadline">
-            this is a dummy text to keep the stupid divs size.
-          </div>
-        </div>
       </div>
 
-      <div class="field field-resource">
+      <div class="field-resources">
+        <div class="resources-list">
+          <ul>
+            <li v-for="(resource, index) in project.resources" :key="index" class="flex gap-2 items-start">
+              <div class="resource-input">
+                <div class="field">
+                  <input type="text" v-model="resource.name" name="resourceName" placeholder="" />
+                  <label for="resourceName">Name</label>
+                </div>
+                <div class="field">
+                  <input type="text" v-model="resource.src" name="resourceSrc" placeholder="" />
+                  <label for="resourceSrc">Datenquelle</label>
+                </div>
+              </div>
+              <Trash @click="removeResource(index)" class="w-6 fill-red mt-6" />
+            </li>
+          </ul>
+        </div>
         <div class="add-resource flex gap-2 cursor-pointer w-max" @click="toggleNewResource">
           <AddCircle class="w-5" :is-open="showResourceDetails"/>
           <p>Ressource hinzufügen</p>
         </div>
         <div class="resource-details ml-8" v-if="showResourceDetails">
           <div class="field">
-            <input type="text" v-model="resourceName" name="resourceName">
+            <input type="text" v-model="resourceName" name="resourceName" placeholder="">
             <label for="resourceName">Name</label>
           </div>
           <div class="field">
-            <input type="text" v-model="resourceSrc" name="resourceSrc">
+            <input type="text" v-model="resourceSrc" name="resourceSrc" placeholder="">
             <label for="resourceSrc">Quelle</label>
           </div>
           <div class="field flex gap-2">
@@ -272,6 +199,17 @@ onMounted(() => {
             <p class="btn btn-muted mt-0" @click="closeResource">Abbrechen</p>
           </div>
         </div>
+      </div>
+
+      <div class="field-members" v-if="project.members.length > 0">
+        <ul>
+          <li v-for="(member, index) in project.members" :key="index">
+            <p>{{ member.name }}</p>
+            <p>{{ member.id }}</p>
+            <p>{{ member.avatar }}</p>
+            <pre>{{ member }}</pre>
+          </li>
+        </ul>
       </div>
 
       <div class="field field-isLookingForMembers">
@@ -284,8 +222,13 @@ onMounted(() => {
         <label for="isVisible">Projekt soll für alle sichtbar sein</label>
       </div>
 
+      <div class="field field-isDone">
+        <input v-model="project.isDone" type="checkbox" name="isDone" >
+        <label for="isDone">Projekt ist abgeschlossen</label>
+      </div>
+
       <div class="field field-submit">
-        <button class="btn btn-submit" type="submit" :disabled="!meta.valid">
+        <button class="btn btn-submit" type="submit">
           <span v-if="!props.updateOnSave">Projekt erstellen</span>
           <span v-else>Änderungen speichern</span>
         </button>

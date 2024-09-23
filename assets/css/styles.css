@@ -93,11 +93,7 @@ input, textarea{
 }
 
 form .field{
-  @apply relative
-}
-
-form .field + .field{
-  @apply mt-4
+  @apply relative mt-4
 }
 
 form label,
@@ -112,7 +108,8 @@ form .has-text input{
 form :focus + label,
 form .has-text label,
 form .is-acceptable label,
-.autocomplete :focus + label{
+.autocomplete :focus + label,
+:not(:placeholder-shown) + label{
   @apply left-1 top-0 text-xs leading-4 bg-white;
   transform:translateY(-50%);
 }

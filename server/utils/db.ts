@@ -76,6 +76,20 @@ export const postQuestion = db
   isSolved: sql.placeholder('isSolved'),
 })
 
+export const updateQuestion = db
+.update(questions)
+.set({
+  id: sql.placeholder('id'),
+  owner: sql.placeholder('owner'),
+  title: sql.placeholder('title'),
+  requiredSkills: sql.placeholder('requiredSkills'),
+  description: sql.placeholder('description'),
+  attemptedSolutions: sql.placeholder('attemptedSolutions'),
+  isVisible: sql.placeholder('isVisible'),
+  isSolved: sql.placeholder('isSolved'),
+})
+.where(sql`${questions.id} = ${sql.placeholder("id")}`)
+
 export const getAllQuestionIds = db
 .select({
   id: questions.id

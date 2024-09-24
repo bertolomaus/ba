@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import Autocomplete from '../components/Autocomplete.vue'
 import Trash from '../components/Trash.vue'
-import type { Project } from '~/composables/useProjectsData'
 
 interface Props {
   id?: number,

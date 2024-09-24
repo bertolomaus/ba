@@ -1,5 +1,3 @@
-import { desc } from "drizzle-orm";
-
 export interface Question{
   id: number,
   owner: number,
@@ -13,6 +11,16 @@ export interface Question{
 
 export const useQuestionData = () => {
   const questionsList = useState<Question[]>('questionsList', () => [])
+  const question = useState<Question>('question', () => ({
+    id: 0,
+    owner: 0,
+    title: "",
+    requiredSkills: [],
+    description: "",
+    attemptedSolutions: "",
+    isVisible: false,
+    isSolved: false,
+  }))
 
   const fetchQuestionData = async (id: number) => {
     try {
@@ -77,6 +85,7 @@ export const useQuestionData = () => {
   }
 
   return {
+    question,
     questionsList, updateQuestionsList,
     fetchQuestionData
   }

@@ -29,6 +29,13 @@
       "when": 1726862285234,
       "tag": "0003_zippy_human_fly",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1727194623993,
+      "tag": "0004_zippy_viper",
+      "breakpoints": true
     }
   ]
 }

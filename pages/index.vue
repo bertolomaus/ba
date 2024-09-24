@@ -3,9 +3,8 @@ import UserAuthentication from '../components/UserAuthentication.vue'
 import BavariaIpsum from '../components/BavariaIpsum.vue'
 
 const { isLoggedIn } = useAuth()
-const { modalShowNewQuestion, modalShowNewProject } = useModal()
+const { modalShowNewQuestion, modalShowNewProject, showModal } = useModal()
 const { showSidebar } = useToggleContent()
-const { showModal } = useModal()
 
 onMounted(() => {
   showSidebar.value = false

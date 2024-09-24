@@ -4,9 +4,17 @@ import UserAuthentication from './UserAuthentication.vue'
 import SVGClose from './SVGClose.vue'
 
 const { isLoggedIn, userId } = useAuth()
-const { showLogin, toggleAuthForm, showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
-const {  modalShowNewQuestion, modalShowNewProject } = useModal()
-const profileLink = computed(() => `/profile?id=${userId}`)
+const { userData, fetchUserData } = useUserData()
+const { showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
+const { modalShowNewQuestion, modalShowNewProject } = useModal()
+
+const generateNavigationLinks = async () => {
+  try {
+    await fetchUserData(userId.value)
+  } catch (error) {
+    console.error(error)
+  }
+}
 </script>
 
 <template>
@@ -20,7 +28,7 @@ const profileLink = computed(() => `/profile?id=${userId}`)
         </NuxtLink>
       </div>
       <div class="sidebar-togglers">
-        <div class="open-navigation" @click="showNavigation">
+        <div class="open-navigation" @click="showNavigation(); generateNavigationLinks()">
           <svg viewBox="0 0 8 7">
             <rect width="8" height="1" x="0" y="0" />
             <rect width="8" height="1" x="0" y="3" />
@@ -62,17 +70,17 @@ const profileLink = computed(() => `/profile?id=${userId}`)
               <li>
                 <NuxtLink to="/fragen">Fragen</NuxtLink>
                 <ul>
-                  <li><NuxtLink to="/fragen">Frage 1</NuxtLink></li>
-                  <li><NuxtLink to="/fragen">Frage 2</NuxtLink></li>
-                  <li><NuxtLink to="/fragen">Frage 3</NuxtLink></li>
+                  <li v-for="(question, index) in userData.questions" :key="index">
+                    <NuxtLink :to="{path: 'frage', query: {id: question.id}}">{{ question.title }}</NuxtLink>
+                  </li>
                 </ul>
               </li>
               <li>
                 <NuxtLink to="/projekte">Projekte</NuxtLink>
                 <ul>
-                  <NuxtLink to="/projekte">Projekt 1</NuxtLink>
-                  <NuxtLink to="/projekte">Projekt 2</NuxtLink>
-                  <NuxtLink to="/projekte">Projekt 3</NuxtLink>
+                  <li v-for="(project, index) in userData.projects" :key="index">
+                    <NuxtLink :to="{path: 'projekt', query: {id: project.id}}">{{ project.title }}</NuxtLink>
+                  </li>
                 </ul>
               </li>
             </ul>

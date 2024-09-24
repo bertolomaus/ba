@@ -1,1 +1,0 @@
-ALTER TABLE `projects` RENAME COLUMN `isSolved` TO `isDone`;

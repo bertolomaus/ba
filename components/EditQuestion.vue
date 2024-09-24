@@ -43,7 +43,7 @@ const removeSkill = (index: number) => {
 const onSubmit = async () => {
   try {
     // send project to api endpoint -- depending on whether a new question is posted or an existing question is edited
-    if(!props.updateOnSave){
+    if(props.updateOnSave){
       await $fetch('/api/updateQuestion', {
         method: 'POST',
         body: {

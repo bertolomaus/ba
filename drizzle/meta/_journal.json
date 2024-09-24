@@ -5,57 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1726415729556,
-      "tag": "0000_tiny_shockwave",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1726560468611,
-      "tag": "0001_heavy_frank_castle",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1726560508844,
-      "tag": "0002_needy_proteus",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1726862285234,
-      "tag": "0003_zippy_human_fly",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1727194623993,
-      "tag": "0004_zippy_viper",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1727215464106,
-      "tag": "0005_nostalgic_marvex",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "6",
-      "when": 1727215520907,
-      "tag": "0006_stiff_masque",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "6",
-      "when": 1727215938564,
-      "tag": "0007_lush_spacker_dave",
+      "when": 1727217177939,
+      "tag": "0000_reflective_victor_mancha",
       "breakpoints": true
     }
   ]

@@ -71,7 +71,6 @@ const onSubmit = async () => {
 
       // update userData > add new project to data
       await fetchUserData(userId.value)
-      console.log(userData.value)
       userData.value.questions.push(question.value)
       await updateUserData(userId.value, userData.value)
     }

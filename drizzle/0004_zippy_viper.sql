@@ -6,3 +6,6 @@
 
  Due to that we don't generate migration automatically and it has to be done manually
 */
+
+DROP TABLE `questions`;--> statement-breakpoint
+DROP TABLE `questions_new`;

@@ -29,11 +29,11 @@ export const questions = sqliteTable("questions", {
   id: integer("id").primaryKey(),
   owner: integer("owner"),
   title: text("title"),
-  requiredSkills: text("requiredSkills"),
   description: text("description"),
   attemptedSolutions: text("attemptedSolutions"),
+  requiredSkills: text("requiredSkills"),
   isVisible: integer("isVisible"),
-  isSolved: integer("isSolved"),
+  isSolved: integer("isDone"),
 })
 
 export const skills = sqliteTable("skills", {

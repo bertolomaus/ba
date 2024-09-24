@@ -43,7 +43,7 @@ const removeSkill = (index: number) => {
 const onSubmit = async () => {
   try {
     // send project to api endpoint -- depending on whether a new question is posted or an existing question is edited
-    if(props.updateOnSave){
+    if(!props.updateOnSave){
       await $fetch('/api/updateQuestion', {
         method: 'POST',
         body: {
@@ -54,11 +54,12 @@ const onSubmit = async () => {
 
       // update userData > update project in data
       await fetchUserData(userId.value)
-      const projectIndex = userData.value.projects.findIndex(q => q.id === question.value.id)
+      const projectIndex = userData.value.questions.findIndex(q => q.id === question.value.id)
       if (projectIndex !== -1) {
         userData.value.questions[projectIndex] = { ...question.value }
       }
       await updateUserData(userId.value, userData.value)
+      console.log(userData.value)
     } else {
       await $fetch('/api/postQuestion', {
         method: 'POST',
@@ -70,6 +71,7 @@ const onSubmit = async () => {
 
       // update userData > add new project to data
       await fetchUserData(userId.value)
+      console.log(userData.value)
       userData.value.questions.push(question.value)
       await updateUserData(userId.value, userData.value)
     }

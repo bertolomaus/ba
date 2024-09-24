@@ -50,7 +50,7 @@ const handleLogin = async () => {
     <p class="h3">Login</p>
     <form @submit.prevent="handleLogin">
       <div class="field field-email" :class="[{'has-text': email}, {'has-error': errors.email}, {'is-acceptable': email && !errors.email}]">
-        <input v-model="email" v-bind="emailAttrs" name="email" />
+        <input v-model="email" v-bind="emailAttrs" name="email" placeholder="" />
         <label for="email">E-Mail</label>
         <div class="errors">
           {{ errors.email }}
@@ -60,7 +60,7 @@ const handleLogin = async () => {
         </div>
       </div>
       <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
-        <input v-model="password" v-bind="passwordAttrs"  name="password" />
+        <input v-model="password" v-bind="passwordAttrs"  name="password" placeholder="" />
         <label for="password">Passwort</label>
         <div class="errors">
           {{ errors.password }}

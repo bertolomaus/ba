@@ -1,15 +1,18 @@
 <script lang="ts" setup>
+import EditQuestion from '~/components/EditQuestion.vue'
+
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { fetchQuestionData } = useQuestionData()
 const route = useRoute()
 const question = ref<Question>()
-const qId = route.query.id?.toString()
+const qId = parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0")
+const { userData } = useUserData()
 
 onMounted(async () => {
   showSidebar.value = false
   showModal.value = false
-  const request = await fetchQuestionData(parseInt(qId ? qId : "0"))
+  const request = await fetchQuestionData(qId)
   question.value = request?.question
 })
 </script>
@@ -17,16 +20,8 @@ onMounted(async () => {
 <template>
   <div class="frage">
     <div class="container">
-      <h1 class="">{{ question?.title }}</h1>
-      <h2 class="h3">Worum geht es?</h2>
-      <ul class="tags">
-        <li v-for="(skill, index) of question?.requiredSkills" :key="index">{{ skill }}</li>
-      </ul>
-      <h3 class="h3">Beschreibung</h3>
-      <p>{{ question?.description }}</p>
-      <h3 class="h3">Lösungsansätze</h3>
-      <p>{{ question?.attemptedSolutions }}</p>
-      <pre class="mt-16">{{ question }}</pre>
+      <EditQuestion :id="qId" :update-on-save="true" />
+      <pre class="mt-16">{{ userData.questions }}</pre>
     </div>
   </div>
 </template>

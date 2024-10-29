@@ -186,8 +186,17 @@ a:hover .btn-text:after{
 }
 
 .btn-close{
-  @apply w-12 -rotate-45 p-3 text-muted cursor-pointer transition-all border-transparent rounded-full;
+  @apply w-12 -rotate-45 p-3 text-muted cursor-pointer transition-all border-transparent border rounded-full;
   @apply hover:rotate-45 hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
+}
+
+.btn-edit{
+  @apply w-16 p-3 cursor-pointer transition-all rounded-full border border-transparent;
+  @apply hover:bg-bgColor-mutedLight hover:text-primary hover:border-muted;
+}
+
+.btn-edit.active{
+  @apply bg-bgColor-mutedLight text-primary border-muted;
 }
 
 /* *** TAGS *** */

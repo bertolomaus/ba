@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import EditQuestion from '~/components/EditQuestion.vue'
+import Edit from '../components/Edit.vue'
 
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
@@ -8,6 +9,7 @@ const route = useRoute()
 const question = ref<Question>()
 const qId = parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0")
 const { userData } = useUserData()
+const { editMode, toggleEditMode } = useEdit()
 
 onMounted(async () => {
   showSidebar.value = false
@@ -20,7 +22,8 @@ onMounted(async () => {
 <template>
   <div class="frage">
     <div class="container">
-      <EditQuestion :id="qId" :update-on-save="true" />
+      <Edit />
+      <EditQuestion v-if="editMode" :id="qId" :update-on-save="true" />
       <pre class="mt-16">{{ userData.questions }}</pre>
     </div>
   </div>

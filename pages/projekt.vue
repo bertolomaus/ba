@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import EditProject from '~/components/EditProject.vue'
+import Edit from '~/components/Edit.vue'
 
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { fetchProjectData } = useProjectsData()
+const { editMode } = useEdit()
 const route = useRoute()
 const project = ref<Project>()
 const pId = route.query.id?.toString()
@@ -19,9 +21,10 @@ onMounted(async () => {
 <template>
   <div class="projekt">
     <div class="container">
-      <EditProject :update-on-save="true" :id="parseInt(pId ? pId : '0')" />
+      <Edit />
+      <EditProject v-if="editMode" :update-on-save="true" :id="parseInt(pId ? pId : '0')" />
 
-      <div class="project-viewer hidden">
+      <div v-if="!editMode" class="project-viewer">
         <h1 class="">{{ project?.title }}</h1>
         <h3 class="h3">Was ist das Ziel?</h3>
         <p>{{ project?.goal }}</p>

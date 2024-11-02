@@ -35,7 +35,7 @@ export interface UserDataShort {
 }
 
 export const useUserData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", avatar: "mr", contact: [], status: "", skills: [], hobbies: [], bio: "", questions: [], projects: []}))
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "profile-mr-light.png", contact: [], status: "", skills: [], hobbies: [], bio: "", questions: [], projects: []}))
   const allHobbies = useState<string[]>('allHobbies', () => [])
   const { userId } = useAuth()
   

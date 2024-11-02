@@ -1,7 +1,7 @@
 /* ********** BASIC FONT ********** */
 
 body{
-  @apply font-sans font-light text-base tracking-wide leading-6 antialiased text-textColor pt-20;
+  @apply font-sans font-light text-base tracking-wide leading-6 antialiased text-textColor pt-28;
   min-height:100vh;
 }
 
@@ -199,6 +199,10 @@ a:hover .btn-text:after{
   @apply bg-bgColor-mutedLight text-primary border-muted;
 }
 
+.btn-editMode{
+  @apply absolute top-36 right-8 flex gap-3 items-center
+}
+
 /* *** TAGS *** */
 
 .tags{
@@ -221,7 +225,7 @@ a:hover .btn-text:after{
 /* ********** COMPONENT/HEADER ********** */
 
 .headerbar{
-  @apply fixed top-0 left-0 w-full px-8 h-20 transition-all flex justify-between items-center;
+  @apply fixed top-0 left-0 w-full px-8 h-28 transition-all flex justify-between items-center bg-bgColor-mutedLight;
   z-index: 1000;
 }
 
@@ -428,12 +432,30 @@ a:hover .btn-text:after{
 
 /* ********** PROFILE ********** */
 
+.avatar{
+  @apply relative
+}
+
+.iconEditAvatar{
+  @apply absolute bottom-0 right-0 p-3 text-muted transition-colors rounded-full border-transparent border cursor-pointer;
+  @apply hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
+}
+
+.iconEditAvatar.active{
+  @apply bg-bgColor-mutedLight border-muted text-primary;
+}
+
+.list-avatars{
+  @apply absolute top-full right-0 mt-4 p-4 bg-bgColor-mutedLight flex gap-4 max-w-full justify-end rounded-md border border-muted shadow
+}
+
 .skill-name{
   @apply w-40
 }
 
 .skill-level .star{
-  @apply w-6 overflow-visible stroke-2 stroke-primary;
+  @apply w-7 overflow-visible stroke-primary;
+  stroke-width:72px
 }
 
 .skill-level:hover .star{
@@ -447,6 +469,20 @@ a:hover .btn-text:after{
   @apply fill-none;
 }
 
-.skills .trash{
-  @apply w-5;
+.skills .trash,
+.personal .trash{
+  @apply w-6 text-red opacity-0 transition-opacity;
+}
+
+.skills li:hover .trash,
+.personal li:hover .trash{
+  @apply opacity-100
+}
+
+.list-hobbies .trash{
+  @apply opacity-0 transition-opacity 
+}
+
+.list-hobbies li{
+  @apply w-max
 }

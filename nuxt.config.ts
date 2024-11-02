@@ -2,7 +2,11 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/content", '@vee-validate/nuxt'],
+  modules: ["@nuxtjs/tailwindcss",
+    "@nuxt/content",
+    "@vee-validate/nuxt",
+    "@nuxt/image"
+  ],
   css: ["~/assets/css/utilities.css", "~/assets/css/styles.css", "~/assets/css/responsive.css"],
   tailwindcss: {
     cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],
@@ -22,5 +26,8 @@ export default defineNuxtConfig({
         }
       ]
     }
+  },
+  image: {
+    dir: 'assets/img'
   }
 })

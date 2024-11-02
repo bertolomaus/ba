@@ -22,7 +22,7 @@ const generateNavigationLinks = async () => {
     <div class="headerbar">
       <div class="logo">
         <NuxtLink to="/">
-          <img src="~/assets/img/logo-dark-red.png" alt="Wizard Logo" height="64" width="207">
+          <NuxtImg src="logo-dark-red.png" alt="Wizard Logo" height="64" />
           <!-- <img src="../assets/img/logo-dark-red.png" alt="Wizard Logo" height="64" width="207" class="dark:opacity-0">
           <img src="../assets/img/logo-light-red.png" alt="Wizard Logo" height="64" width="207" class="dark:opacity-1"> -->
         </NuxtLink>
@@ -36,7 +36,7 @@ const generateNavigationLinks = async () => {
           </svg>
         </div>
         <div class="open-interaction" @click="showInteraction">
-          <img src="../assets/img/profile-mr-light.png" alt="Wizard Logo" height="64" width="64">
+          <NuxtImg :src="userData.avatar" alt="Wizard Logo" width="64" />
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@ const generateNavigationLinks = async () => {
             </svg>
           </div>
           <div class="sidebar-open-interaction" @click="showInteraction">
-            <img src="../assets/img/profile-mr-light.png" alt="Wizard Logo" height="48" width="48">
+            <NuxtImg :src="userData.avatar" alt="Wizard Logo" width="48" />
           </div>
           <SVGClose class="sidebar-close" @click="toggleSidebar" />
         </div>

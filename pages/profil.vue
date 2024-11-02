@@ -2,6 +2,7 @@
 import Autocomplete from '../components/Autocomplete.vue'
 import Star from '../components/Star.vue'
 import Trash from '../components/Trash.vue'
+import Edit from '../components/Edit.vue'
 
 const route = useRoute()
 const { userId } = useAuth()
@@ -10,7 +11,23 @@ const { userData, fetchUserData, updateUserData, getHobbies, allHobbies } = useU
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { getSkills, allSkills, setSkills } = useSkills()
+const { editMode, toggleEditMode } = useEdit()
 const isOwner = ref<boolean>(false)
+const listAvatars = ref<string[]>([
+  "profile-mr-light.png",
+  "profile-fr-light.png"
+])
+const editAvatar = ref<boolean>(false)
+
+// toggle the avatar edit mode
+const toggleEditAvatar = () => {
+  editAvatar.value = !editAvatar.value
+}
+
+// set new avatar (not yet to database)
+const setAvatar = (newAvatar: string) => {
+  userData.value.avatar = newAvatar
+}
 
 // add skill to userData array (not yet to database)
 const addNewSkill = (eventPayload: { payload: string }) => {
@@ -27,6 +44,11 @@ const removeSkill = (index: number) => {
   userData.value.skills.splice(index, 1)
 }
 
+// remove hobby from userData array (not yet from database)
+const removeHobby = (index: number) => {
+  userData.value.hobbies.splice(index, 1)
+}
+
 // update database entry
 const save = async () => {
   if(profileId != '0' && profileId == userId.value.toString()){
@@ -38,6 +60,7 @@ const save = async () => {
     })
     
     setSkills(skills)
+    toggleEditMode()
   }
 }
 
@@ -74,49 +97,99 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
 
 <template>
   <div class="profil">
+    <Edit />
     <div class="container">
       <h1 class="">At your service, {{ userData.name }}</h1>
-      <ul class="p-8 list-disc">
-        <li>JWT auth für persistenten login</li>
-      </ul>
       <div class="grid grid-cols-2 gap-16">
         <div>
           <div class="avatar">
-            <img src="assets/img/profile-mr-light.png" alt="">
-            <ul class="p-8 list-disc">
-              <li>avatar editable machen</li>
-              <li>wählen zwischen 4 avataren</li>
-              <li>onclick: öffne auswhl für avatare</li>
-              <li>wenn avatar gewählt: ändere url von avatar</li>
-            </ul>
+            <NuxtImg :src="userData.avatar" :alt="`Avatar ${userData.name}`" width="256" />
+            <div class="edit-avatar" v-if="editMode">
+              <div class="iconEditAvatar" @click="toggleEditAvatar" :class="editAvatar ? 'active' : ''">
+                <svg class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+                  <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                </svg>
+              </div>
+              <ul class="list-avatars" v-if="editAvatar">
+                <li class="item-skills" v-for="avatar in listAvatars" :key="avatar">
+                  <NuxtImg :src="avatar" :alt="`Alternative Avatare ${userData.name}`" width="96" @click="setAvatar(avatar)" class="cursor-pointer" />
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div>
           <div class="name">
-            <h3>Anzeigename</h3>
-            <input placeholder="Name" name="name" v-model="userData.name" />
+            <div v-if="editMode">
+              <h3>Anzeigename</h3>
+              <input placeholder="Name" name="name" v-model="userData.name" />
+            </div>
+            <div v-else>
+              <h3>{{ userData.name }}</h3>
+            </div>
           </div>
           <div class="status">
-            <h3>Status</h3>
-            <textarea placeholder="Status" name="status" v-model="userData.status"></textarea>
+            <div v-if="editMode">
+              <h3>Status</h3>
+              <textarea placeholder="Status" name="status" v-model="userData.status"></textarea>
+            </div>
+            <div v-else>
+              <p>{{ userData.status }}</p>
+            </div>
           </div>
         </div>
       </div>
       <div class="contact">
-        <h3>Contact</h3>
-        <p>Abgesehen von Eulen und Gedankenlesen, wie möchtest du kontaktiert werden?</p>
-        <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
-        <input placeholder="Discord" name="discord" v-model="userData.contact[1]" />
-        <input placeholder="Signal" name="signal" v-model="userData.contact[2]" />
-        <input placeholder="Webex" name="webex" v-model="userData.contact[3]" />
-        <input placeholder="Email" name="email" v-model="userData.contact[4]" />
+        <h3>Kontakt</h3>
+        <div v-if="editMode">
+          <p>Abgesehen von Eulen und Gedankenlesen, wie möchtest du kontaktiert werden?</p>
+          <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
+          <input placeholder="Discord" name="discord" v-model="userData.contact[1]" />
+          <input placeholder="Signal" name="signal" v-model="userData.contact[2]" />
+          <input placeholder="Webex" name="webex" v-model="userData.contact[3]" />
+          <input placeholder="Email" name="email" v-model="userData.contact[4]" />
+        </div>
+        <div v-else>
+          <ul class="list-contact">
+            <li v-if="userData.contact[0]">
+              <a :href="userData.contact[0]" class="flex gap-2 items-center">
+                <NuxtImg src="wa.png" alt="Icon Whatsapp" height="24" />
+                Whatsapp
+              </a>
+            </li>
+            <li v-if="userData.contact[1]">
+              <a :href="userData.contact[2]" class="flex gap-2 items-center">
+                <NuxtImg src="discord.png" alt="Icon Discord" height="24" />
+                Discprd
+              </a>
+            </li>
+            <li v-if="userData.contact[2]">
+              <a :href="userData.contact[2]" class="flex gap-2 items-center">
+                <NuxtImg src="signal.png" alt="Icon Signal" height="24" />
+                Signal
+              </a>
+            </li>
+            <li v-if="userData.contact[3]">
+              <a :href="userData.contact[3]" class="flex gap-2 items-center">
+                <NuxtImg src="webex.png" alt="Icon Webex" height="24" />
+                Webex
+              </a>
+            </li>
+            <li v-if="userData.contact[4]">
+              <a :href="userData.contact[4]" class="flex gap-2 items-center">
+                <NuxtImg src="mail.png" alt="Icon Email" height="24" />
+                Email
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="skills">
-        <h3>Prepared Spells</h3>
+        <h3>Fertigkeiten & Zaubertricks</h3>
         <ul class="list-skills">
           <li class="item-skills flex" v-for="(skill, index) in userData.skills.sort((a, b) => {if(b.level != a.level){return b.level - a.level} return a.name.localeCompare(b.name)})" :key="skill.name">
             <div class="skill-name">{{ skill.name }}</div>
-            <div class="flex skill-level">
+            <div class="flex skill-level" v-if="editMode">
               <Star
                 @click="skill.level = index + 1"
                 class="pr-2 cursor-pointer"
@@ -125,26 +198,38 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
                 :class="index + 1 <= skill.level ? 'fill-primary' : 'fill-none'"
               />
             </div>
-            <Trash @click="removeSkill(index)" class="ml-4" />
+            <div class="flex skill-level pointer-events-none" v-else>
+              <Star
+                class="pr-2"
+                v-for="(item, index) in 5"
+                :key="index" :data-skill="index + 1"
+                :class="index + 1 <= skill.level ? 'fill-primary' : 'fill-none'"
+              />
+            </div>
+            <Trash @click="removeSkill(index)" class="ml-4" v-if="editMode" />
           </li>
         </ul>
-        <Autocomplete :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
+        <Autocomplete v-if="editMode" :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
-        <ul class="list-skills">
-          <li class="item-skills" v-for="hobby in userData.hobbies.sort()" :key="hobby">
+        <ul class="list-hobbies">
+          <li class="item-hobbies flex items-center" v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
+            <Trash @click="removeHobby(index)" class="ml-4" v-if="editMode" />
           </li>
         </ul>
-        <Autocomplete :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
+        <Autocomplete v-if="editMode" :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
       </div>
       <div class="bio">
-        <h3>Bio</h3>
-        <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
+        <h3>Über {{ userData.name }}</h3>
+        <div v-if="editMode">
+          <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
+        </div>
+        <div v-else>{{ userData.bio }}</div>
       </div>
-      <div class="save">
-        <p class="btn w-max mt-8" @click="save">Speichern</p>
+      <div class="save" v-if="editMode">
+        <button class="btn w-max mt-8" @click="save">Speichern</button>
       </div>
     </div>
   </div>

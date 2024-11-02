@@ -24,7 +24,7 @@ onMounted(async () => {
       <Edit />
       <EditProject v-if="editMode" :update-on-save="true" :id="parseInt(pId ? pId : '0')" />
 
-      <div v-if="!editMode" class="project-viewer">
+      <div v-else class="project-viewer">
         <h1 class="">{{ project?.title }}</h1>
         <h3 class="h3">Was ist das Ziel?</h3>
         <p>{{ project?.goal }}</p>

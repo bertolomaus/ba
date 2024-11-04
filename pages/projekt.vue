@@ -6,6 +6,7 @@ const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { fetchProjectData } = useProjectsData()
 const { editMode } = useEdit()
+const { userId } = useAuth()
 const route = useRoute()
 const project = ref<Project>()
 const pId = route.query.id?.toString()
@@ -21,16 +22,16 @@ onMounted(async () => {
 <template>
   <div class="projekt">
     <div class="container">
-      <Edit />
+      <Edit v-if="project?.owner === userId" />
       <EditProject v-if="editMode" :update-on-save="true" :id="parseInt(pId ? pId : '0')" />
 
       <div v-else class="project-viewer">
         <h1 class="">{{ project?.title }}</h1>
-        <h3 class="h3">Was ist das Ziel?</h3>
+        <h2 class="h3">Was ist das Ziel?</h2>
         <p>{{ project?.goal }}</p>
         <h3 class="h3">Beschreibung</h3>
         <p>{{ project?.description }}</p>
-        <h2 class="h3">Welche Fertigkeiten & Technologien werden genutzt?</h2>
+        <h3 class="h3">Welche Fertigkeiten & Technologien werden genutzt?</h3>
         <ul class="tags">
           <li v-for="(skill, index) of project?.requiredSkills" :key="index">{{ skill }}</li>
         </ul>
@@ -42,17 +43,13 @@ onMounted(async () => {
         <p>{{ project?.whyRelevant }}</p>
         <h3 class="h3">Realistische Deadline</h3>
         <p>{{ project?.deadline }}</p>
-        <h3 class="h3">Verwendete Ressourcen</h3>
-        <p>{{ project?.resources }}</p>
+        <h3 class="h3" v-if="project?.resources && project?.resources.length > 0">Verwendete Ressourcen</h3>
+        <p v-if="project?.resources && project?.resources.length > 0">{{ project?.resources }}</p>
         <h3 class="h3">Projektmitglieder</h3>
         <p>{{ project?.members }}</p>
         <p>Werden noch Mitglieder gesucht? {{ project?.isLookingForMembers }}</p>
-        <h3 class="h3">Soll das Projekt für alle sichtbar sein?</h3>
-        <p>{{ project?.isVisible }}</p>
-        <h3 class="h3">Projekt ist abgeschlossen</h3>
-        <p>{{ project?.isDone }}</p>
+        <h3 class="h3 text-red" v-if="!project?.isDone">Dieses Projekt ist abgeschlossen.</h3>
       </div>
-      <pre class="mt-16">{{ project }}</pre>
     </div>
   </div>
 </template>

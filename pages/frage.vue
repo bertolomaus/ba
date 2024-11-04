@@ -24,7 +24,6 @@ onMounted(async () => {
     <div class="container">
       <Edit />
       <EditQuestion v-if="editMode" :id="qId" :update-on-save="true" />
-      <pre class="mt-16">{{ userData.questions }}</pre>
     </div>
   </div>
 </template>

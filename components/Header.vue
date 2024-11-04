@@ -2,6 +2,7 @@
 import FormLogout from './FormLogout.vue'
 import UserAuthentication from './UserAuthentication.vue'
 import SVGClose from './SVGClose.vue'
+import IconLogin from './IconLogin.vue'
 
 const { isLoggedIn, userId } = useAuth()
 const { userData, fetchUserData } = useUserData()
@@ -22,9 +23,7 @@ const generateNavigationLinks = async () => {
     <div class="headerbar">
       <div class="logo">
         <NuxtLink to="/">
-          <NuxtImg src="logo-dark-red.png" alt="Wizard Logo" height="64" />
-          <!-- <img src="../assets/img/logo-dark-red.png" alt="Wizard Logo" height="64" width="207" class="dark:opacity-0">
-          <img src="../assets/img/logo-light-red.png" alt="Wizard Logo" height="64" width="207" class="dark:opacity-1"> -->
+          <NuxtImg src="logo-light-red.png" alt="Wizard Logo" height="64" />
         </NuxtLink>
       </div>
       <div class="sidebar-togglers">
@@ -36,7 +35,8 @@ const generateNavigationLinks = async () => {
           </svg>
         </div>
         <div class="open-interaction" @click="showInteraction">
-          <NuxtImg :src="userData.avatar" alt="Wizard Logo" width="64" />
+          <NuxtImg v-if="isLoggedIn" :src="userData.avatar" alt="Wizard Logo" width="64" />
+          <p class="btn" v-else>Login</p>
         </div>
       </div>
     </div>
@@ -53,7 +53,8 @@ const generateNavigationLinks = async () => {
             </svg>
           </div>
           <div class="sidebar-open-interaction" @click="showInteraction">
-            <NuxtImg :src="userData.avatar" alt="Wizard Logo" width="48" />
+            <NuxtImg v-if="isLoggedIn" :src="userData.avatar" alt="Wizard Logo" width="48" />
+            <IconLogin v-else />
           </div>
           <SVGClose class="sidebar-close" @click="toggleSidebar" />
         </div>

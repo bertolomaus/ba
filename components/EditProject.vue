@@ -12,6 +12,7 @@ const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
 const { fetchMembers, fetchProjectData, project } = useProjectsData()
 const { userData, fetchUserData, updateUserData } = useUserData()
+const { editMode } = useEdit()
 const possibleHelpers = ref<UserDataShort[]>([])
 const resourceName = ref<string>('')
 const resourceSrc = ref<string>('')
@@ -98,9 +99,12 @@ const onSubmit = async () => {
       userData.value.projects.push(project.value)
       await updateUserData(userId.value, userData.value)
     }
-
+    
     // add project's requiredSkills to skills table
     setSkills(project.value.requiredSkills)
+    
+    // turn off edit mode
+    editMode.value = false
   } catch (error) {
     console.error(error)
   }
@@ -206,7 +210,6 @@ onMounted(async () => {
             <p>{{ member.name }}</p>
             <p>{{ member.id }}</p>
             <p>{{ member.avatar }}</p>
-            <pre>{{ member }}</pre>
           </li>
         </ul>
       </div>
@@ -238,7 +241,7 @@ onMounted(async () => {
         <p>id: {{ helper.id }}</p>
         <p>name: {{ helper.name }}</p>
         <p>common: {{ helper.skills }}</p>
-        <img src="../assets/img/profile-mr-light.png" :alt="helper.name">
+        <NuxtImg :src="helper.avatar" :alt="helper.name" />
         <NuxtLink :to="{path: 'profil', query: {wizard: helper.id}}">Mehr erfahren</NuxtLink>
       </div>
     </div>

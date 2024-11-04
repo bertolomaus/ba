@@ -30,30 +30,31 @@ export default {
       'xs': '.75rem',
       'sm': '.875rem',
       'base': '1rem',
-      'lg': '1.25rem',
-      'xl': '1.5rem',
+      'lg': '1.125rem',
+      'xl': '1.25rem',
       '2xl': '2rem',
       '3xl': '3rem',
     },
     extend: {
       colors: {
         textColor: {
-          DEFAULT: '#4c586d',
-          primary: '#00112f',
+          DEFAULT: '#cccfd5',
+          primary: '#e5e7ea',
           red: '#eb4747',
-          blue: '#00319f',
-          highlight: '#ffd824',
-          muted: '#99a0ac',
+          blue: '#e5e7ea',
+          highlight: '#ffffff',
+          text: '#cccfd5',
+          muted: '#667082'
         },
         bgColor: {
-          DEFAULT: 'rgba(0,0,0,0)',
+          DEFAULT: '#00112f',
           primary: '#00112f',
-          primaryLight: '#203c6c',
           red: '#eb4747',
           blue: '#00319f',
           highlight: '#ffd824',
-          muted: '#e5e7ea',
-          mutedLight: '#f4f5f6',
+          muted: '#11213d',
+          lighter: '#1e2d47',
+          darker: '#000e26',
         },
         primary: {
           DEFAULT: '#00112f',
@@ -73,13 +74,12 @@ export default {
           DEFAULT: '#99a0ac',
         },
         inverted: {
-          DEFAULT: '#e5e7ea',
-          primary: '#e5e7ea',
-          red: '#e5e7ea',
-          blue: '#e5e7ea',
-          highlight: '#ffffff',
-          text: '#cccfd5',
-          muted: '#667082'
+          DEFAULT: '#4c586d',
+          primary: '#00112f',
+          red: '#eb4747',
+          blue: '#00319f',
+          highlight: '#ffd824',
+          muted: '#99a0ac',
         },
         success: {
           DEFAULT: '#33ff88'

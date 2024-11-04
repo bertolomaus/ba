@@ -1,46 +1,66 @@
 /* ********** BASIC FONT ********** */
 
 body{
-  @apply font-sans font-light text-base tracking-wide leading-6 antialiased text-textColor pt-28;
+  @apply font-sans font-light text-base tracking-wider leading-8 antialiased text-textColor pt-28 bg-bgColor;
   min-height:100vh;
 }
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6{
-  @apply font-serif font-bold text-base tracking-wide text-textColor-primary uppercase tracking-normal;
+  @apply font-serif font-bold text-base tracking-wider uppercase text-textColor-primary;
   line-height:1em;
 }
 
 h1, .h1{
-  @apply text-3xl
+  @apply text-3xl mb-8 text-primary;
+  -webkit-text-stroke: #fff 0px;
+  text-shadow:0 -1px #fff, -1px 0 #fff, -1px -1px #fff, 0px 1px #fff, 1px 0px #fff, 1px 1px #fff, 1px 2px #fff, 2px 1px #fff, 2px 2px #fff, 2px 2.5px #fff, 2.5px 2px #fff, 2.5px 2.5px 1px #fff, 2px 3px #fff, 3px 2px #fff, 3px 3px #fff;
 }
 
 h2, .h2{
-  @apply text-2xl
+  @apply text-2xl mb-4
+}
+
+* + h2, * + .h2{
+  @apply mt-8;
 }
 
 h3, .h3{
-  @apply text-xl
+  @apply text-xl mb-3
+}
+
+* + h3, * + .h3{
+  @apply mt-6;
+}
+
+* + h4, * + .h4,
+* + h5, * + .h5,
+* + h6, * + .h6{
+  @apply mt-4;
 }
 
 h4, .h4{
-  @apply text-lg
+  @apply text-lg mb-3
 }
 
 h5, .h5{
-  @apply text-lg font-medium
+  @apply text-lg font-medium mb-2
 }
 
 h6, .h6{
-  @apply text-lg font-normal
+  @apply text-lg font-normal mb-2
 }
 
 a{
   @apply text-textColor-primary transition-all font-normal
 }
 
-p+p{
-  margin-top:.75em;
+p + p{
+  @apply mt-2
+}
+
+ul + p, ol + p{
+  @apply mt-4
 }
 
 [class^="el-"]:not(:last-child){
@@ -87,8 +107,8 @@ svg{
 
 /* *** FORM *** */
 input, textarea{
-  @apply border border-transparent rounded p-2 bg-bgColor-mutedLight transition-all block w-full;
-  @apply hover:border-muted focus:border-primary focus:bg-white;
+  @apply border border-transparent rounded py-2 px-4 bg-bgColor-muted transition-all block w-full;
+  @apply hover:border-muted focus:border-muted focus:bg-bgColor;
   outline:none;
 }
 
@@ -98,11 +118,11 @@ form .field{
 
 form label,
 .autocomplete label{
-  @apply absolute left-1 top-2 text-textColor-muted text-sm transition-all z-10 pointer-events-none px-1;
+  @apply absolute left-3 top-2 text-sm transition-all z-10 pointer-events-none px-1;
 }
 
 form .has-text input{
-  @apply bg-white
+  @apply bg-bgColor-primary
 }
 
 form :focus + label,
@@ -110,7 +130,7 @@ form .has-text label,
 form .is-acceptable label,
 .autocomplete :focus + label,
 :not(:placeholder-shown) + label{
-  @apply left-1 top-0 text-xs leading-4 bg-white;
+  @apply left-1 top-0 text-xs leading-4 bg-bgColor-primary;
   transform:translateY(-50%);
 }
 
@@ -141,7 +161,7 @@ form .btn{
 /* *** BUTTON *** */
 .btn{
   @apply leading-5 font-serif text-sm uppercase px-8 py-2 font-bold rounded transition-all relative z-10 border-2 border-bgColor-muted block cursor-pointer;
-  @apply hover:text-inverted hover:border-bgColor-primaryLight
+  @apply text-textColor-highlight hover:border-blue
 }
 
 .btn:after, .btn:before{
@@ -157,7 +177,7 @@ form .btn{
 }
 
 .btn:after{
-  @apply bg-bgColor-primaryLight;
+  @apply bg-blue;
   transition-delay: .1s;
 }
 
@@ -166,7 +186,7 @@ form .btn{
 }
 
 .btn-primary{
-  @apply text-inverted bg-bgColor-primaryLight
+  @apply text-inverted bg-bgColor-muted
 }
 
 /* BTN VARIATION */
@@ -187,16 +207,16 @@ a:hover .btn-text:after{
 
 .btn-close{
   @apply w-12 -rotate-45 p-3 text-muted cursor-pointer transition-all border-transparent border rounded-full;
-  @apply hover:rotate-45 hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
+  @apply hover:rotate-45 hover:bg-bgColor hover:border-muted hover:text-textColor-primary;
 }
 
 .btn-edit{
   @apply w-16 p-3 cursor-pointer transition-all rounded-full border border-transparent;
-  @apply hover:bg-bgColor-mutedLight hover:text-primary hover:border-muted;
+  @apply hover:bg-bgColor-muted hover:text-primary hover:border-muted;
 }
 
 .btn-edit.active{
-  @apply bg-bgColor-mutedLight text-primary border-muted;
+  @apply bg-bgColor-muted text-primary border-muted;
 }
 
 .btn-editMode{
@@ -210,7 +230,7 @@ a:hover .btn-text:after{
 }
 
 .tags li{
-  @apply px-3 py-1 bg-primary text-inverted rounded-2xl flex cursor-pointer
+  @apply px-3 py-1 bg-red text-textColor-primary rounded-2xl flex cursor-pointer font-serif font-medium tracking-widest
 }
 
 .tags svg{
@@ -225,7 +245,7 @@ a:hover .btn-text:after{
 /* ********** COMPONENT/HEADER ********** */
 
 .headerbar{
-  @apply fixed top-0 left-0 w-full px-8 h-28 transition-all flex justify-between items-center bg-bgColor-mutedLight;
+  @apply fixed top-0 left-0 w-full px-8 h-28 transition-all flex justify-between items-center bg-bgColor-darker;
   z-index: 1000;
 }
 
@@ -243,7 +263,7 @@ a:hover .btn-text:after{
 
 .open-navigation{
   @apply mr-4 p-4;
-  @apply hover:text-primary;
+  @apply hover:text-textColor-primary;
 }
 
 .open-navigation svg{
@@ -268,11 +288,11 @@ a:hover .btn-text:after{
 }
 
 .sidebar-controls{
-  @apply absolute px-8 pt-4 top-0 right-0 h-20 w-full flex items-center bg-white;
+  @apply absolute px-8 pt-4 top-0 right-0 h-20 w-full flex items-center bg-bgColor-muted;
 }
 
 .sidebar-controls-highlight{
-  @apply absolute h-16 left-8 w-16 bg-bgColor-muted border rounded border-muted transition-all;
+  @apply absolute h-16 left-8 w-16 bg-bgColor border rounded border-muted transition-all;
 }
 
 .sidebar-controls-highlight.highlight-interaction{
@@ -281,12 +301,16 @@ a:hover .btn-text:after{
 
 .sidebar-open-navigation, .sidebar-open-interaction{
   @apply mr-4 relative px-5 h-16 flex items-center cursor-pointer transition-colors;
-  @apply hover:text-primary;
+  @apply hover:text-textColor-highlight;
   z-index:10;
 }
 
 .sidebar-open-interaction{
-  @apply px-2;
+  @apply p-0
+}
+
+.sidebar-open-interaction svg{
+  @apply w-16 pl-4 pr-5;
 }
 
 .sidebar-open-navigation svg{
@@ -298,7 +322,7 @@ a:hover .btn-text:after{
 }
 
 .sidebar-content{
-  @apply absolute h-full right-0 top-0 bg-white overflow-x-hidden translate-x-[400px] transition-all;
+  @apply absolute h-full right-0 top-0 bg-bgColor-muted overflow-x-hidden translate-x-[400px] transition-all;
   width:400px;
   z-index:10;
 }
@@ -314,11 +338,11 @@ a:hover .btn-text:after{
 }
 
 .sidebar-content:before{
-  @apply bg-gradient-to-r from-white to-transparent left-0
+  @apply bg-gradient-to-r from-bgColor-muted to-transparent left-0
 }
 
 .sidebar-content:after{
-  @apply bg-gradient-to-l from-white to-transparent right-0
+  @apply bg-gradient-to-l from-bgColor-muted to-transparent right-0
 }
 
 .sidebar .h4{
@@ -333,14 +357,6 @@ a:hover .btn-text:after{
   @apply absolute top-28 left-0 transition-transform w-full px-8;
 }
 
-.sidebar .navigation{
-  transform:translateX(100%);
-}
-
-.sidebar .interaction{
-  transform:translateX(-100%);
-}
-
 .sidebar .navigation.active, .sidebar .interaction.active{
   @apply translate-x-0;
 }
@@ -351,6 +367,32 @@ a:hover .btn-text:after{
 
 .sidebar .navigation ul ul a{
   @apply pl-8 font-light;
+}
+
+.sidebar .navigation .router-link-active{
+  @apply text-textColor-primary font-medium
+}
+
+.sidebar .navigation{
+  transform:translateX(100%);
+}
+
+.sidebar .interaction{
+  transform:translateX(-100%);
+}
+
+.sidebar form :focus + label,
+.sidebar form .has-text label,
+.sidebar form .is-acceptable label,
+.sidebar .autocomplete :focus + label,
+.sidebar :not(:placeholder-shown) + label,
+.sidebar form .has-text input{
+  @apply bg-bgColor-muted
+}
+
+.sidebar input, .sidebar textarea{
+  @apply bg-bgColor-lighter;
+  @apply focus:bg-bgColor-muted
 }
 
 
@@ -389,13 +431,13 @@ a:hover .btn-text:after{
 }
 
 .modal-content{
-  @apply absolute bg-white rounded-lg top-16 left-16 right-16 bottom-16 p-16;
+  @apply absolute bg-bgColor-muted rounded-lg top-16 left-16 right-16 bottom-16 p-16;
   z-index: 1;
 }
 
 .modal-close{
-  @apply absolute top-10 right-10 bg-bgColor-mutedLight shadow;
-  @apply hover:bg-bgColor-muted;
+  @apply absolute top-10 right-10 bg-bgColor-muted shadow;
+  @apply hover:bg-bgColor;
   z-index: 2;
 }
 
@@ -408,7 +450,7 @@ a:hover .btn-text:after{
 }
 
 .suggestions-list{
-  @apply absolute top-full w-max min-w-40 bg-bgColor-mutedLight border-muted border rounded-md overflow-hidden;
+  @apply absolute top-full w-max min-w-40 bg-bgColor-muted border-muted border rounded-md overflow-hidden;
   z-index:100;
 }
 
@@ -438,15 +480,15 @@ a:hover .btn-text:after{
 
 .iconEditAvatar{
   @apply absolute bottom-0 right-0 p-3 text-muted transition-colors rounded-full border-transparent border cursor-pointer;
-  @apply hover:bg-bgColor-mutedLight hover:border-muted hover:text-primary;
+  @apply hover:bg-bgColor-muted hover:border-muted hover:text-primary;
 }
 
 .iconEditAvatar.active{
-  @apply bg-bgColor-mutedLight border-muted text-primary;
+  @apply bg-bgColor-muted border-muted text-primary;
 }
 
 .list-avatars{
-  @apply absolute top-full right-0 mt-4 p-4 bg-bgColor-mutedLight flex gap-4 max-w-full justify-end rounded-md border border-muted shadow
+  @apply absolute top-full right-0 mt-4 p-4 bg-bgColor-muted flex gap-4 max-w-full justify-end rounded-md border border-muted shadow
 }
 
 .skill-name{

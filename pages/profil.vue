@@ -14,8 +14,8 @@ const { getSkills, allSkills, setSkills } = useSkills()
 const { editMode, toggleEditMode } = useEdit()
 const isOwner = ref<boolean>(false)
 const listAvatars = ref<string[]>([
-  "profile-mr-light.png",
-  "profile-fr-light.png"
+  "profile-mr-dark.png",
+  "profile-fr-dark.png"
 ])
 const editAvatar = ref<boolean>(false)
 

@@ -4,5 +4,14 @@ export const useEdit = () => {
   const toggleEditMode = () => {
     editMode.value = !editMode.value
   }
-  return {editMode, toggleEditMode}
+
+  const editModeOn = () => {
+    editMode.value = true
+  }
+
+  const editModeOff = () => {
+    editMode.value = false
+  }
+
+  return {editMode, toggleEditMode, editModeOn, editModeOff}
 }

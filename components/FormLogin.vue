@@ -80,5 +80,7 @@ const handleLogin = async () => {
     <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(85355566)">Login as Albus</button>
     <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(92664339)">Login as Elminster</button>
     <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(49831990)">Login as Gandalf</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(71157217)">Login as Jaina</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(5544526)">Login as Sellen</button>
   </div>
 </template>

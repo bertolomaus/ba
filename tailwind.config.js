@@ -81,14 +81,8 @@ export default {
           highlight: '#ffd824',
           muted: '#99a0ac',
         },
-        success: {
-          DEFAULT: '#33ff88'
-        },
-        error: {
-          DEFAULT: '#eb4747'
-        },
-        warning: {
-          DEFAULT: '#ffd824'
+        green: {
+          DEFAULT: '#00d96c'
         }
       },
       transitionDuration: {

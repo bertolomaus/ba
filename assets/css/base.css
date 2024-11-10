@@ -1,0 +1,101 @@
+/* ********** BASIC FONT ********** */
+
+body{
+  @apply font-sans font-light text-base tracking-wider leading-8 antialiased text-textColor pt-28 bg-bgColor;
+  min-height:100vh;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6{
+  @apply font-serif font-bold text-base tracking-wider uppercase text-textColor-primary;
+  line-height:1em;
+}
+
+h1, .h1{
+  @apply text-3xl mb-8 text-primary;
+  -webkit-text-stroke: #e5e7ea 0px;
+  text-shadow:0 -1px #e5e7ea, -1px 0 #e5e7ea, -1px -1px #e5e7ea, 0px 1px #e5e7ea, 1px 0px #e5e7ea, 1px 1px #e5e7ea, 1px 2px #e5e7ea, 2px 1px #e5e7ea, 2px 2px #e5e7ea, 2px 2.5px #e5e7ea, 2.5px 2px #e5e7ea, 2.5px 2.5px 1px #e5e7ea, 2px 3px #e5e7ea, 3px 2px #e5e7ea, 3px 3px #e5e7ea;
+}
+
+h2, .h2{
+  @apply text-2xl mb-4
+}
+
+* + h2, * + .h2{
+  @apply mt-12;
+}
+
+h3, .h3{
+  @apply text-xl mb-4
+}
+
+* + h3, * + .h3{
+  @apply mt-8;
+}
+
+* + h4, * + .h4,
+* + h5, * + .h5,
+* + h6, * + .h6{
+  @apply mt-4;
+}
+
+h4, .h4{
+  @apply text-lg mb-3
+}
+
+h5, .h5{
+  @apply text-lg font-medium mb-2
+}
+
+h6, .h6{
+  @apply text-lg font-normal mb-2
+}
+
+a{
+  @apply text-textColor-primary transition-all font-normal
+}
+
+p + p{
+  @apply mt-2
+}
+
+ul + p, ol + p{
+  @apply mt-4
+}
+
+[class^="el-"]:not(:last-child){
+  @apply mb-8
+}
+
+svg{
+  @apply fill-current;
+}
+
+
+
+/* ********** BASIC LAYOUT ********** */
+
+.container{
+  @apply p-conainer;
+  max-width: 1328px;
+}
+
+.container.small{
+  max-width:928px;
+}
+
+.container.large{
+  max-width:1728px;
+}
+
+.container.padding-lg{
+  @apply py-conainerLg;
+}
+
+.container.padding-sm{
+  @apply py-conainerSm;
+}
+
+.container.padding-xs{
+  @apply py-conainerXs;
+}

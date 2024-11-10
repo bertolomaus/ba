@@ -1,0 +1,81 @@
+/* *** DASHBOARD *** */
+
+.dashboard .user-authentication {
+  @apply max-w-sm mx-auto;
+}
+
+/* ********** PROFILE ********** */
+
+.profil .h3,
+.profil h3 {
+  @apply mt-8;
+}
+
+.avatar {
+  @apply relative;
+}
+
+.iconEditAvatar {
+  @apply absolute bottom-0 right-0 p-3 text-muted transition-colors rounded-full border-transparent border cursor-pointer;
+  @apply hover:bg-bgColor-darker hover:border-muted hover:text-textColor-primary;
+}
+
+.iconEditAvatar.active {
+  @apply bg-bgColor-darker border-muted text-textColor-primary;
+}
+
+.list-avatars {
+  @apply absolute top-full right-0 mt-4 p-4 bg-bgColor-muted flex gap-4 max-w-full justify-end rounded-md border border-muted shadow;
+}
+
+.skill-name {
+  @apply w-40;
+}
+
+.skill-level .star {
+  @apply w-7 overflow-visible stroke-highlight;
+  stroke-width: 60px;
+}
+
+.skill-level:hover .star {
+  @apply fill-highlight;
+}
+
+.skill-level:hover .star:hover + svg,
+.skill-level:hover .star:hover + svg + svg,
+.skill-level:hover .star:hover + svg + svg + svg,
+.skill-level:hover .star:hover + svg + svg + svg + svg {
+  @apply fill-none;
+}
+
+.skills .trash,
+.personal .trash {
+  @apply w-0 text-red opacity-0 transition-opacity;
+}
+
+.skills li:hover .trash,
+.personal li:hover .trash {
+  @apply opacity-100 w-6 ml-4;
+}
+
+.list-hobbies {
+  @apply gap-2;
+}
+
+.list-hobbies .trash {
+  @apply opacity-0 transition-all;
+}
+
+.list-hobbies li {
+  @apply w-max px-3 py-1 bg-blue text-textColor-primary rounded-2xl flex font-serif font-medium tracking-widest;
+}
+
+.save {
+  @apply fixed bottom-8;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.save .btn {
+  @apply bg-bgColor-darker hover:px-16 hover:py-4;
+}

@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
     "@nuxt/image"
   ],
-  css: ["~/assets/css/utilities.css", "~/assets/css/styles.css", "~/assets/css/responsive.css"],
+  css: ["~/assets/css/styles.css"],
   tailwindcss: {
     cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],
     configPath: "tailwind.config.js",

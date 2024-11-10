@@ -11,13 +11,14 @@ const { userData, fetchUserData, updateUserData, getHobbies, allHobbies } = useU
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { getSkills, allSkills, setSkills } = useSkills()
-const { editMode, toggleEditMode } = useEdit()
-const isOwner = ref<boolean>(false)
-const listAvatars = ref<string[]>([
+const { editMode, editModeOn, editModeOff } = useEdit()
+const isOwner = ref(false)
+const listAvatars = ref([
   "profile-mr-dark.png",
   "profile-fr-dark.png"
 ])
-const editAvatar = ref<boolean>(false)
+const editAvatar = ref(false)
+const { isScrolled } = useWindow()
 
 // toggle the avatar edit mode
 const toggleEditAvatar = () => {
@@ -31,7 +32,7 @@ const setAvatar = (newAvatar: string) => {
 
 // add skill to userData array (not yet to database)
 const addNewSkill = (eventPayload: { payload: string }) => {
-  userData.value.skills.push({name: eventPayload.payload, level: 0})
+  userData.value.skills.push({ name: eventPayload.payload, level: 0 })
 }
 
 // add hobby to userData array (not yet to database)
@@ -51,16 +52,27 @@ const removeHobby = (index: number) => {
 
 // update database entry
 const save = async () => {
-  if(profileId != '0' && profileId == userId.value.toString()){
+  if (profileId != '0' && profileId == userId.value.toString()) {
     updateUserData(parseInt(profileId), userData.value)
 
     let skills: string[] = []
     userData.value.skills.forEach((skill) => {
       skills.push(skill.name)
     })
-    
+
     setSkills(skills)
-    toggleEditMode()
+    editModeOff()
+  }
+  else {
+    console.log(profileId, userId.value.toString())
+  }
+}
+
+// trigger save() on ctrl+s
+const handleKeydown = (event: KeyboardEvent) => {
+  if(editMode.value && event.ctrlKey && event.key === 's'){
+    event.preventDefault()
+    save()
   }
 }
 
@@ -68,23 +80,31 @@ const save = async () => {
 const prepareContent = async () => {
   showSidebar.value = false
   showModal.value = false
-  try{
-    if(profileId){
+  try {
+    if (profileId) {
       fetchUserData(parseInt(profileId.toString()))
-    } else{
+    } else {
       fetchUserData()
     }
     profileId == userId.value.toString() ? isOwner.value = true : isOwner.value = false
     getSkills()
     getHobbies()
-  } catch (error){
+  } catch (error) {
     console.error(error)
   }
 }
 
-// prepare displayed content on page load
+//delete profile
+const deleteProfile = async () => {
+  console.log('ohnoo');
+}
+
 onMounted(async () => {
+  // prepare displayed content on page load
   prepareContent()
+
+  // add ctrl+s saving
+  window.addEventListener('keydown', handleKeydown)
 })
 
 // change displayed content whenever wizard id in url changes
@@ -93,13 +113,23 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
     prepareContent()
   }
 })
+
+onUnmounted(() => {
+  // remove ctrl+s key locking
+  window.removeEventListener('keydown', handleKeydown)
+
+  // make sure to deactivate edit mode when leaving the page
+  editModeOff()
+})
 </script>
 
 <template>
   <div class="profil">
-    <Edit />
+    <Edit :class="{ 'scrolled': isScrolled }" />
     <div class="container">
-      <h1 class="">At your service, {{ userData.name }}</h1>
+      <h1 class=""><span v-if="userData.name">{{ userData.name }}<span
+            v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
+          </span><span v-else>s </span></span>Profil</h1>
       <div class="grid grid-cols-2 gap-16">
         <div>
           <div class="avatar">
@@ -107,12 +137,14 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
             <div class="edit-avatar" v-if="editMode">
               <div class="iconEditAvatar" @click="toggleEditAvatar" :class="editAvatar ? 'active' : ''">
                 <svg class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-                  <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
+                  <path
+                    d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
                 </svg>
               </div>
               <ul class="list-avatars" v-if="editAvatar">
                 <li class="item-skills" v-for="avatar in listAvatars" :key="avatar">
-                  <NuxtImg :src="avatar" :alt="`Alternative Avatare ${userData.name}`" width="96" @click="setAvatar(avatar)" class="cursor-pointer" />
+                  <NuxtImg :src="avatar" :alt="`Alternative Avatare ${userData.name}`" width="96"
+                    @click="setAvatar(avatar)" class="cursor-pointer" />
                 </li>
               </ul>
             </div>
@@ -187,39 +219,34 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
       <div class="skills">
         <h3>Fertigkeiten & Zaubertricks</h3>
         <ul class="list-skills">
-          <li class="item-skills flex" v-for="(skill, index) in userData.skills.sort((a, b) => {if(b.level != a.level){return b.level - a.level} return a.name.localeCompare(b.name)})" :key="skill.name">
+          <li class="item-skills flex"
+            v-for="(skill, index) in userData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"
+            :key="skill.name">
             <div class="skill-name">{{ skill.name }}</div>
             <div class="flex skill-level" v-if="editMode">
-              <Star
-                @click="skill.level = index + 1"
-                class="pr-2 cursor-pointer"
-                v-for="(item, index) in 5"
-                :key="index" :data-skill="index + 1"
-                :class="index + 1 <= skill.level ? 'fill-primary' : 'fill-none'"
-              />
+              <Star @click="skill.level = index + 1" class="pr-2 cursor-pointer" v-for="(item, index) in 5" :key="index"
+                :data-skill="index + 1" :class="index + 1 <= skill.level ? 'fill-highlight' : 'fill-none'" />
             </div>
             <div class="flex skill-level pointer-events-none" v-else>
-              <Star
-                class="pr-2"
-                v-for="(item, index) in 5"
-                :key="index" :data-skill="index + 1"
-                :class="index + 1 <= skill.level ? 'fill-primary' : 'fill-none'"
-              />
+              <Star class="pr-2" v-for="(item, index) in 5" :key="index" :data-skill="index + 1"
+                :class="index + 1 <= skill.level ? 'fill-highlight' : 'fill-none'" />
             </div>
             <Trash @click="removeSkill(index)" class="ml-4" v-if="editMode" />
           </li>
         </ul>
-        <Autocomplete v-if="editMode" :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()" @submit-input="addNewSkill" />
+        <Autocomplete v-if="editMode" :label="'Fertigkeit hinzufügen'" :suggestions="allSkills.sort()"
+          @submit-input="addNewSkill" />
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
-        <ul class="list-hobbies">
+        <ul class="list-hobbies flex">
           <li class="item-hobbies flex items-center" v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
-            <Trash @click="removeHobby(index)" class="ml-4" v-if="editMode" />
+            <Trash @click="removeHobby(index)" v-if="editMode" />
           </li>
         </ul>
-        <Autocomplete v-if="editMode" :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()" @submit-input="addNewHobby" />
+        <Autocomplete v-if="editMode" :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()"
+          @submit-input="addNewHobby" />
       </div>
       <div class="bio">
         <h3>Über {{ userData.name }}</h3>
@@ -228,8 +255,11 @@ watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like
         </div>
         <div v-else>{{ userData.bio }}</div>
       </div>
+      <div class="deleteProfile mt-16">
+        <button class="btn btn-red" @click="deleteProfile">Profil löschen</button>
+      </div>
       <div class="save" v-if="editMode">
-        <button class="btn w-max mt-8" @click="save">Speichern</button>
+        <button class="btn btn-green w-max" @click="save">Änderungen Speichern</button>
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@ export default defineEventHandler(async (event: any) => {
   // check if user exists and password is correct
   if (result && result?.password == body.password) {
     const userId = result.id
-    return { userId, success: true };
+    return { userId, success: true }
   } else {
     // Invalid credentials
     throw createError({

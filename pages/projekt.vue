@@ -48,7 +48,7 @@ onMounted(async () => {
         <h3 class="h3">Projektmitglieder</h3>
         <p>{{ project?.members }}</p>
         <p>Werden noch Mitglieder gesucht? {{ project?.isLookingForMembers }}</p>
-        <h3 class="h3 text-red" v-if="!project?.isDone">Dieses Projekt ist abgeschlossen.</h3>
+        <h3 class="h3 text-red" v-if="project?.isDone">Dieses Projekt ist abgeschlossen.</h3>
       </div>
     </div>
   </div>

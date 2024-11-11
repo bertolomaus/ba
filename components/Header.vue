@@ -8,8 +8,12 @@ const { isLoggedIn, userId } = useAuth()
 const { userData, fetchUserData } = useUserData()
 const { showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
 const { modalShowNewQuestion, modalShowNewProject } = useModal()
-const { activeEditMode } = useEdit()
+const { editModeOn } = useEdit()
 const { isScrolled } = useWindow()
+const profileLink = ref(computed(() => ({
+  path: 'profil',
+  query: { wizard: userId.value }
+})))
 
 const generateNavigationLinks = async () => {
   try {
@@ -19,10 +23,6 @@ const generateNavigationLinks = async () => {
   }
 }
 
-const profileLink = computed(() => ({
-  path: 'profil',
-  query: { wizard: userId.value }
-}))
 </script>
 
 <template>
@@ -100,7 +100,7 @@ const profileLink = computed(() => ({
             <p class="h4">Interaktion</p>
             <UserAuthentication v-if="!isLoggedIn" />
             <div v-else>
-              <NuxtLink class="btn-link" :to="profileLink" @click="activeEditMode">Profil bearbeiten</NuxtLink>
+              <NuxtLink class="btn-link" :to="profileLink" @click="editModeOn">Profil bearbeiten</NuxtLink>
               <a href="#" class="btn-link" @click="modalShowNewQuestion">Frage stellen</a>
               <a href="#" class="btn-link" @click="modalShowNewProject">Neues Projekt</a>
               <FormLogout class="ml-4 mt-8" />

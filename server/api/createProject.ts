@@ -6,11 +6,11 @@ export default defineEventHandler(async (event) => {
 
   // set new id for the question: last used id + 1 or start at id 1
   let takenIds = getAllProjectIds.all().map(q => q.id).length == 0 ? [0] : getAllProjectIds.all().map(q => q.id)
-  body.id = ++takenIds[takenIds.length - 1]
+  const newId = ++takenIds[takenIds.length - 1]
 
   try {
     createProject.run({
-      id: body.id,
+      id: newId,
       owner: body.data.owner,
       title: body.data.title,
       goal: body.data.goal,

@@ -59,15 +59,18 @@ const onSubmit = async () => {
         userData.value.questions[projectIndex] = { ...question.value }
       }
       await updateUserData(userId.value, userData.value)
-      console.log(userData.value)
     } else {
-      await $fetch('/api/postQuestion', {
+      question.value.owner = userId.value
+      console.log(question.value);
+      const response = await $fetch('/api/postQuestion', {
         method: 'POST',
         body: {
           id: props.id,
           data: question.value
         }
       })
+      console.log(response);
+      question.value.id = response.id
 
       // update userData > add new project to data
       await fetchUserData(userId.value)

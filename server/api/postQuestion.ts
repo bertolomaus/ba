@@ -11,15 +11,15 @@ export default defineEventHandler(async (event) => {
   try {
     postQuestion.run({ 
       id: newId,
-      owner: body.owner,
-      title: body.title,
-      requiredSkills: body.requiredSkills,
-      description: body.description,
-      attemptedSolutions: body.attemptedSolutions,
-      isVisible: body.isVisible,
-      isSolved: body.isSolved
+      owner: body.data.owner,
+      title: body.data.title,
+      requiredSkills: JSON.stringify(body.data.requiredSkills),
+      description: body.data.description,
+      attemptedSolutions: body.data.attemptedSolutions,
+      isVisible: body.data.isVisible ? 1 : 0,
+      isSolved: body.data.isSolved ? 1 : 0
     })
-    return { success: true }
+    return { success: true, id: newId }
   } catch (error) {
     console.error(error);
     return { success: false }

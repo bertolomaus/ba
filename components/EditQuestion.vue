@@ -12,6 +12,7 @@ const { getSkills, allSkills, setSkills } = useSkills()
 const { userId } = useAuth()
 const { question, fetchQuestionData } = useQuestionData()
 const { userData, fetchUserData, updateUserData } = useUserData()
+const { toggleModal } = useModal()
 const possibleHelpers = ref<UserDataShort[]>([])
 
 const getHelpers = async () => {
@@ -43,7 +44,7 @@ const removeSkill = (index: number) => {
 const onSubmit = async () => {
   try {
     // send project to api endpoint -- depending on whether a new question is posted or an existing question is edited
-    if(props.updateOnSave){
+    if (props.updateOnSave) {
       await $fetch('/api/updateQuestion', {
         method: 'POST',
         body: {
@@ -69,13 +70,15 @@ const onSubmit = async () => {
           data: question.value
         }
       })
-      console.log(response);
       question.value.id = response.id
 
       // update userData > add new project to data
       await fetchUserData(userId.value)
       userData.value.questions.push(question.value)
       await updateUserData(userId.value, userData.value)
+
+      // clear & close modal window
+      clearQuestion()
     }
 
     // add project's requiredSkills to skills table
@@ -85,11 +88,25 @@ const onSubmit = async () => {
   }
 }
 
+const clearQuestion = () => {
+  question.value  = {
+    id: 0,
+    owner: 0,
+    title: "",
+    requiredSkills: [],
+    description: "",
+    attemptedSolutions: "",
+    isVisible: false,
+    isSolved: false,
+  }
+  toggleModal()
+}
+
 onMounted(async () => {
   getSkills()
-  if(props.id){
+  if (props.id) {
     const request = await fetchQuestionData(props.id)
-    if(request){
+    if (request) {
       question.value = request.question
     }
   }
@@ -106,9 +123,12 @@ onMounted(async () => {
 
       <div class="field field-tags">
         <ul class="tags" v-if="question.requiredSkills.length > 0">
-          <li v-for="(skill, index) in question.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}<Trash /></li>
+          <li v-for="(skill, index) in question.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}
+            <Trash />
+          </li>
         </ul>
-        <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()" @submit-input="addRequiredSkill" />
+        <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
+          @submit-input="addRequiredSkill" />
       </div>
 
       <div class="field field-description">
@@ -122,12 +142,12 @@ onMounted(async () => {
       </div>
 
       <div class="field field-isVisible">
-        <input v-model="question.isVisible" type="checkbox" name="isVisible" >
+        <input v-model="question.isVisible" type="checkbox" name="isVisible">
         <label for="isVisible">Frage soll für alle sichtbar sein</label>
       </div>
 
       <div class="field field-isSolved">
-        <input v-model="question.isSolved" type="checkbox" name="isSolved" >
+        <input v-model="question.isSolved" type="checkbox" name="isSolved">
         <label for="isSolved">Problem ist gelöst</label>
       </div>
 
@@ -139,12 +159,14 @@ onMounted(async () => {
       </div>
     </form>
     <div class="helpers grid grid-cols-4 gap-4">
-      <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= question.requiredSkills.length / 2)" :key="index">
+      <div
+        v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= question.requiredSkills.length / 2)"
+        :key="index">
         <p>id: {{ helper.id }}</p>
         <p>name: {{ helper.name }}</p>
         <p>common: {{ helper.skills }}</p>
         <img src="../assets/img/profile-mr-light.png" :alt="helper.name">
-        <NuxtLink :to="{path: 'profil', query: {wizard: helper.id}}">Mehr erfahren</NuxtLink>
+        <NuxtLink :to="{ path: 'profil', query: { wizard: helper.id } }">Mehr erfahren</NuxtLink>
       </div>
     </div>
   </div>

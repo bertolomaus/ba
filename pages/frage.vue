@@ -24,6 +24,19 @@ onMounted(async () => {
     <div class="container">
       <Edit />
       <EditQuestion v-if="editMode" :id="qId" :update-on-save="true" />
+
+      <div v-else class="question-viewer">
+        <h1 class="">{{ question?.title }}</h1>
+        <h3 class="h3">Welche Fertigkeiten oder Kenntnisse sind zur Lösung erforderlich?</h3>
+        <ul class="tags">
+          <li v-for="(skill, index) of question?.requiredSkills" :key="index">{{ skill }}</li>
+        </ul>
+        <h3 class="h3">Beschreibung</h3>
+        <p>{{ question?.description }}</p>
+        <h3 class="h3">Welche Lösungsansätze wurden schon versucht?</h3>
+        <p>{{ question?.attemptedSolutions }}</p>
+        <h3 class="h3 text-red" v-if="question?.isSolved">Dieses Problem wurde gelöst.</h3>
+      </div>
     </div>
   </div>
 </template>

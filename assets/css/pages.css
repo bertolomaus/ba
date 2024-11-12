@@ -70,12 +70,16 @@
   @apply w-max px-3 py-1 bg-blue text-textColor-primary rounded-2xl flex font-serif font-medium tracking-widest;
 }
 
-.save {
-  @apply fixed bottom-8;
+.endEditModeButtons {
+  @apply fixed bottom-8 flex gap-4;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.save .btn {
+.endEditModeButtons .btn-green {
   @apply bg-bgColor-darker hover:px-16 hover:py-4;
+}
+
+.endEditModeButtons .btn-muted {
+  @apply bg-bgColor-darker;
 }

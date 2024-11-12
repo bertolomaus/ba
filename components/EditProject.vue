@@ -13,6 +13,7 @@ const { userId } = useAuth()
 const { fetchMembers, fetchProjectData, project } = useProjectsData()
 const { userData, fetchUserData, updateUserData } = useUserData()
 const { editMode } = useEdit()
+const { toggleModal } = useModal()
 const possibleHelpers = ref<UserDataShort[]>([])
 const resourceName = ref<string>('')
 const resourceSrc = ref<string>('')
@@ -49,7 +50,7 @@ const toggleNewResource = () => {
 }
 
 const addResource = () => {
-  project.value.resources.push({name: resourceName.value, src: resourceSrc.value})
+  project.value.resources.push({ name: resourceName.value, src: resourceSrc.value })
   closeResource()
 }
 
@@ -69,7 +70,7 @@ const onSubmit = async () => {
     project.value.members = await fetchMembers([userId.value])
 
     // send project to api endpoint -- depending on whether a new project is created or an existing project is edited
-    if(props.updateOnSave){
+    if (props.updateOnSave) {
       await $fetch('/api/updateProject', {
         method: 'POST',
         body: {
@@ -98,11 +99,14 @@ const onSubmit = async () => {
       await fetchUserData(userId.value)
       userData.value.projects.push(project.value)
       await updateUserData(userId.value, userData.value)
+
+      // clear & close modal
+      clearProject()
     }
-    
+
     // add project's requiredSkills to skills table
     setSkills(project.value.requiredSkills)
-    
+
     // turn off edit mode
     editMode.value = false
   } catch (error) {
@@ -110,11 +114,32 @@ const onSubmit = async () => {
   }
 }
 
+const clearProject = () => {
+  project.value = {
+    id: 0,
+    owner: 0,
+    title: "",
+    requiredSkills: [],
+    description: "",
+    goal: "",
+    winCondition: "",
+    whyAchieveable: "",
+    whyRelevant: "",
+    deadline: "",
+    members: [],
+    resources: [],
+    isLookingForMembers: false,
+    isVisible: false,
+    isDone: false
+  }
+  toggleModal()
+}
+
 onMounted(async () => {
   getSkills()
-  if(props.id){
+  if (props.id) {
     const request = await fetchProjectData(props.id)
-    if(request){
+    if (request) {
       project.value = request.project
     }
   }
@@ -141,9 +166,12 @@ onMounted(async () => {
 
       <div class="field field-tags">
         <ul class="tags" v-if="project.requiredSkills.length > 0">
-          <li v-for="(skill, index) in project.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}<Trash /></li>
+          <li v-for="(skill, index) in project.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}
+            <Trash />
+          </li>
         </ul>
-        <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()" @submit-input="addRequiredSkill" />
+        <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
+          @submit-input="addRequiredSkill" />
       </div>
 
       <div class="field field-winCondition">
@@ -185,7 +213,7 @@ onMounted(async () => {
           </ul>
         </div>
         <div class="add-resource flex gap-2 cursor-pointer w-max" @click="toggleNewResource">
-          <AddCircle class="w-5" :is-open="showResourceDetails"/>
+          <AddCircle class="w-5" :is-open="showResourceDetails" />
           <p>Ressource hinzufügen</p>
         </div>
         <div class="resource-details ml-8" v-if="showResourceDetails">
@@ -206,26 +234,27 @@ onMounted(async () => {
 
       <div class="field-members" v-if="project.members.length > 0">
         <ul>
-          <li v-for="(member, index) in project.members" :key="index">
-            <p>{{ member.name }}</p>
-            <p>{{ member.id }}</p>
-            <p>{{ member.avatar }}</p>
+          <li v-for="(member, index) in project.members" :key="index" class="card card-user">
+            <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }" class="flex gap-4 flex-wrap items-center">
+              <NuxtImg :src="member.avatar" :alt="member.name" :height="64" />
+              <p class="h4">{{ member.name }}</p>
+            </NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="field field-isLookingForMembers">
-        <input v-model="project.isLookingForMembers" type="checkbox" name="isLookingForMembers" >
+        <input v-model="project.isLookingForMembers" type="checkbox" name="isLookingForMembers">
         <label for="isLookingForMembers">Suchst du nach Partnern für dein Projekt?</label>
       </div>
 
       <div class="field field-isVisible">
-        <input v-model="project.isVisible" type="checkbox" name="isVisible" >
+        <input v-model="project.isVisible" type="checkbox" name="isVisible">
         <label for="isVisible">Projekt soll für alle sichtbar sein</label>
       </div>
 
       <div class="field field-isDone">
-        <input v-model="project.isDone" type="checkbox" name="isDone" >
+        <input v-model="project.isDone" type="checkbox" name="isDone">
         <label for="isDone">Projekt ist abgeschlossen</label>
       </div>
 
@@ -237,12 +266,14 @@ onMounted(async () => {
       </div>
     </form>
     <div class="helpers grid grid-cols-4 gap-4">
-      <div v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= project.requiredSkills.length / 2)" :key="index">
-        <p>id: {{ helper.id }}</p>
-        <p>name: {{ helper.name }}</p>
-        <p>common: {{ helper.skills }}</p>
-        <NuxtImg :src="helper.avatar" :alt="helper.name" />
-        <NuxtLink :to="{path: 'profil', query: {wizard: helper.id}}">Mehr erfahren</NuxtLink>
+      <div
+        v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= project.requiredSkills.length / 2)"
+        :key="index" class="card card-user">
+        <NuxtLink :to="{ path: 'profil', query: { wizard: helper.id } }" class="flex gap-4 flex-wrap items-center">
+          <NuxtImg :src="helper.avatar" :alt="helper.name" />
+          <p class="h4">{{ helper.name }}</p>
+        </NuxtLink>
+        <p>{{ helper.skills }}</p>
       </div>
     </div>
   </div>

@@ -86,6 +86,10 @@ form .btn{
   @apply border-textColor-muted hover:border-red after:bg-red
 }
 
+.btn-muted{
+  @apply border-textColor-muted hover:border-textColor-muted
+}
+
 .btn-large{
   @apply px-16 py-4 text-base
 }
@@ -131,7 +135,7 @@ a:hover .btn-text:after{
 /* *** TAGS *** */
 
 .tags{
-  @apply flex gap-1 mb-2;
+  @apply flex gap-1 mb-2 flex-wrap;
 }
 
 .tags li{

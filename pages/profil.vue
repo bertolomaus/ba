@@ -68,6 +68,12 @@ const save = async () => {
   }
 }
 
+// abort edit
+const discardChanges = async () => {
+  prepareContent()
+  editModeOff()
+}
+
 // trigger save() on ctrl+s
 const handleKeydown = (event: KeyboardEvent) => {
   if(editMode.value && event.ctrlKey && event.key === 's'){
@@ -78,8 +84,6 @@ const handleKeydown = (event: KeyboardEvent) => {
 
 // fetch profile info, skills, hobbies, set isOwner and hide modal & sidebar
 const prepareContent = async () => {
-  showSidebar.value = false
-  showModal.value = false
   try {
     if (profileId) {
       fetchUserData(parseInt(profileId.toString()))
@@ -102,6 +106,8 @@ const deleteProfile = async () => {
 onMounted(async () => {
   // prepare displayed content on page load
   prepareContent()
+  showSidebar.value = false
+  showModal.value = false
 
   // add ctrl+s saving
   window.addEventListener('keydown', handleKeydown)
@@ -258,8 +264,9 @@ onUnmounted(() => {
       <div class="deleteProfile mt-16">
         <button class="btn btn-red" @click="deleteProfile">Profil löschen</button>
       </div>
-      <div class="save" v-if="editMode">
+      <div class="endEditModeButtons" v-if="editMode">
         <button class="btn btn-green w-max" @click="save">Änderungen Speichern</button>
+        <button class="btn btn-muted" @click="discardChanges">Abbrechen</button>
       </div>
     </div>
   </div>

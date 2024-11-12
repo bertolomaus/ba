@@ -46,8 +46,18 @@ onMounted(async () => {
         <h3 class="h3" v-if="project?.resources && project?.resources.length > 0">Verwendete Ressourcen</h3>
         <p v-if="project?.resources && project?.resources.length > 0">{{ project?.resources }}</p>
         <h3 class="h3">Projektmitglieder</h3>
-        <p>{{ project?.members }}</p>
-        <p>Werden noch Mitglieder gesucht? {{ project?.isLookingForMembers }}</p>
+        <div class="field-members" v-if="project && project.members.length > 0">
+          <ul>
+            <li v-for="(member, index) in project?.members" :key="index" class="card card-user">
+              <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }"
+                class="flex gap-4 flex-wrap items-center">
+                <NuxtImg :src="member.avatar" :alt="member.name" :height="64" />
+                <p class="h4">{{ member.name }}</p>
+              </NuxtLink>
+            </li>
+          </ul>
+        </div>
+        <h3 class="text-green" v-if="project?.isLookingForMembers">{{ project.members[0].name }} sucht noch Mitglieder für sein Projekt</h3>
         <h3 class="h3 text-red" v-if="project?.isDone">Dieses Projekt ist abgeschlossen.</h3>
       </div>
     </div>

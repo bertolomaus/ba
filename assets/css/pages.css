@@ -83,3 +83,15 @@
 .endEditModeButtons .btn-muted {
   @apply bg-bgColor-darker;
 }
+
+.list-projects .h3{
+  @apply mt-0 flex gap-2 items-center
+}
+
+.isDone .h3{
+  @apply text-muted
+}
+
+.list-projects .check{
+  @apply text-green block w-8
+}

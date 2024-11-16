@@ -245,8 +245,8 @@ onUnmounted(() => {
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
-        <ul class="list-hobbies flex">
-          <li class="item-hobbies flex items-center" v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
+        <ul class="tags">
+          <li v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
             <Trash @click="removeHobby(index)" v-if="editMode" />
           </li>
@@ -260,6 +260,27 @@ onUnmounted(() => {
           <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
         </div>
         <div v-else>{{ userData.bio }}</div>
+      </div>
+      <div class="projects" v-if="userData.projects">
+        <h3>
+          <span v-if="userData.name">{{ userData.name }}<span
+            v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
+          </span><span v-else>s </span></span>Projekte
+        </h3>
+        <div class="list-projects cards">
+            <NuxtLink class="card" v-for="(project, index) in userData.projects.filter(p => !p.isDone)" :key="index" :to="{ path: 'projekt', query: { id: project.id } }">
+              <h4 class="h3">{{ project.title }}</h4>
+              <ul class="tags tags-small">
+                <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
+              </ul>
+            </NuxtLink>
+            <NuxtLink class="card isDone" v-for="(project, index) in userData.projects.filter(p => p.isDone)" :key="index" :to="{ path: 'projekt', query: { id: project.id } }">
+              <h4 class="h3"><IconCheck />{{ project.title }}</h4>
+              <ul class="tags tags-small">
+                <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
+              </ul>
+            </NuxtLink>
+        </div>
       </div>
       <div class="deleteProfile mt-16">
         <button class="btn btn-red" @click="deleteProfile">Profil löschen</button>

@@ -135,11 +135,15 @@ a:hover .btn-text:after{
 /* *** TAGS *** */
 
 .tags{
-  @apply flex gap-1 mb-2 flex-wrap;
+  @apply flex gap-2 mb-2 flex-wrap;
 }
 
 .tags li{
-  @apply px-3 py-1 bg-blue text-textColor-primary rounded-2xl flex font-serif font-medium tracking-widest
+  @apply px-4 py-2 bg-blue text-textColor-primary rounded-3xl flex font-serif font-medium tracking-widest leading-6
+}
+
+.tags-small li{
+  @apply text-sm px-3 py-1.5
 }
 
 .tags svg{
@@ -148,4 +152,30 @@ a:hover .btn-text:after{
 
 .tags li:hover svg{
   @apply w-7 pl-1.5
+}
+
+/* *** CARDS *** */
+
+.cards > .card{
+  @apply p-4 border-t bg-bgColor-muted block;
+  border-color:rgba(204, 207, 213, .3);
+}
+
+.card + .card{
+  @apply mt-4
+}
+
+a.card{
+  @apply hover:border-highlight
+}
+
+a.card:hover{
+  transform:scale(1.02);
+}
+
+
+/* *** LIST PROJECTS / LIST QUESTIONS *** */
+
+.list-projects .tags, .list-questions .tags{
+  @apply mb-0
 }

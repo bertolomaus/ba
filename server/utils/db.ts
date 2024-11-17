@@ -156,6 +156,7 @@ export const getAllProjectsListData = db
   id: projects.id,
   owner: projects.owner,
   title: projects.title,
+  goal: projects.goal,
   requiredSkills: projects.requiredSkills,
   description: projects.description,
   winCondition: projects.winCondition,
@@ -164,7 +165,7 @@ export const getAllProjectsListData = db
   deadline: projects.deadline,
   members: projects.members,
   resources: projects.resources,
-  isLookingForMembers: projects.isVisible,
+  isLookingForMembers: projects.isLookingForMembers,
   isVisible: projects.isVisible,
   isDone: projects.isDone,
 })

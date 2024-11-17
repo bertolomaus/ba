@@ -13,6 +13,9 @@ export interface UserData {
   bio: string
   questions: Question[]
   projects: Project[]
+  visitedProjects: number[]
+  visitedQuestions: number[]
+
 }
 
 interface UserDataWithId {
@@ -26,6 +29,9 @@ interface UserDataWithId {
   bio: string
   questions: Question[]
   projects: Project[]
+  visitedProjects: number[]
+  visitedQuestions: number[]
+
 }
 export interface UserDataShort {
   id: number,
@@ -34,10 +40,26 @@ export interface UserDataShort {
   skills: string[]
 }
 
+export interface ProjectsUserCanHelpWith {
+  id: number
+  title: string
+  skills: string[]
+}
+
+export interface QuestionsUserCanHelpWith {
+  id: number
+  title: string
+  skills: string[]
+}
+
 export const useUserData = () => {
-  const userData = useState<UserData>('userData', () => ({name: "", avatar: "profile-mr-light.png", contact: [], status: "", skills: [], hobbies: [], bio: "", questions: [], projects: []}))
+  const userData = useState<UserData>('userData', () => ({name: "", avatar: "profile-mr-light.png", contact: [], status: "", skills: [], hobbies: [], bio: "", questions: [], projects: [], visitedProjects: [], visitedQuestions: []}))
   const allHobbies = useState<string[]>('allHobbies', () => [])
+  const projectsUserCanHelpWith = useState<ProjectsUserCanHelpWith[]>('projectsUserCanHelpWith', () => [])
+  const questionsUserCanHelpWith = useState<QuestionsUserCanHelpWith[]>('questionsUserCanHelpWith', () => [])
   const { userId } = useAuth()
+  const { projectsList, updateProjectsList } = useProjectsData()
+  const { questionsList, updateQuestionsList } = useQuestionData()
   
   // login with credentials
   const fetchUserData = async (id = userId.value) => {
@@ -130,5 +152,35 @@ export const useUserData = () => {
     })
   }
 
-  return { getName, getAvatar, updateUserData, fetchUserData, userData, getHobbies, allHobbies }
+  // find projects from all projects with matching required skills
+  const findProjectsUserCanHelpWith = async () => {
+    updateProjectsList()
+    projectsUserCanHelpWith.value = []
+    
+    projectsList.value.forEach(p => {
+      const matches = p.requiredSkills.filter(item => userData.value.skills.map(s => s.name).includes(item))
+
+      console.log(p);
+
+      if(matches.length > 0 && p.isLookingForMembers){
+        projectsUserCanHelpWith.value.push({id: p.id, title: p.title,  skills: matches})
+      }
+    })
+  }
+
+  // find projects from all projects with matching required skills
+  const findQuetionsUserCanHelpWith = async () => {
+    updateQuestionsList()
+    questionsUserCanHelpWith.value = []
+    
+    questionsList.value.forEach(q => {
+      const matches = q.requiredSkills.filter(item => userData.value.skills.map(s => s.name).includes(item))
+
+      if(matches.length > 0){
+        questionsUserCanHelpWith.value.push({id: q.id, title: q.title,  skills: matches})
+      }
+    })
+  }
+
+  return { getName, getAvatar, updateUserData, fetchUserData, userData, getHobbies, allHobbies, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith }
 }

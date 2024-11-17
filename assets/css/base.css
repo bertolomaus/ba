@@ -8,7 +8,7 @@ body{
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6{
   @apply font-serif font-bold text-base tracking-wider uppercase text-textColor-primary;
-  line-height:1em;
+  line-height:1.25em;
 }
 
 h1, .h1{
@@ -48,7 +48,7 @@ h5, .h5{
 }
 
 h6, .h6{
-  @apply text-lg font-normal mb-2
+  @apply text-base font-medium mb-2
 }
 
 a{

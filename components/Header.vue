@@ -5,7 +5,7 @@ import SVGClose from './SVGClose.vue'
 import IconLogin from './IconLogin.vue'
 
 const { isLoggedIn, userId } = useAuth()
-const { userData, fetchUserData } = useUserData()
+const { userData, fetchUserData, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith, } = useUserData()
 const { showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
 const { modalShowNewQuestion, modalShowNewProject } = useModal()
 const { editModeOn } = useEdit()
@@ -18,16 +18,23 @@ const profileLink = ref(computed(() => ({
 const generateNavigationLinks = async () => {
   try {
     await fetchUserData(userId.value)
+    await findProjectsUserCanHelpWith()
+    await findQuetionsUserCanHelpWith()
   } catch (error) {
     console.error(error)
   }
 }
 
+onMounted(async () => {
+    await findProjectsUserCanHelpWith()
+    await findQuetionsUserCanHelpWith()
+})
+
 </script>
 
 <template>
   <div class="header">
-    <div class="headerbar" :class="{'scrolled': isScrolled}">
+    <div class="headerbar" :class="{ 'scrolled': isScrolled }">
       <div class="logo">
         <NuxtLink to="/">
           <NuxtImg src="logo-light-red-new.png" alt="Wizard Logo" height="64" />
@@ -41,7 +48,7 @@ const generateNavigationLinks = async () => {
             <rect width="8" height="1" x="0" y="6" />
           </svg>
         </div>
-        <div class="open-interaction" @click="showInteraction">
+        <div class="open-interaction" @click="showInteraction(); generateNavigationLinks()">
           <NuxtImg v-if="isLoggedIn" :src="userData.avatar" alt="Wizard Logo" width="64" />
           <p class="btn" v-else>Login</p>
         </div>
@@ -103,6 +110,24 @@ const generateNavigationLinks = async () => {
               <NuxtLink class="btn-link" :to="profileLink" @click="editModeOn">Profil bearbeiten</NuxtLink>
               <a href="#" class="btn-link" @click="modalShowNewQuestion">Frage stellen</a>
               <a href="#" class="btn-link" @click="modalShowNewProject">Neues Projekt</a>
+              <p class="h6">Fragen, bei denen du helfen könntest</p>
+              <div class="with-tags">
+                <NuxtLink v-for="(frage, index) in questionsUserCanHelpWith" :key="index" :to="{ path: 'frage', query: { id: frage.id } }">
+                  {{ frage.title }}
+                  <ul class="tags tags-xs">
+                    <li v-for="(skill, index) in frage.skills" :key="index">{{ skill }}</li>
+                  </ul>
+                </NuxtLink>
+              </div>
+              <p class="h6">Projekte, die nach deinen Fertigkeiten suchen</p>
+              <div class="with-tags">
+                <NuxtLink v-for="(projekt, index) in projectsUserCanHelpWith" :key="index" :to="{ path: 'projekt', query: { id: projekt.id } }">
+                  {{ projekt.title }}
+                  <ul class="tags tags-xs">
+                    <li v-for="(skill, index) in projekt.skills" :key="index">{{ skill }}</li>
+                  </ul>
+                </NuxtLink>
+              </div>
               <FormLogout class="ml-4 mt-8" />
             </div>
           </div>

@@ -106,7 +106,7 @@ export const useProjectsData = () => {
           goal: p.goal,
           winCondition: p.winCondition,
           whyAchieveable: p.whyAchieveable,
-          whyRelevant: p.WhyRelevant,
+          whyRelevant: p.whyRelevant,
           deadline: p.deadline,
           members: JSON.parse(p.members),
           resources: JSON.parse(p.resources),

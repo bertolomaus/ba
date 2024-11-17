@@ -89,6 +89,8 @@
   @apply absolute h-full right-0 top-0 bg-bgColor-muted overflow-x-hidden translate-x-[400px] transition-all;
   width:400px;
   z-index:10;
+  scrollbar-width: thin;
+  scrollbar-color: #00112f #11213d;
 }
 
 .sidebar.open .sidebar-content{
@@ -111,6 +113,10 @@
 
 .sidebar .h4{
   @apply mb-8;
+}
+
+.sidebar .h6{
+  @apply mt-12 mb-8
 }
 
 .sidebar .interaction .h3{
@@ -162,6 +168,14 @@
 
 .sidebar .btn{
   @apply border-bgColor-lighter hover:border-blue
+}
+
+.sidebar .tags{
+  @apply mb-0
+}
+
+.sidebar .with-tags a{
+  @apply py-2
 }
 
 

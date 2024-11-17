@@ -2,18 +2,12 @@
 
 ## TODO NOW
 
-- editmode / regular mode
-  - profile
-  - project
-  - question
-
-## TODO SOON
-
-- add edit mode button to nav
-
-## where i stopped
-
-- how tf can i differentiate between creating and editing a project? component props?
+- add "seen" to userData
+- add delete profile
+- hash password
+- add "change pw" to profile
+- add isLoggedIn to local storage
+- add frage stellen & neuen projekt btns to fragen/projekte pages
 
 ## dashboard
 
@@ -25,26 +19,13 @@
 - [x] add avatar to data json
 - [x] add preferred contact method
 - [ ] wizardly wording
-- [ ] toggle edit mode
+- [x] toggle edit mode
 
 ## frage stellen
 
 - [x] suggestions id -> name, avatar & commonskills as card
 - [ ] guide how do ask good questions
 - [x] add postQuestion function: generate new json in content/frage/id.json
-
-## projekte
-
-- [ ] title
-- [ ] req skills
-- [ ] description
-- [ ] zielkarte
-- [ ] ressources: members, miro, discord, cloud etc
-- [ ] find members
-- [ ] visibility: everyone, lfm
-- [ ] checkbox: finished
-- [ ] add new project function: generate new json in content/projekt/id.json
-- [ ] toggle edit mode
 
 ## alle fragen / alle projekte
 
@@ -57,7 +38,3 @@
 - [ ] make useState persistent through reloads. use cookie for it
 - [ ] forgot passwpord
 - [ ] jwt
-
-## notification
-
-- [ ] google firebase notifications

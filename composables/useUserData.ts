@@ -182,5 +182,19 @@ export const useUserData = () => {
     })
   }
 
-  return { getName, getAvatar, updateUserData, fetchUserData, userData, getHobbies, allHobbies, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith }
+  const addVisitedProject = async (id: number) => {
+    if(!userData.value.visitedProjects.includes(id)){
+      userData.value.visitedProjects.push(id)
+    }
+    updateUserData(userId.value, userData.value)
+  }
+
+  const addVisitedQuestion = async (id: number) => {
+    if(!userData.value.visitedQuestions.includes(id)){
+      userData.value.visitedQuestions.push(id)
+    }
+    updateUserData(userId.value, userData.value)
+  }
+
+  return { getName, getAvatar, updateUserData, fetchUserData, userData, getHobbies, allHobbies, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith, addVisitedProject, addVisitedQuestion }
 }

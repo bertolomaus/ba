@@ -7,6 +7,7 @@ const { showModal } = useModal()
 const { fetchProjectData } = useProjectsData()
 const { editMode } = useEdit()
 const { userId } = useAuth()
+const { addVisitedProject } = useUserData()
 const route = useRoute()
 const project = ref<Project>()
 const pId = route.query.id?.toString()
@@ -16,6 +17,7 @@ onMounted(async () => {
   showModal.value = false
   const request = await fetchProjectData(parseInt(pId ? pId : "0"))
   project.value = request?.project
+  addVisitedProject(parseInt(pId ? pId : "0"))
 })
 </script>
 

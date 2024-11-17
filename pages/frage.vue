@@ -8,7 +8,7 @@ const { fetchQuestionData } = useQuestionData()
 const route = useRoute()
 const question = ref<Question>()
 const qId = parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0")
-const { userData } = useUserData()
+const { userData, addVisitedQuestion } = useUserData()
 const { editMode, toggleEditMode } = useEdit()
 
 onMounted(async () => {
@@ -16,6 +16,7 @@ onMounted(async () => {
   showModal.value = false
   const request = await fetchQuestionData(qId)
   question.value = request?.question
+  addVisitedQuestion(qId)
 })
 </script>
 

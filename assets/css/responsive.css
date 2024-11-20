@@ -7,11 +7,5 @@
 @media(min-width:1328px){
 }
 
-@media(min-width:2048px){
-  .container{
-    max-width:1600px;
-  }
-}
-
 @media(min-width:2561px){
 }

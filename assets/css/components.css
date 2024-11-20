@@ -1,7 +1,7 @@
 /* ********** COMPONENT/HEADER ********** */
 
 .headerbar{
-  @apply fixed top-0 left-0 w-full px-8 h-28 transition-all flex justify-between items-center bg-bgColor-darker;
+  @apply fixed top-0 left-0 w-full px-8 h-28 transition-all flex justify-between items-center bg-slate-900;
   z-index: 1000;
 }
 
@@ -90,7 +90,7 @@
   width:400px;
   z-index:10;
   scrollbar-width: thin;
-  scrollbar-color: #00112f #11213d;
+  scrollbar-color: #1e293b #334155;
 }
 
 .sidebar.open .sidebar-content{
@@ -167,7 +167,7 @@
 }
 
 .sidebar .btn{
-  @apply border-bgColor-lighter hover:border-blue
+  @apply border-bgColor-lighter hover:border-red
 }
 
 .sidebar .tags{
@@ -209,15 +209,15 @@
 }
 
 .modal-content{
-  @apply absolute bg-bgColor rounded-lg top-16 left-16 right-16 bottom-16 p-16 border-2 rounded-md border-bgColor-lighter overflow-y-scroll;
+  @apply absolute bg-slate-800 rounded-lg top-16 left-16 right-16 bottom-16 py-16 border-2 rounded-md border-slate-600 overflow-y-scroll;
   z-index: 1;
   scrollbar-width: thin;
-  scrollbar-color: #000e26 #11213d;
+  scrollbar-color: #1e293b #334155;
 }
 
 .modal-close{
-  @apply absolute top-10 right-10 bg-bgColor-muted shadow;
-  @apply hover:bg-bgColor;
+  @apply absolute top-10 right-10 bg-slate-700 shadow;
+  @apply hover:bg-slate-900;
   z-index: 2;
 }
 
@@ -230,7 +230,7 @@
 }
 
 .suggestions-list{
-  @apply absolute top-full w-max min-w-40 bg-bgColor-muted border-muted border rounded-md overflow-hidden;
+  @apply absolute top-full w-max min-w-40 bg-slate-750 border-muted border rounded-md overflow-hidden;
   z-index:100;
 }
 
@@ -239,7 +239,7 @@
 }
 
 .suggestions-list .active{
-  @apply bg-bgColor-primary text-inverted;
+  @apply bg-slate-800 text-textColor-primary;
 }
 
 
@@ -247,5 +247,5 @@
 /* ********** COMPONENT/TRASH ********** */
 
 .trash{
-  @apply cursor-pointer;
+  @apply cursor-pointer fill-red;
 }

@@ -11,21 +11,25 @@
   @apply mt-8;
 }
 
+.profil .name > :first-child > h3:first-child{
+  @apply mt-0
+}
+
 .avatar {
   @apply relative;
 }
 
 .iconEditAvatar {
-  @apply absolute bottom-0 right-0 p-3 text-muted transition-colors rounded-full border-transparent border cursor-pointer;
-  @apply hover:bg-bgColor-darker hover:border-muted hover:text-textColor-primary;
+  @apply absolute bottom-0 right-0 p-3 text-muted transition-colors rounded-full border-muted border cursor-pointer bg-slate-750;
+  @apply hover:bg-slate-900 hover:border-muted hover:text-textColor-primary;
 }
 
 .iconEditAvatar.active {
-  @apply bg-bgColor-darker border-muted text-textColor-primary;
+  @apply bg-slate-900 border-muted text-textColor-primary;
 }
 
 .list-avatars {
-  @apply absolute top-full right-0 mt-4 p-4 bg-bgColor-muted flex gap-4 max-w-full justify-end rounded-md border border-muted shadow;
+  @apply absolute top-full right-0 mt-4 p-4 bg-slate-900 flex gap-4 max-w-full justify-end rounded-md border border-muted shadow;
 }
 
 .skill-name {
@@ -50,12 +54,16 @@
 
 .skills .trash,
 .personal .trash {
-  @apply w-0 text-red opacity-0 transition-opacity;
+  @apply w-0 opacity-0 transition-all;
+}
+
+.skills li:hover .trash{
+
 }
 
 .skills li:hover .trash,
 .personal li:hover .trash {
-  @apply opacity-100 w-6 ml-4;
+  @apply opacity-100 w-6;
 }
 
 .list-hobbies {
@@ -67,7 +75,7 @@
 }
 
 .list-hobbies li {
-  @apply w-max px-3 py-1 bg-blue text-textColor-primary rounded-2xl flex font-serif font-medium tracking-widest;
+  @apply w-max px-3 py-1 bg-red text-textColor-primary rounded-2xl flex font-serif font-medium tracking-widest;
 }
 
 .endEditModeButtons {
@@ -77,11 +85,11 @@
 }
 
 .endEditModeButtons .btn-green {
-  @apply bg-bgColor-darker hover:px-16 hover:py-4;
+  @apply bg-slate-800 hover:px-16 hover:py-4;
 }
 
 .endEditModeButtons .btn-muted {
-  @apply bg-bgColor-darker;
+  @apply bg-slate-800;
 }
 
 .list-projects .h3{

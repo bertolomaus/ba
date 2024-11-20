@@ -11,8 +11,10 @@ const { modalNewProject, modalNewQuestion, toggleModal, showModal } = useModal()
     <div class="modal-overlay" @click="toggleModal"></div>
     <SVGClose class="modal-close" @click="toggleModal" />
     <div class="modal-content">
-      <NewQuestion v-if="modalNewQuestion" />
-      <NewProject v-if="modalNewProject" />
+      <div class="container">
+        <NewQuestion v-if="modalNewQuestion" />
+        <NewProject v-if="modalNewProject" />
+      </div>
     </div>
   </div>
 </template>

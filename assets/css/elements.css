@@ -1,12 +1,12 @@
 /* *** FORM *** */
 input, textarea{
-  @apply border border-transparent rounded py-2 px-4 bg-bgColor-muted transition-all block w-full mt-4;
-  @apply hover:border-muted focus:border-muted focus:bg-bgColor;
+  @apply border border-transparent rounded py-2 px-4 bg-slate-700 transition-all block w-full mt-4;
+  @apply hover:border-muted focus:border-muted focus:bg-slate-750;
   outline:none;
 }
 
 form .field{
-  @apply relative mt-4
+  @apply relative mt-8
 }
 
 form label,
@@ -15,7 +15,7 @@ form label,
 }
 
 form .has-text input{
-  @apply bg-bgColor-primary
+  @apply bg-slate-700
 }
 
 form :focus + label,
@@ -23,8 +23,21 @@ form .has-text label,
 form .is-acceptable label,
 .autocomplete :focus + label,
 :not(:placeholder-shown) + label{
-  @apply left-1 top-0 text-xs leading-4 bg-bgColor-primary;
+  @apply left-1 top-0 text-xs leading-4 bg-slate-800;
   transform:translateY(-50%);
+  background: linear-gradient(to top, #334155 50%, #1e293b 50%);
+}
+
+form .field.checkbox + .checkbox{
+  @apply mt-2
+}
+
+form [type="checkbox"]{
+  @apply w-max m-0 mr-4 flex w-4
+}
+
+form .checkbox label{
+  @apply text-base bg-none static w-max pl-0 flex pointer-events-auto
 }
 
 form .has-error input,
@@ -53,8 +66,8 @@ form .btn{
 
 /* *** BUTTON *** */
 .btn{
-  @apply text-textColor-primary leading-5 font-serif text-sm uppercase px-8 py-2 font-bold rounded transition-all relative z-10 border-2 border-bgColor-muted block cursor-pointer;
-  @apply hover:text-textColor-highlight hover:border-blue
+  @apply text-textColor-primary leading-5 font-serif text-sm uppercase px-8 py-2 font-bold rounded transition-all relative z-10 border-2 border-slate-600 block cursor-pointer;
+  @apply hover:text-textColor-highlight hover:border-red
 }
 
 .btn:after, .btn:before{
@@ -70,7 +83,7 @@ form .btn{
 }
 
 .btn:after{
-  @apply bg-blue;
+  @apply bg-red;
   transition-delay: .1s;
 }
 
@@ -87,7 +100,7 @@ form .btn{
 }
 
 .btn-muted{
-  @apply border-textColor-muted hover:border-textColor-muted
+  @apply border-textColor-muted hover:border-textColor-muted after:bg-textColor-muted
 }
 
 .btn-large{
@@ -112,16 +125,16 @@ a:hover .btn-text:after{
 
 .btn-close{
   @apply w-12 -rotate-45 p-3 text-muted cursor-pointer transition-all border-transparent border rounded-full;
-  @apply hover:rotate-45 hover:bg-bgColor hover:border-muted hover:text-textColor-primary;
+  @apply hover:rotate-45 hover:bg-slate-800 hover:border-muted hover:text-textColor-primary;
 }
 
 .btn-edit{
   @apply w-16 p-3 cursor-pointer transition-all rounded-full border border-transparent;
-  @apply hover:bg-bgColor-muted hover:text-primary hover:border-muted;
+  @apply hover:bg-slate-700 hover:text-slate-800 hover:border-muted;
 }
 
 .btn-edit.active{
-  @apply bg-bgColor-muted text-primary border-muted;
+  @apply bg-slate-700 text-slate-800 border-muted;
 }
 
 .btn-editMode{
@@ -139,7 +152,7 @@ a:hover .btn-text:after{
 }
 
 .tags li{
-  @apply px-4 py-2 bg-blue text-textColor-primary rounded-3xl flex font-serif font-medium tracking-widest leading-6
+  @apply px-4 py-2 bg-red text-textColor-primary rounded-3xl flex font-serif font-medium tracking-widest leading-6
 }
 
 .tags-small li{
@@ -151,18 +164,21 @@ a:hover .btn-text:after{
 }
 
 .tags svg{
-  @apply w-0 fill-red transition-all pl-0 cursor-pointer;
+  @apply w-0 fill-textColor-primary transition-all cursor-pointer;
 }
 
 .tags li:hover svg{
-  @apply w-7 pl-1.5
+  @apply w-6 ml-2
+}
+
+.tags .trash{
+  @apply fill-textColor-primary
 }
 
 /* *** CARDS *** */
 
 .cards > .card{
-  @apply p-4 border-t bg-bgColor-muted block;
-  border-color:rgba(204, 207, 213, .3);
+  @apply p-4 border-t border-t-slate-500 block bg-slate-750 drop-shadow-lg;
 }
 
 .card + .card{

@@ -8,6 +8,7 @@
 - add "change pw" to profile
 - add isLoggedIn to local storage
 - add frage stellen & neuen projekt btns to fragen/projekte pages
+- wenn neue frage/project: frage/project data clearen & wenn nötig von /frage?id=... weg
 
 ## dashboard
 

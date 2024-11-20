@@ -28,6 +28,7 @@ const toggleEditAvatar = () => {
 // set new avatar (not yet to database)
 const setAvatar = (newAvatar: string) => {
   userData.value.avatar = newAvatar
+  editAvatar.value = false;
 }
 
 // add skill to userData array (not yet to database)
@@ -136,7 +137,7 @@ onUnmounted(() => {
       <h1 class=""><span v-if="userData.name">{{ userData.name }}<span
             v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
           </span><span v-else>s </span></span>Profil</h1>
-      <div class="grid grid-cols-2 gap-16">
+      <div class="flex gap-16">
         <div>
           <div class="avatar">
             <NuxtImg :src="userData.avatar" :alt="`Avatar ${userData.name}`" width="256" />
@@ -156,7 +157,7 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
-        <div>
+        <div class="flex-grow">
           <div class="name">
             <div v-if="editMode">
               <h3>Anzeigename</h3>
@@ -223,7 +224,7 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="skills">
-        <h3>Fertigkeiten & Zaubertricks</h3>
+        <h3>Fertigkeiten</h3>
         <ul class="list-skills">
           <li class="item-skills flex"
             v-for="(skill, index) in userData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"

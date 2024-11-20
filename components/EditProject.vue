@@ -156,7 +156,7 @@ onMounted(async () => {
 
       <div class="field field-goal">
         <textarea v-model="project.goal" name="goal" placeholder=""></textarea>
-        <label for="goal">Was ist ein konkretes Ziel?</label>
+        <label for="goal">Was ist dein konkretes Ziel?</label>
       </div>
 
       <div class="field field-description">
@@ -194,7 +194,7 @@ onMounted(async () => {
         <label for="deadline">Realistische Deadline</label>
       </div>
 
-      <div class="field-resources">
+      <div class="field field-resources">
         <div class="resources-list">
           <ul>
             <li v-for="(resource, index) in project.resources" :key="index" class="flex gap-2 items-start">
@@ -232,7 +232,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="field-members" v-if="project.members.length > 0">
+      <div class="field field-members" v-if="project.members.length > 0">
         <ul>
           <li v-for="(member, index) in project.members" :key="index" class="card card-user">
             <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }" class="flex gap-4 flex-wrap items-center">
@@ -243,19 +243,25 @@ onMounted(async () => {
         </ul>
       </div>
 
-      <div class="field field-isLookingForMembers">
-        <input v-model="project.isLookingForMembers" type="checkbox" name="isLookingForMembers">
-        <label for="isLookingForMembers">Suchst du nach Partnern für dein Projekt?</label>
+      <div class="field checkbox field-isLookingForMembers">
+        <label>
+          <input v-model="project.isLookingForMembers" type="checkbox" name="isLookingForMembers">
+          Suchst du nach Partnern für dein Projekt?
+        </label>
       </div>
 
-      <div class="field field-isVisible">
-        <input v-model="project.isVisible" type="checkbox" name="isVisible">
-        <label for="isVisible">Projekt soll für alle sichtbar sein</label>
+      <div class="field checkbox field-isVisible">
+        <label>
+          <input v-model="project.isVisible" type="checkbox" name="isVisible">
+          Projekt soll für alle sichtbar sein
+        </label>
       </div>
 
-      <div class="field field-isDone">
-        <input v-model="project.isDone" type="checkbox" name="isDone">
-        <label for="isDone">Projekt ist abgeschlossen</label>
+      <div class="field checkbox field-isDone">
+        <label>
+          <input v-model="project.isDone" type="checkbox" name="isDone">
+          Projekt ist abgeschlossen
+        </label>
       </div>
 
       <div class="field field-submit">

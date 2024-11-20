@@ -89,7 +89,7 @@ const onSubmit = async () => {
 }
 
 const clearQuestion = () => {
-  question.value  = {
+  question.value = {
     id: 0,
     owner: 0,
     title: "",
@@ -121,16 +121,6 @@ onMounted(async () => {
         <label for="title">Titel</label>
       </div>
 
-      <div class="field field-tags">
-        <ul class="tags" v-if="question.requiredSkills.length > 0">
-          <li v-for="(skill, index) in question.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}
-            <Trash />
-          </li>
-        </ul>
-        <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
-          @submit-input="addRequiredSkill" />
-      </div>
-
       <div class="field field-description">
         <textarea v-model="question.description" name="description" placeholder=""></textarea>
         <label for="description">Beschreib dein Problem</label>
@@ -141,14 +131,28 @@ onMounted(async () => {
         <label for="attemptedSolutions">Welche Lösungsansätze hast du schon versucht?</label>
       </div>
 
-      <div class="field field-isVisible">
-        <input v-model="question.isVisible" type="checkbox" name="isVisible">
-        <label for="isVisible">Frage soll für alle sichtbar sein</label>
+      <div class="field field-tags">
+        <ul class="tags" v-if="question.requiredSkills.length > 0">
+          <li v-for="(skill, index) in question.requiredSkills" :key="index" @click="removeSkill(index)">{{ skill }}
+            <Trash />
+          </li>
+        </ul>
+        <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
+          @submit-input="addRequiredSkill" />
       </div>
 
-      <div class="field field-isSolved">
-        <input v-model="question.isSolved" type="checkbox" name="isSolved">
-        <label for="isSolved">Problem ist gelöst</label>
+      <div class="field checkbox field-isVisible">
+        <label>
+          <input v-model="question.isVisible" type="checkbox" name="isVisible" id="isVisible">
+          Frage soll für alle sichtbar sein
+        </label>
+      </div>
+
+      <div class="field checkbox field-isSolved">
+        <label>
+          <input v-model="question.isSolved" type="checkbox" name="isSolved" id="isSolved">
+          Problem ist gelöst
+        </label>
       </div>
 
       <div class="field field-submit">

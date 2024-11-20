@@ -83,6 +83,9 @@ export default {
         },
         green: {
           DEFAULT: '#00d96c'
+        },
+        slate: {
+          750: '#2b3648'
         }
       },
       transitionDuration: {

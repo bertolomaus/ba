@@ -171,11 +171,11 @@
 }
 
 .sidebar .tags{
-  @apply mb-0
+  @apply mb-0 mt-2
 }
 
 .sidebar .with-tags a{
-  @apply py-2
+  @apply py-2 leading-6
 }
 
 

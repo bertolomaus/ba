@@ -4,8 +4,8 @@ import UserAuthentication from './UserAuthentication.vue'
 import SVGClose from './SVGClose.vue'
 import IconLogin from './IconLogin.vue'
 
-const { isLoggedIn, userId } = useAuth()
-const { userData, fetchUserData, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith, } = useUserData()
+const { isLoggedIn, userId, login } = useAuth()
+const { userData, fetchUserData, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith } = useUserData()
 const { showSidebar, toggleSidebar, showSidebarNav, showNavigation, showInteraction } = useToggleContent()
 const { modalShowNewQuestion, modalShowNewProject } = useModal()
 const { editModeOn } = useEdit()
@@ -14,6 +14,10 @@ const profileLink = ref(computed(() => ({
   path: 'profil',
   query: { wizard: userId.value }
 })))
+
+if (localStorage.getItem('isLoggedIn')) {
+  login(parseInt(localStorage.getItem('isLoggedIn') as string))
+}
 
 const generateNavigationLinks = async () => {
   try {
@@ -26,8 +30,11 @@ const generateNavigationLinks = async () => {
 }
 
 onMounted(async () => {
+  if(isLoggedIn.value){
+    await fetchUserData(userId.value)
     await findProjectsUserCanHelpWith()
     await findQuetionsUserCanHelpWith()
+  }
 })
 
 </script>
@@ -112,7 +119,8 @@ onMounted(async () => {
               <a href="#" class="btn-link" @click="modalShowNewProject">Neues Projekt</a>
               <p class="h6">Fragen, bei denen du helfen könntest</p>
               <div class="with-tags">
-                <NuxtLink v-for="(frage, index) in questionsUserCanHelpWith" :key="index" :to="{ path: 'frage', query: { id: frage.id } }">
+                <NuxtLink v-for="(frage, index) in questionsUserCanHelpWith" :key="index"
+                  :to="{ path: 'frage', query: { id: frage.id } }">
                   {{ frage.title }}
                   <ul class="tags tags-xs">
                     <li v-for="(skill, index) in frage.skills" :key="index">{{ skill }}</li>
@@ -121,7 +129,8 @@ onMounted(async () => {
               </div>
               <p class="h6">Projekte, die nach deinen Fertigkeiten suchen</p>
               <div class="with-tags">
-                <NuxtLink v-for="(projekt, index) in projectsUserCanHelpWith" :key="index" :to="{ path: 'projekt', query: { id: projekt.id } }">
+                <NuxtLink v-for="(projekt, index) in projectsUserCanHelpWith" :key="index"
+                  :to="{ path: 'projekt', query: { id: projekt.id } }">
                   {{ projekt.title }}
                   <ul class="tags tags-xs">
                     <li v-for="(skill, index) in projekt.skills" :key="index">{{ skill }}</li>

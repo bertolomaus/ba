@@ -82,6 +82,7 @@ const onSubmit = async () => {
       // update userData > update project in data
       await fetchUserData(userId.value)
       const projectIndex = userData.value.projects.findIndex(p => p.id === project.value.id)
+      
       if (projectIndex !== -1) {
         userData.value.projects[projectIndex] = { ...project.value }
       }
@@ -244,6 +245,7 @@ onMounted(async () => {
       </div>
 
       <div class="field checkbox field-isLookingForMembers">
+
         <label>
           <input v-model="project.isLookingForMembers" type="checkbox" name="isLookingForMembers">
           Suchst du nach Partnern für dein Projekt?

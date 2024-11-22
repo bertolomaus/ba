@@ -10,22 +10,32 @@ const { userId } = useAuth()
 const { addVisitedProject } = useUserData()
 const route = useRoute()
 const project = ref<Project>()
-const pId = route.query.id?.toString()
+const pId = ref(parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0"))
 
 onMounted(async () => {
   showSidebar.value = false
   showModal.value = false
-  const request = await fetchProjectData(parseInt(pId ? pId : "0"))
+  const request = await fetchProjectData(pId.value)
   project.value = request?.project
-  addVisitedProject(parseInt(pId ? pId : "0"))
+  addVisitedProject(pId.value)
 })
+
+watch(async () =>
+  route.query,
+  async () => {
+    pId.value = parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0")
+    const request = await fetchProjectData(pId.value)
+    project.value = request?.project
+    fetchProjectData(pId.value)
+  }
+)
 </script>
 
 <template>
   <div class="projekt">
     <div class="container">
       <Edit v-if="project?.owner === userId" />
-      <EditProject v-if="editMode" :update-on-save="true" :id="parseInt(pId ? pId : '0')" />
+      <EditProject v-if="editMode" :update-on-save="true" :id="pId" />
 
       <div v-else class="project-viewer">
         <h1 class="">{{ project?.title }}</h1>
@@ -46,20 +56,28 @@ onMounted(async () => {
         <h3 class="h3">Realistische Deadline</h3>
         <p>{{ project?.deadline }}</p>
         <h3 class="h3" v-if="project?.resources && project?.resources.length > 0">Verwendete Ressourcen</h3>
-        <p v-if="project?.resources && project?.resources.length > 0">{{ project?.resources }}</p>
-        <h3 class="h3">Projektmitglieder</h3>
-        <div class="field-members" v-if="project && project.members.length > 0">
-          <ul>
-            <li v-for="(member, index) in project?.members" :key="index" class="card card-user">
-              <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }"
-                class="flex gap-4 flex-wrap items-center">
-                <NuxtImg :src="member.avatar" :alt="member.name" :height="64" />
-                <p class="h4">{{ member.name }}</p>
-              </NuxtLink>
-            </li>
-          </ul>
+        <ul>
+          <li v-for="(resource, index) in project?.resources" :key="index">
+            <NuxtLink :to="resource.src" target="_blank" :title="`${resource.name} für ${project?.title}`">{{
+              resource.name }}</NuxtLink>
+          </li>
+        </ul>
+        <div v-if="false">
+          <h3 class="h3">Projektmitglieder</h3>
+          <div class="field-members" v-if="project && project.members.length > 0">
+            <ul>
+              <li v-for="(member, index) in project?.members" :key="index" class="card card-user">
+                <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }"
+                  class="flex gap-4 flex-wrap items-center">
+                  <NuxtImg :src="member.avatar" :alt="member.name" :height="64" />
+                  <p class="h4">{{ member.name }}</p>
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
         </div>
-        <h3 class="text-green" v-if="project?.isLookingForMembers">{{ project.members[0].name }} sucht noch Mitglieder für sein Projekt</h3>
+        <h3 class="text-green" v-if="project?.isLookingForMembers">{{ project.members[0].name }} sucht noch Mitglieder
+          für sein Projekt</h3>
         <h3 class="h3 text-red" v-if="project?.isDone">Dieses Projekt ist abgeschlossen.</h3>
       </div>
     </div>

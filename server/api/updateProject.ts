@@ -19,8 +19,8 @@ export default defineEventHandler(async (event) => {
       deadline: body.data.deadline,
       members: JSON.stringify(body.data.members),
       resources: JSON.stringify(body.data.resources),
-      isLookingForMembers: body.data.isLookingForMembers ? 1 : 0,
       isVisible: body.data.isVisible ? 1 : 0,
+      isLookingForMembers: body.data.isLookingForMembers ? 1 : 0,
       isDone: body.data.isDone ? 1 : 0,
     })
     return { success: true }

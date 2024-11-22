@@ -149,10 +149,31 @@ export const useProjectsData = () => {
     return members.value
   }
 
+  const clearCurrentProjectData = () => {
+    project.value  = {
+      id: 0,
+      owner: 0,
+      title: "",
+      requiredSkills: [],
+      description: "",
+      goal: "",
+      winCondition: "",
+      whyAchieveable: "",
+      whyRelevant: "",
+      deadline: "",
+      members: [],
+      resources: [],
+      isLookingForMembers: false,
+      isVisible: false,
+      isDone: false
+    }
+  }
+
   return {
     project,
     projectsList, updateProjectsList,
     fetchProjectData,
-    fetchMembers
+    fetchMembers,
+    clearCurrentProjectData
   }
 };

@@ -206,8 +206,8 @@ export const updateProject = db
   deadline: sql`${sql.placeholder("deadline")}`,
   members: sql`${sql.placeholder("members")}`,
   resources: sql`${sql.placeholder("resources")}`,
-  isLookingForMembers: sql`${sql.placeholder("isLookingForMembers")}`,
   isVisible: sql`${sql.placeholder("isVisible")}`,
+  isLookingForMembers: sql`${sql.placeholder("isLookingForMembers")}`,
   isDone: sql`${sql.placeholder("isDone")}`,
 })
 .where(sql`${projects.id} = ${sql.placeholder("id")}`)

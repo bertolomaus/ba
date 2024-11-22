@@ -179,7 +179,7 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="contact">
-        <h3>Kontakt</h3>
+        <h3 v-if="userData.contact || editMode">Kontakt</h3>
         <div v-if="editMode">
           <p>Abgesehen von Eulen und Gedankenlesen, wie möchtest du kontaktiert werden?</p>
           <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
@@ -190,33 +190,33 @@ onUnmounted(() => {
         </div>
         <div v-else>
           <ul class="list-contact">
-            <li v-if="userData.contact[0]">
-              <a :href="userData.contact[0]" class="flex gap-2 items-center">
-                <NuxtImg src="wa.png" alt="Icon Whatsapp" height="24" />
+            <li v-if="`https://wa.me/${userData.contact[0]}`">
+              <a :href="userData.contact[0]" class="flex gap-2 items-center" target="_blank">
+                <NuxtImg :src="'wa.png'" alt="Icon Whatsapp" height="24" />
                 Whatsapp
               </a>
             </li>
             <li v-if="userData.contact[1]">
-              <a :href="userData.contact[2]" class="flex gap-2 items-center">
-                <NuxtImg src="discord.png" alt="Icon Discord" height="24" />
-                Discprd
-              </a>
+              <p class="flex gap-2 items-center">
+                <NuxtImg :src="'discord.png'" alt="Icon Discord" height="24" />
+                Discord: {{ userData.contact[1] }}
+              </p>
             </li>
             <li v-if="userData.contact[2]">
-              <a :href="userData.contact[2]" class="flex gap-2 items-center">
-                <NuxtImg src="signal.png" alt="Icon Signal" height="24" />
+              <a :href="`signal://send?phone=${userData.contact[2]}`" class="flex gap-2 items-center" target="_blank">
+                <NuxtImg :src="'signal.png'" alt="Icon Signal" height="24" />
                 Signal
               </a>
             </li>
             <li v-if="userData.contact[3]">
-              <a :href="userData.contact[3]" class="flex gap-2 items-center">
-                <NuxtImg src="webex.png" alt="Icon Webex" height="24" />
+              <a :href="`https://web.webex.com/meet/${userData.contact[3]}`" class="flex gap-2 items-center" target="_blank">
+                <NuxtImg :src="'webex.png'" alt="Icon Webex" height="24" />
                 Webex
               </a>
             </li>
             <li v-if="userData.contact[4]">
-              <a :href="userData.contact[4]" class="flex gap-2 items-center">
-                <NuxtImg src="mail.png" alt="Icon Email" height="24" />
+              <a :href="`mailto:${userData.contact[4]}`" class="flex gap-2 items-center" target="_blank">
+                <NuxtImg :src="'mail.png'" alt="Icon Email" height="24" />
                 Email
               </a>
             </li>
@@ -256,7 +256,7 @@ onUnmounted(() => {
           @submit-input="addNewHobby" />
       </div>
       <div class="bio">
-        <h3>Über {{ userData.name }}</h3>
+        <h3 v-if="userData.bio || editMode">Über {{ userData.name }}</h3>
         <div v-if="editMode">
           <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
         </div>

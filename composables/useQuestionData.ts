@@ -84,9 +84,23 @@ export const useQuestionData = () => {
     }
   }
 
+  const clearCurrentQuestionData = () => {
+    question.value = {
+      id: 0,
+      owner: 0,
+      title: "",
+      requiredSkills: [],
+      description: "",
+      attemptedSolutions: "",
+      isVisible: false,
+      isSolved: false,
+    }
+  }
+
   return {
     question,
     questionsList, updateQuestionsList,
-    fetchQuestionData
+    fetchQuestionData,
+    clearCurrentQuestionData
   }
 };

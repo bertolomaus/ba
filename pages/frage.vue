@@ -5,25 +5,36 @@ import Edit from '../components/Edit.vue'
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { fetchQuestionData } = useQuestionData()
+const { userId } = useAuth()
 const route = useRoute()
 const question = ref<Question>()
-const qId = parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0")
+const qId = ref(parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0"))
 const { userData, addVisitedQuestion } = useUserData()
 const { editMode, toggleEditMode } = useEdit()
 
 onMounted(async () => {
   showSidebar.value = false
   showModal.value = false
-  const request = await fetchQuestionData(qId)
+  const request = await fetchQuestionData(qId.value)
   question.value = request?.question
-  addVisitedQuestion(qId)
+  addVisitedQuestion(qId.value)
 })
+
+watch(async () =>
+  route.query,
+  async () => {
+    qId.value = parseInt(route.query.id?.toString() ? route.query.id?.toString() : "0")
+    const request = await fetchQuestionData(qId.value)
+    question.value = request?.question
+    addVisitedQuestion(qId.value)
+  }
+)
 </script>
 
 <template>
   <div class="frage">
     <div class="container">
-      <Edit />
+      <Edit v-if="question?.owner === userId" />
       <EditQuestion v-if="editMode" :id="qId" :update-on-save="true" />
 
       <div v-else class="question-viewer">

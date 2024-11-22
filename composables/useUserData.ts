@@ -160,9 +160,7 @@ export const useUserData = () => {
     projectsList.value.forEach(p => {
       const matches = p.requiredSkills.filter(item => userData.value.skills.map(s => s.name).includes(item))
 
-      console.log(p);
-
-      if(matches.length > 0 && p.isLookingForMembers){
+      if(matches.length > 0 && p.isLookingForMembers && userId.value !== p.owner){
         projectsUserCanHelpWith.value.push({id: p.id, title: p.title,  skills: matches})
       }
     })
@@ -176,7 +174,7 @@ export const useUserData = () => {
     questionsList.value.forEach(q => {
       const matches = q.requiredSkills.filter(item => userData.value.skills.map(s => s.name).includes(item))
 
-      if(matches.length > 0){
+      if(matches.length > 0 && userId.value !== q.owner){
         questionsUserCanHelpWith.value.push({id: q.id, title: q.title,  skills: matches})
       }
     })

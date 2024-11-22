@@ -13,6 +13,7 @@ const { userId } = useAuth()
 const { question, fetchQuestionData } = useQuestionData()
 const { userData, fetchUserData, updateUserData } = useUserData()
 const { toggleModal } = useModal()
+const { editMode } = useEdit()
 const possibleHelpers = ref<UserDataShort[]>([])
 
 const getHelpers = async () => {
@@ -83,6 +84,9 @@ const onSubmit = async () => {
 
     // add project's requiredSkills to skills table
     setSkills(question.value.requiredSkills)
+
+    // turn off edit mode
+    editMode.value = false
   } catch (error) {
     console.error(error)
   }

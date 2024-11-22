@@ -32,6 +32,10 @@
   @apply absolute top-full right-0 mt-4 p-4 bg-slate-900 flex gap-4 max-w-full justify-end rounded-md border border-muted shadow;
 }
 
+.list-contact img{
+  @apply w-6 h-6 object-contain object-center mr-4;
+}
+
 .skill-name {
   @apply w-40;
 }

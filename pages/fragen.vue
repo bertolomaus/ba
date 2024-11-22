@@ -3,6 +3,7 @@ const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { questionsList, updateQuestionsList } = useQuestionData()
 const { userId } = useAuth()
+const { modalShowNewQuestion } = useModal()
 
 const loadQuestions = async () => {
   updateQuestionsList()
@@ -19,6 +20,7 @@ onMounted(async () => {
   <div class="fragen">
     <div class="container">
       <h1 class="">Fragen</h1>
+      <a href="#" class="btn w-max mb-8" @click="modalShowNewQuestion">Neue Frage stellen</a>
       <div class="list-questions cards">
         <NuxtLink class="card"
           v-for="(q, index) of questionsList.filter(q => q.isVisible || !q.isVisible && q.owner == userId)" :key="index"

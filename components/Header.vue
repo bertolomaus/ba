@@ -3,6 +3,7 @@ import FormLogout from './FormLogout.vue'
 import UserAuthentication from './UserAuthentication.vue'
 import SVGClose from './SVGClose.vue'
 import IconLogin from './IconLogin.vue'
+import type { Project } from '~/composables/useProjectsData';
 
 const { isLoggedIn, userId, login } = useAuth()
 const { userData, fetchUserData, findProjectsUserCanHelpWith, projectsUserCanHelpWith, findQuetionsUserCanHelpWith, questionsUserCanHelpWith } = useUserData()
@@ -14,9 +15,18 @@ const profileLink = ref(computed(() => ({
   path: 'profil',
   query: { wizard: userId.value }
 })))
+const userCanHelpWithSomething = ref(false)
 
-if (localStorage.getItem('isLoggedIn')) {
-  login(parseInt(localStorage.getItem('isLoggedIn') as string))
+// if (localStorage.getItem('isLoggedIn')) {
+//   login(parseInt(localStorage.getItem('isLoggedIn') as string))
+// }
+
+const questionIsNew = (qId: number) => {
+  return !userData.value.visitedQuestions.includes(qId)
+}
+
+const projectIsNew = (pId: number) => {
+  return !userData.value.visitedProjects.includes(pId)
 }
 
 const generateNavigationLinks = async () => {
@@ -24,18 +34,46 @@ const generateNavigationLinks = async () => {
     await fetchUserData(userId.value)
     await findProjectsUserCanHelpWith()
     await findQuetionsUserCanHelpWith()
+    checkIfUserCanHelpWithSomething()
   } catch (error) {
     console.error(error)
   }
 }
 
+const checkIfUserCanHelpWithSomething = () => {
+  userCanHelpWithSomething.value = false;
+
+  projectsUserCanHelpWith.value.forEach(p => {
+    if (!userData.value.visitedProjects.includes(p.id)) {
+      userCanHelpWithSomething.value = true;
+    }
+  })
+  questionsUserCanHelpWith.value.forEach(q => {
+    if (!userData.value.visitedQuestions.includes(q.id)) {
+      userCanHelpWithSomething.value = true;
+    }
+  })
+}
+
 onMounted(async () => {
-  if(isLoggedIn.value){
+  if (isLoggedIn.value) {
     await fetchUserData(userId.value)
     await findProjectsUserCanHelpWith()
     await findQuetionsUserCanHelpWith()
+    checkIfUserCanHelpWithSomething()
   }
 })
+
+watch(isLoggedIn, async (newVal, oldVal) => {
+  try {
+    await fetchUserData(userId.value)
+    await findProjectsUserCanHelpWith()
+    await findQuetionsUserCanHelpWith()
+    checkIfUserCanHelpWithSomething()
+  } catch (error) {
+    console.error(error)
+  }
+});
 
 </script>
 
@@ -58,6 +96,7 @@ onMounted(async () => {
         <div class="open-interaction" @click="showInteraction(); generateNavigationLinks()">
           <NuxtImg v-if="isLoggedIn" :src="userData.avatar" alt="Wizard Logo" width="64" />
           <p class="btn" v-else>Login</p>
+          <div class="notification" v-if="isLoggedIn && userCanHelpWithSomething"></div>
         </div>
       </div>
     </div>
@@ -77,6 +116,8 @@ onMounted(async () => {
           <div class="sidebar-open-interaction" @click="showInteraction">
             <NuxtImg v-if="isLoggedIn" :src="userData.avatar" alt="Wizard Logo" width="48" class="px-2 w-16" />
             <IconLogin v-else />
+            <div class="notification" v-if="isLoggedIn && userCanHelpWithSomething">
+            </div>
           </div>
           <SVGClose class="sidebar-close" @click="toggleSidebar" />
         </div>
@@ -121,7 +162,10 @@ onMounted(async () => {
               <div class="with-tags">
                 <NuxtLink v-for="(frage, index) in questionsUserCanHelpWith" :key="index"
                   :to="{ path: 'frage', query: { id: frage.id } }">
-                  {{ frage.title }}
+                  <span class="relative block">
+                    {{ frage.title }}
+                    <span v-if="questionIsNew(frage.id)" class="icon-new">!</span>
+                  </span>
                   <ul class="tags tags-xs">
                     <li v-for="(skill, index) in frage.skills" :key="index">{{ skill }}</li>
                   </ul>
@@ -131,13 +175,16 @@ onMounted(async () => {
               <div class="with-tags">
                 <NuxtLink v-for="(projekt, index) in projectsUserCanHelpWith" :key="index"
                   :to="{ path: 'projekt', query: { id: projekt.id } }">
-                  {{ projekt.title }}
+                  <span class="relative block">
+                    {{ projekt.title }}
+                    <span v-if="projectIsNew(projekt.id)" class="icon-new">!</span>
+                  </span>
                   <ul class="tags tags-xs">
                     <li v-for="(skill, index) in projekt.skills" :key="index">{{ skill }}</li>
                   </ul>
                 </NuxtLink>
               </div>
-              <FormLogout class="ml-4 mt-8" />
+              <FormLogout class="my-16" />
             </div>
           </div>
         </div>

@@ -1,155 +1,171 @@
 /* ********** COMPONENT/HEADER ********** */
 
-.headerbar{
+.headerbar {
   @apply fixed top-0 left-0 w-full px-8 h-28 transition-all flex justify-between items-center bg-slate-900;
   z-index: 1000;
 }
 
-.headerbar.scrolled{
-  @apply h-20
+.headerbar.scrolled {
+  @apply h-20;
 }
 
-.logo img, .open-interaction img{
+.logo img,
+.open-interaction img {
   @apply h-16 w-auto transition-all;
 }
 
-.scrolled .logo img, .scrolled .open-interaction img{
-  @apply h-12 w-auto
+.scrolled .logo img,
+.scrolled .open-interaction img {
+  @apply h-12 w-auto;
 }
 
-.sidebar-togglers{
-  @apply flex items-center
+.sidebar-togglers {
+  @apply flex items-center;
 }
 
-.open-navigation, .open-interaction{
-  @apply cursor-pointer transition-colors;
+.open-navigation,
+.open-interaction {
+  @apply cursor-pointer transition-colors relative;
 }
 
-.open-navigation{
+.open-navigation {
   @apply mr-4 p-4;
   @apply hover:text-textColor-primary;
 }
 
-.open-navigation svg{
-  @apply w-6
-}
-
-.sidebar{
-  @apply fixed right-0 top-0 h-full pointer-events-none;
-  z-index:1010;
-}
-
-.sidebar.open{
-  @apply pointer-events-auto;
-}
-
-.sidebar-overlay{
-  @apply fixed w-screen h-screen top-0 right-0 bg-black opacity-0 transition-all;
-}
-
-.sidebar.open .sidebar-overlay{
-  @apply opacity-60 pointer-events-auto;
-}
-
-.sidebar-controls{
-  @apply absolute px-8 pt-4 top-0 right-0 h-20 w-full flex items-center bg-bgColor-muted;
-}
-
-.sidebar-controls-highlight{
-  @apply absolute h-16 left-8 w-16 bg-bgColor border rounded border-muted transition-all;
-}
-
-.sidebar-controls-highlight.highlight-interaction{
-  @apply left-28
-}
-
-.sidebar-open-navigation, .sidebar-open-interaction{
-  @apply mr-4 relative px-5 h-16 flex items-center cursor-pointer transition-colors;
-  @apply hover:text-textColor-highlight;
-  z-index:10;
-}
-
-.sidebar-open-interaction{
-  @apply p-0
-}
-
-.sidebar-open-interaction svg{
-  @apply w-16 pl-4 pr-5;
-}
-
-.sidebar-open-navigation svg{
+.open-navigation svg {
   @apply w-6;
 }
 
-.sidebar-close{
+.notification{
+  @apply absolute -top-1 -right-1 w-4 h-4 bg-red rounded-full border border-slate-600
+}
+
+.sidebar {
+  @apply fixed right-0 top-0 h-full pointer-events-none;
+  z-index: 1010;
+}
+
+.sidebar.open {
+  @apply pointer-events-auto;
+}
+
+.sidebar-overlay {
+  @apply fixed w-screen h-screen top-0 right-0 bg-black opacity-0 transition-all;
+}
+
+.sidebar.open .sidebar-overlay {
+  @apply opacity-60 pointer-events-auto;
+}
+
+.sidebar-controls {
+  @apply absolute px-8 pt-4 top-0 right-0 h-20 w-full flex items-center bg-bgColor-muted;
+}
+
+.sidebar-controls-highlight {
+  @apply absolute h-16 left-8 w-16 bg-bgColor border rounded border-muted transition-all;
+}
+
+.sidebar-controls-highlight.highlight-interaction {
+  @apply left-28;
+}
+
+.sidebar-open-navigation,
+.sidebar-open-interaction {
+  @apply mr-4 relative px-5 h-16 flex items-center cursor-pointer transition-colors;
+  @apply hover:text-textColor-highlight;
+  z-index: 10;
+}
+
+.sidebar-open-interaction {
+  @apply p-0;
+}
+
+.sidebar-open-interaction svg {
+  @apply w-16 pl-4 pr-5;
+}
+
+.sidebar-open-navigation svg {
+  @apply w-6;
+}
+
+.sidebar .notification{
+  @apply top-0.5 right-0.5
+}
+
+.sidebar-close {
   @apply absolute right-4;
 }
 
-.sidebar-content{
-  @apply absolute h-full right-0 top-0 bg-bgColor-muted overflow-x-hidden translate-x-[400px] transition-all;
-  width:400px;
-  z-index:10;
-  scrollbar-width: thin;
-  scrollbar-color: #1e293b #334155;
+.sidebar-content {
+  @apply absolute h-full right-0 top-0 bg-bgColor-muted overflow-x-hidden translate-x-[400px] transition-all overflow-hidden;
+  width: 400px;
+  z-index: 10;
 }
 
-.sidebar.open .sidebar-content{
+.sidebar.open .sidebar-content {
   @apply translate-x-0;
 }
 
-.sidebar-content:before, .sidebar-content:after{
+.sidebar-content:before,
+.sidebar-content:after {
   @apply absolute w-8 h-full top-0;
   z-index: 20;
-  content:"";
+  content: "";
 }
 
-.sidebar-content:before{
-  @apply bg-gradient-to-r from-bgColor-muted to-transparent left-0
+.sidebar-content:before {
+  @apply bg-gradient-to-r from-bgColor-muted to-transparent left-0;
 }
 
-.sidebar-content:after{
-  @apply bg-gradient-to-l from-bgColor-muted to-transparent right-0
+.sidebar-content:after {
+  @apply bg-gradient-to-l from-bgColor-muted to-transparent right-0;
 }
 
-.sidebar .h4{
+.sidebar .h4 {
   @apply mb-8;
 }
 
-.sidebar .h6{
-  @apply mt-12 mb-8
+.sidebar .h6 {
+  @apply mt-12 mb-8;
 }
 
-.sidebar .interaction .h3{
+.sidebar .interaction .h3 {
   @apply text-lg mb-4;
 }
 
-.sidebar .navigation, .sidebar .interaction{
-  @apply absolute top-28 left-0 transition-transform w-full px-8;
+.sidebar .navigation,
+.sidebar .interaction {
+  @apply absolute top-28 left-0 transition-transform w-full px-8 overflow-y-scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #334155 rgba(0,0,0,0);
+  height:calc(100vh - 9rem);
 }
 
-.sidebar .navigation.active, .sidebar .interaction.active{
+.sidebar .navigation.active,
+.sidebar .interaction.active {
   @apply translate-x-0;
 }
 
 .sidebar .navigation a,
-.sidebar .interaction a{
+.sidebar .interaction a {
   @apply relative py-1 pl-4 block text-textColor;
 }
 
-.sidebar .navigation ul ul a{
+.sidebar .navigation ul ul a {
   @apply pl-8 font-light;
 }
 
-.sidebar .navigation .router-link-active{
-  @apply text-textColor-primary font-medium
+.sidebar .navigation .router-link-active {
+  @apply text-textColor-primary font-medium;
 }
 
-.sidebar .navigation{
-  transform:translateX(100%);
+.sidebar .navigation {
+  transform: translateX(100%);
 }
 
-.sidebar .interaction{
-  transform:translateX(-100%);
+.sidebar .interaction {
+  transform: translateX(-100%);
 }
 
 .sidebar form :focus + label,
@@ -157,95 +173,98 @@
 .sidebar form .is-acceptable label,
 .sidebar .autocomplete :focus + label,
 .sidebar :not(:placeholder-shown) + label,
-.sidebar form .has-text input{
-  @apply bg-bgColor-muted
+.sidebar form .has-text input {
+  @apply bg-bgColor-muted;
 }
 
-.sidebar input, .sidebar textarea{
+.sidebar input,
+.sidebar textarea {
   @apply bg-bgColor-lighter;
-  @apply focus:bg-bgColor-muted
+  @apply focus:bg-bgColor-muted;
 }
 
-.sidebar .btn{
-  @apply border-bgColor-lighter hover:border-red
+.sidebar .btn {
+  @apply border-bgColor-lighter hover:border-red;
 }
 
-.sidebar .tags{
-  @apply mb-0 mt-2
+.sidebar .tags {
+  @apply mb-0 mt-2;
 }
 
-.sidebar .with-tags a{
-  @apply py-2 leading-6
+.sidebar .with-tags a {
+  @apply py-2 leading-6;
 }
 
+.sidebar .tags li {
+  background: rgba(255, 255, 255, 0.1);
+}
 
-
+.icon-new {
+  @apply absolute block -left-6 top-1 rounded-full bg-red text-textColor-primary text-base;
+  line-height: 1;
+  width: 1em;
+  text-align: center;
+}
 
 /* ********** COMPONENT/AUTHENTICATION ********** */
 
-.user-authentication form + p{
+.user-authentication form + p {
   @apply mt-4;
 }
 
-.user-authentication .h3{
+.user-authentication .h3 {
   @apply mb-4;
 }
 
-
-
 /* ********** COMPONENT/MODAL ********** */
 
-.modal{
+.modal {
   @apply fixed top-0 left-0 right-0 bottom-0 transition-all opacity-0;
-  z-index:10000;
+  z-index: 10000;
 }
 
-.modal.open{
+.modal.open {
   @apply opacity-100;
 }
 
-.modal-overlay{
+.modal-overlay {
   @apply absolute top-0 left-0 right-0 bottom-0 bg-black opacity-30;
 }
 
-.modal-content{
+.modal-content {
   @apply absolute bg-slate-800 rounded-lg top-16 left-16 right-16 bottom-16 py-16 border-2 rounded-md border-slate-600 overflow-y-scroll;
   z-index: 1;
   scrollbar-width: thin;
   scrollbar-color: #1e293b #334155;
 }
 
-.modal-close{
+.modal-close {
   @apply absolute top-10 right-10 bg-slate-700 shadow;
   @apply hover:bg-slate-900;
   z-index: 2;
 }
 
-
-
 /* ********** COMPONENT/AUTOCOMPLETE ********** */
 
-.autocomplete{
+.autocomplete {
   @apply relative;
 }
 
-.suggestions-list{
+.suggestions-list {
   @apply absolute top-full w-max min-w-40 bg-slate-750 border-muted border rounded-md overflow-hidden;
-  z-index:100;
+  z-index: 100;
 }
 
-.suggestions-list li{
-  @apply p-2
+.suggestions-list li {
+  @apply p-2;
 }
 
-.suggestions-list .active{
+.suggestions-list .active {
   @apply bg-slate-800 text-textColor-primary;
 }
 
-
-
 /* ********** COMPONENT/TRASH ********** */
 
-.trash{
+.trash {
   @apply cursor-pointer fill-red;
 }

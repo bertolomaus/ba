@@ -153,16 +153,19 @@ onMounted(async () => {
       <div class="field field-title">
         <input v-model="project.title" name="title" placeholder="" />
         <label for="title">Titel</label>
+        <p class="hint">Ein sprechender Titel, der dein Projekt beschreibt.</p>
       </div>
 
       <div class="field field-goal">
         <textarea v-model="project.goal" name="goal" placeholder=""></textarea>
         <label for="goal">Was ist dein konkretes Ziel?</label>
+        <p class="hint">Beschreibe präzise, welchen Zweck dein Projekt erfüllen soll.</p>
       </div>
 
       <div class="field field-description">
         <textarea v-model="project.description" name="description" placeholder=""></textarea>
         <label for="description">Beschreib dein Projekt</label>
+        <p class="hint">Beschreib deine Idee: Was möchtest du Umsetzen? Welche Sprachen, Software, Frameworks oder Tools willst du einsetzen? Was möchtest du dabei lernen?</p>
       </div>
 
       <div class="field field-tags">
@@ -173,26 +176,31 @@ onMounted(async () => {
         </ul>
         <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
           @submit-input="addRequiredSkill" />
+        <p class="hint">Diese Eingaben erscheinen als Tags in der Liste der aller Projekte.</p>
       </div>
 
       <div class="field field-winCondition">
         <textarea v-model="project.winCondition" name="winCondition" placeholder=""></textarea>
         <label for="winCondition">Wann ist dein Ziel erreicht?</label>
+        <p class="hint">Definiere die Akzeptanzkriterien für dein Projekt.</p>
       </div>
 
       <div class="field field-whyAchieveable">
         <textarea v-model="project.whyAchieveable" name="whyAchieveable" placeholder=""></textarea>
-        <label for="whyAchieveable">Dein Ziel ist erreichbar, weil</label>
+        <label for="whyAchieveable">Dein Ziel ist erreichbar, weil...</label>
+        <p class="hint">Beschriebe, auf welchem Wege du dein Ziel erreichen willst.</p>
       </div>
 
       <div class="field field-whyRelevant">
         <textarea v-model="project.whyRelevant" name="whyRelevant" placeholder=""></textarea>
-        <label for="whyRelevant">Dein Ziel ist relevant, weil</label>
+        <label for="whyRelevant">Dein Ziel ist relevant, weil...</label>
+        <p class="hint">Beschreibe, wieso du dieses Ziel erreichen willst.</p>
       </div>
 
       <div class="field field-deadline">
         <input v-model="project.deadline" name="deadline" placeholder="" />
         <label for="deadline">Realistische Deadline</label>
+        <p class="hint">Setze dir selbst eine Deadline als Orientierungspunkt.</p>
       </div>
 
       <div class="field field-resources">
@@ -217,6 +225,7 @@ onMounted(async () => {
           <AddCircle class="w-5" :is-open="showResourceDetails" />
           <p>Ressource hinzufügen</p>
         </div>
+        <p class="hint ml-3">Nutze dies, um Links zu allen relevanten Ressourcen deines Projektes an einem Ort zu speichern - z.B. Git-Repositories, Discord-Server, Miroboards, Cloudspeicher, ...</p>
         <div class="resource-details ml-8" v-if="showResourceDetails">
           <div class="field">
             <input type="text" v-model="resourceName" name="resourceName" placeholder="">

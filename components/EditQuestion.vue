@@ -123,16 +123,29 @@ onMounted(async () => {
       <div class="field field-title">
         <input v-model="question.title" name="title" placeholder="" />
         <label for="title">Titel</label>
+        <p class="hint">Ein sprechender Titel, der deine Frage beschreibt.</p>
       </div>
 
       <div class="field field-description">
         <textarea v-model="question.description" name="description" placeholder=""></textarea>
         <label for="description">Beschreib dein Problem</label>
+        <div class="hint">
+          <p>
+            Mach es deinen Kommilitonen möglichst einfach, nachzuvollziehen, was du tun möchtest und wobei du Unterstützung benötigst. Beschreib den Kontext, in dem du auf das Problem gestoßen bist:
+          </p>
+          <ul class="mt-2 list-disc pl-6">
+            <li>Woran arbeitest du?</li>
+            <li>Benötigst du Hilfe oder hättest du gerne Feedback?</li>
+            <li>Was soll die Funktion bewirken, bei dessen Umsetzung du ein Problem hast?</li>
+            <li>Welche Programme und Programmiersprachen verwendest du?</li>
+          </ul>
+        </div>
       </div>
 
       <div class="field field-attemptedSolutions">
         <textarea v-model="question.attemptedSolutions" name="attemptedSolutions" placeholder=""></textarea>
         <label for="attemptedSolutions">Welche Lösungsansätze hast du schon versucht?</label>
+        <p class="hint">Welche Ideen hast du schon versucht, welche Ansätze hast du zur Lösung? Oder brauchst du Hilfe dabei, den Anfang überhaupt zu finden?</p>
       </div>
 
       <div class="field field-tags">
@@ -143,6 +156,7 @@ onMounted(async () => {
         </ul>
         <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
           @submit-input="addRequiredSkill" />
+        <p class="hint">Diese Eingaben erscheinen als Tags in der Liste der offenen Fragen. Basierend auf diesen Tags wird dein Problem Leuten vorgeschlagen, die über die erforderlichen Fertigkeiten verfügen, dir bei deiner Frage zu helfen.</p>
       </div>
 
       <div class="field checkbox field-isVisible">

@@ -127,7 +127,7 @@
 }
 
 .sidebar .h6 {
-  @apply mt-12 mb-8;
+  @apply my-8;
 }
 
 .sidebar .interaction .h3 {
@@ -138,7 +138,7 @@
 .sidebar .interaction {
   @apply absolute top-28 left-0 transition-transform w-full px-8 overflow-y-scroll;
   scrollbar-width: thin;
-  scrollbar-color: #334155 rgba(0,0,0,0);
+  scrollbar-color: #64748b rgba(0,0,0,0);
   height:calc(100vh - 9rem);
 }
 

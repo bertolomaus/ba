@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
   modules: ["@nuxtjs/tailwindcss",
-    "@nuxt/content",
     "@vee-validate/nuxt",
     "@nuxt/image"
   ],

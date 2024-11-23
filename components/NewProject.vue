@@ -7,7 +7,7 @@ onMounted(() => {
 
 <template>
   <div class="new-project">
-    <h2 class="h2">Starte ein neues Projekt</h2>
+    <h2 class="h2">Fang ein neues Projekt an</h2>
     <EditProject :update-on-save="false" :id="0" />
   </div>
 </template>

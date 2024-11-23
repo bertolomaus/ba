@@ -199,3 +199,30 @@ a.card:hover{
 .list-projects .tags, .list-questions .tags{
   @apply mb-0
 }
+
+
+/* *** QUOTES *** */
+
+.quote{
+  @apply text-textColor-primary px-20 py-8 relative
+}
+
+blockquote{
+  @apply text-xl;
+}
+
+.quote p{
+  @apply mt-4 ml-8 text-lg;
+  font-variant: small-caps;
+}
+
+.quote-icon{
+  @apply absolute w-auto h-full left-0 top-0 opacity-5
+}
+
+
+/* *** HINTS *** */
+
+.hint{
+  @apply text-sm pl-4 leading-6 mt-2
+}

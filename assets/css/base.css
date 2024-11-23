@@ -1,7 +1,7 @@
 /* ********** BASIC FONT ********** */
 
 body{
-  @apply font-serif font-light text-base tracking-wider leading-8 antialiased text-textColor pt-28 bg-slate-800;
+  @apply font-serif font-light text-base tracking-wider leading-8 antialiased text-textColor pt-28 bg-slate-800 pb-16;
   min-height:100vh;
 }
 
@@ -56,7 +56,7 @@ a{
 }
 
 p + p{
-  @apply mt-2
+  @apply mt-4
 }
 
 ul + p, ol + p{

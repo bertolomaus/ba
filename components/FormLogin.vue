@@ -27,7 +27,7 @@ const [password, passwordAttrs] = defineField('password')
 
 // login with credentials
 const handleLogin = async () => {
-  try {
+    try {
     // send credentials to api/auth
     const loginRequest = await $fetch('/api/auth/login', {
       method: 'POST',
@@ -62,7 +62,7 @@ const handleLogin = async () => {
         </div>
       </div>
       <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
-        <input v-model="password" v-bind="passwordAttrs"  name="password" placeholder="" />
+        <input v-model="password" v-bind="passwordAttrs"  name="password" placeholder="" type="password" />
         <label for="password">Passwort</label>
         <div class="errors">
           {{ errors.password }}

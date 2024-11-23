@@ -171,6 +171,7 @@ onUnmounted(() => {
             <div v-if="editMode">
               <h3>Status</h3>
               <textarea placeholder="Status" name="status" v-model="userData.status"></textarea>
+              <p class="hint">Was treibt dichh gerade um?</p>
             </div>
             <div v-else>
               <p>{{ userData.status }}</p>
@@ -183,15 +184,20 @@ onUnmounted(() => {
         <div v-if="editMode">
           <p>Abgesehen von Eulen und Gedankenlesen, wie möchtest du kontaktiert werden?</p>
           <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
+          <p class="hint">Deine Whatsapp-Telefonnummer</p>
           <input placeholder="Discord" name="discord" v-model="userData.contact[1]" />
+          <p class="hint">Dein Discord-Benutzername</p>
           <input placeholder="Signal" name="signal" v-model="userData.contact[2]" />
+          <p class="hint">Deine Signal-Telefonnummer</p>
           <input placeholder="Webex" name="webex" v-model="userData.contact[3]" />
+          <p class="hint">Deine Webex-Emailadresse</p>
           <input placeholder="Email" name="email" v-model="userData.contact[4]" />
+          <p class="hint">Deine Emailadresse</p>
         </div>
         <div v-else>
           <ul class="list-contact">
-            <li v-if="`https://wa.me/${userData.contact[0]}`">
-              <a :href="userData.contact[0]" class="flex gap-2 items-center" target="_blank">
+            <li v-if="userData.contact[0]">
+              <a :href="`https://wa.me/${userData.contact[0]}`" class="flex gap-2 items-center" target="_blank">
                 <NuxtImg :src="'wa.png'" alt="Icon Whatsapp" height="24" />
                 Whatsapp
               </a>
@@ -246,7 +252,8 @@ onUnmounted(() => {
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
-        <ul class="tags">
+        <p v-if="editMode">Erzähl ein bisschen was über dich! Gib deinen Kommilitonen die Möglichkeit, dich kennenzulernen.</p>
+        <ul class="tags mt-4">
           <li v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
             <Trash @click="removeHobby(index)" v-if="editMode" />

@@ -5,7 +5,7 @@ import Trash from '../components/Trash.vue'
 import Edit from '../components/Edit.vue'
 
 const route = useRoute()
-const { userId } = useAuth()
+const { userId, logout } = useAuth()
 const profileId = route.query.wizard?.toString()
 const { userData, fetchUserData, updateUserData, getHobbies, allHobbies } = useUserData()
 const { showSidebar } = useToggleContent()
@@ -19,6 +19,9 @@ const listAvatars = ref([
 ])
 const editAvatar = ref(false)
 const { isScrolled } = useWindow()
+const confirmPw = ref()
+const confirmEmail = ref()
+const openConfirm = ref(false)
 
 // toggle the avatar edit mode
 const toggleEditAvatar = () => {
@@ -77,7 +80,7 @@ const discardChanges = async () => {
 
 // trigger save() on ctrl+s
 const handleKeydown = (event: KeyboardEvent) => {
-  if(editMode.value && event.ctrlKey && event.key === 's'){
+  if (editMode.value && event.ctrlKey && event.key === 's') {
     event.preventDefault()
     save()
   }
@@ -101,7 +104,21 @@ const prepareContent = async () => {
 
 //delete profile
 const deleteProfile = async () => {
-  console.log('ohnoo');
+  try {
+    const response = await $fetch('/api/auth/delete', {
+      method: 'POST',
+      body: {
+        email: confirmEmail.value,
+        password: confirmPw.value
+      }
+    })
+    console.log(response);
+    if(response.success){
+      logout()
+    }
+  } catch (e) {
+    console.error(e)
+  }
 }
 
 onMounted(async () => {
@@ -215,7 +232,8 @@ onUnmounted(() => {
               </a>
             </li>
             <li v-if="userData.contact[3]">
-              <a :href="`https://web.webex.com/meet/${userData.contact[3]}`" class="flex gap-2 items-center" target="_blank">
+              <a :href="`https://web.webex.com/meet/${userData.contact[3]}`" class="flex gap-2 items-center"
+                target="_blank">
                 <NuxtImg :src="'webex.png'" alt="Icon Webex" height="24" />
                 Webex
               </a>
@@ -252,7 +270,8 @@ onUnmounted(() => {
       </div>
       <div class="personal">
         <h3>Hobbies</h3>
-        <p v-if="editMode">Erzähl ein bisschen was über dich! Gib deinen Kommilitonen die Möglichkeit, dich kennenzulernen.</p>
+        <p v-if="editMode">Erzähl ein bisschen was über dich! Gib deinen Kommilitonen die Möglichkeit, dich
+          kennenzulernen.</p>
         <ul class="tags mt-4">
           <li v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
@@ -272,26 +291,41 @@ onUnmounted(() => {
       <div class="projects" v-if="userData.projects">
         <h3>
           <span v-if="userData.name">{{ userData.name }}<span
-            v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
-          </span><span v-else>s </span></span>Projekte
+              v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
+            </span><span v-else>s </span></span>Projekte
         </h3>
         <div class="list-projects cards">
-            <NuxtLink class="card" v-for="(project, index) in userData.projects.filter(p => !p.isDone)" :key="index" :to="{ path: 'projekt', query: { id: project.id } }">
-              <h4 class="h3">{{ project.title }}</h4>
-              <ul class="tags tags-small">
-                <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
-              </ul>
-            </NuxtLink>
-            <NuxtLink class="card isDone" v-for="(project, index) in userData.projects.filter(p => p.isDone)" :key="index" :to="{ path: 'projekt', query: { id: project.id } }">
-              <h4 class="h3"><IconCheck />{{ project.title }}</h4>
-              <ul class="tags tags-small">
-                <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
-              </ul>
-            </NuxtLink>
+          <NuxtLink class="card" v-for="(project, index) in userData.projects.filter(p => !p.isDone)" :key="index"
+            :to="{ path: 'projekt', query: { id: project.id } }">
+            <h4 class="h3">{{ project.title }}</h4>
+            <ul class="tags tags-small">
+              <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
+            </ul>
+          </NuxtLink>
+          <NuxtLink class="card isDone" v-for="(project, index) in userData.projects.filter(p => p.isDone)" :key="index"
+            :to="{ path: 'projekt', query: { id: project.id } }">
+            <h4 class="h3">
+              <IconCheck />{{ project.title }}
+            </h4>
+            <ul class="tags tags-small">
+              <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
+            </ul>
+          </NuxtLink>
         </div>
       </div>
-      <div class="deleteProfile mt-16">
-        <button class="btn btn-red" @click="deleteProfile">Profil löschen</button>
+      <div class="deleteProfile mt-16 relative">
+        <button class="btn btn-red" @click="openConfirm = true">Profil löschen</button>
+        <div v-if="openConfirm" class="mt-8 max-w-lg p-8 bg-slate-750 border border-slate-500">
+          <p class="h6"><span class="text-red">Diese Aktion kann nicht rückgängig gemacht werden.</span></p>
+          <p>Wenn du dein Profil löschst, werden ebenfalls alle deine Projekte und Fragen gelöscht.</p>
+          <p>Um fortzufahren, gib dein Passwort ein:</p>
+          <input placeholder="Email" name="confirmEmail" v-model="confirmEmail" class="mt-4" />
+          <input placeholder="Passwort" name="confirmPw" v-model="confirmPw" type="password" class="mt-2" />
+          <div class="flex gap-4 mt-4">
+            <button class="btn" @click="deleteProfile">Endgültig löschen</button>
+            <button class="btn btn-muted" @click="discardChanges">Abbrechen</button>
+          </div>
+        </div>
       </div>
       <div class="endEditModeButtons" v-if="editMode">
         <button class="btn btn-green w-max" @click="save">Änderungen Speichern</button>

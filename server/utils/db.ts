@@ -61,6 +61,10 @@ export const getAllUserData = db
 })
 .from(users)
 
+export const deleteUser = db
+.delete(users)
+.where(sql`${users.id} = ${sql.placeholder("id")}`)
+
 
 // questions
 export const postQuestion = db
@@ -122,6 +126,10 @@ export const getQuestionData = db
 })
 .from(questions)
 .where(sql`${questions.id} = ${sql.placeholder("id")}`)
+
+export const deleteQuestions = db
+.delete(questions)
+.where(sql`${questions.owner} = ${sql.placeholder("id")}`)
 
 
 // projects
@@ -211,6 +219,10 @@ export const updateProject = db
   isDone: sql`${sql.placeholder("isDone")}`,
 })
 .where(sql`${projects.id} = ${sql.placeholder("id")}`)
+
+export const deleteProjects = db
+.delete(projects)
+.where(sql`${projects.owner} = ${sql.placeholder("id")}`)
 
 // skills
 

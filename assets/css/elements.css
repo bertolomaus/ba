@@ -92,15 +92,15 @@ form .btn{
 }
 
 .btn-green{
-  @apply border-textColor-muted hover:border-green after:bg-green
+  @apply border-slate-600 hover:border-green after:bg-green
 }
 
 .btn-red{
-  @apply border-textColor-muted hover:border-red after:bg-red
+  @apply border-slate-600 hover:border-red after:bg-red
 }
 
 .btn-muted{
-  @apply border-textColor-muted hover:border-textColor-muted after:bg-textColor-muted
+  @apply border-slate-600 hover:border-textColor-muted after:bg-textColor-muted
 }
 
 .btn-large{

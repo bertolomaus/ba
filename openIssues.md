@@ -2,7 +2,6 @@
 
 ## TODO NOW
 
-- add delete profile
 - add "change pw" to profile
 
 ## alle fragen / alle projekte

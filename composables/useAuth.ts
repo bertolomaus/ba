@@ -8,14 +8,12 @@ export const useAuth = () => {
   const login = (id: number) => {
     isLoggedIn.value = true
     userId.value = id
-    localStorage.setItem('isLoggedIn', id.toString())
   }
 
   const logout = () => {
     isLoggedIn.value = false
     userId.value = 0
     showLogin.value = true
-    localStorage.removeItem('isLoggedIn')
     route.push({path: '/'})
   }
 

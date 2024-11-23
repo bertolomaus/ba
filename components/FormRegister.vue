@@ -40,6 +40,7 @@ const [passwordConfirm, passwordConfirmAttrs] = defineField('passwordConfirm')
 const router = useRouter()
 const { toggleAuthForm } = useToggleContent()
 const { login, userId } = useAuth()
+const { fetchUserData } = useUserData()
 
 const register = async () => {
   // insert a new user into table 'users'
@@ -54,6 +55,7 @@ const register = async () => {
     })
     if(registerRequest.success){
       login(registerRequest.id)
+      fetchUserData(registerRequest.id)
       router.push({path: '/profil', query: {wizard: userId.value}})
     } else {
       throw createError({

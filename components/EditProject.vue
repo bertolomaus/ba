@@ -88,6 +88,7 @@ const onSubmit = async () => {
       }
       await updateUserData(userId.value, userData.value)
     } else {
+      project.value.owner = userId.value
       await $fetch('/api/createProject', {
         method: 'POST',
         body: {

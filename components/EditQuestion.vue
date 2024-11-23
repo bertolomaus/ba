@@ -63,7 +63,6 @@ const onSubmit = async () => {
       await updateUserData(userId.value, userData.value)
     } else {
       question.value.owner = userId.value
-      console.log(question.value);
       const response = await $fetch('/api/postQuestion', {
         method: 'POST',
         body: {

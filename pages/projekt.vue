@@ -62,19 +62,17 @@ watch(async () =>
               resource.name }}</NuxtLink>
           </li>
         </ul>
-        <div v-if="false">
-          <h3 class="h3">Projektmitglieder</h3>
-          <div class="field-members" v-if="project && project.members.length > 0">
-            <ul>
-              <li v-for="(member, index) in project?.members" :key="index" class="card card-user">
-                <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }"
-                  class="flex gap-4 flex-wrap items-center">
-                  <NuxtImg :src="member.avatar" :alt="member.name" :height="64" />
-                  <p class="h4">{{ member.name }}</p>
-                </NuxtLink>
-              </li>
-            </ul>
-          </div>
+        <h3 class="h3">Projektmitglieder</h3>
+        <div class="field-members" v-if="project && project.members.length > 0">
+          <ul>
+            <li v-for="(member, index) in project?.members" :key="index" class="card card-user" :limit="1">
+              <NuxtLink :to="{ path: 'profil', query: { wizard: member.id } }"
+                class="flex gap-4 flex-wrap items-center">
+                <NuxtImg :src="member.avatar" :alt="member.name" :height="64" />
+                <p class="h4">{{ member.name }}</p>
+              </NuxtLink>
+            </li>
+          </ul>
         </div>
         <h3 class="text-green" v-if="project?.isLookingForMembers">{{ project.members[0].name }} sucht noch Mitglieder
           für sein Projekt</h3>

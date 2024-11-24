@@ -27,7 +27,7 @@ const [password, passwordAttrs] = defineField('password')
 
 // login with credentials
 const handleLogin = async () => {
-    try {
+  try {
     // send credentials to api/auth
     const loginRequest = await $fetch('/api/auth/login', {
       method: 'POST',
@@ -36,8 +36,9 @@ const handleLogin = async () => {
         password: values.password
       }
     })
-    if(loginRequest.success){
+    if (loginRequest.success) {
       login(loginRequest.userId)
+      fetchUserData(loginRequest.userId)
     }
   }
   catch (error) {
@@ -51,7 +52,8 @@ const handleLogin = async () => {
   <div class="form-login">
     <p class="h3">Login</p>
     <form @submit.prevent="handleLogin">
-      <div class="field field-email" :class="[{'has-text': email}, {'has-error': errors.email}, {'is-acceptable': email && !errors.email}]">
+      <div class="field field-email"
+        :class="[{ 'has-text': email }, { 'has-error': errors.email }, { 'is-acceptable': email && !errors.email }]">
         <input v-model="email" v-bind="emailAttrs" name="email" placeholder="" />
         <label for="email">E-Mail</label>
         <div class="errors">
@@ -61,8 +63,9 @@ const handleLogin = async () => {
           </div>
         </div>
       </div>
-      <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
-        <input v-model="password" v-bind="passwordAttrs"  name="password" placeholder="" type="password" />
+      <div class="field field-password"
+        :class="[{ 'has-text': password }, { 'has-error': errors.password }, { 'is-acceptable': password && !errors.password }]">
+        <input v-model="password" v-bind="passwordAttrs" name="password" placeholder="" type="password" />
         <label for="password">Passwort</label>
         <div class="errors">
           {{ errors.password }}
@@ -76,13 +79,19 @@ const handleLogin = async () => {
       </div>
     </form>
     <p>
-      Du hast noch keinen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span class="btn-text">Registrieren</span></a>
+      Du hast noch keinen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span
+          class="btn-text">Registrieren</span></a>
     </p>
     <button v-if="!isLoggedIn" class="btn mt-8 btn-dev" @click="login(1), fetchUserData(1)">Login as Dev</button>
-    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(85355566), fetchUserData(85355566)">Login as Albus</button>
-    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(92664339), fetchUserData(92664339)">Login as Elminster</button>
-    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(49831990), fetchUserData(49831990)">Login as Gandalf</button>
-    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(71157217), fetchUserData(71157217)">Login as Jaina</button>
-    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(5544526), fetchUserData(5544526)">Login as Sellen</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(85355566), fetchUserData(85355566)">Login as
+      Albus</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(92664339), fetchUserData(92664339)">Login as
+      Elminster</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(49831990), fetchUserData(49831990)">Login as
+      Gandalf</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(71157217), fetchUserData(71157217)">Login as
+      Jaina</button>
+    <button v-if="!isLoggedIn" class="btn mt-4 btn-dev" @click="login(5544526), fetchUserData(5544526)">Login as
+      Sellen</button>
   </div>
 </template>

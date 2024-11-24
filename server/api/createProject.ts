@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       isVisible: body.data.isVisible ? 1 : 0,
       isDone: body.data.isDone ? 1 : 0,
     })
-    return { success: true }
+    return { success: true, id: newId }
   } catch (error) {
     console.error(error);
     return { success: false }

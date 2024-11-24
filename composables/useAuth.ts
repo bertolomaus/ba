@@ -5,9 +5,10 @@ export const useAuth = () => {
   const { showLogin } = useToggleContent()
   const route = useRouter()
 
-  const login = (id: number) => {
+  const login = async (id: number) => {
     isLoggedIn.value = true
     userId.value = id
+    return {success: true}
   }
 
   const logout = () => {

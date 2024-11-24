@@ -41,6 +41,7 @@ const router = useRouter()
 const { toggleAuthForm } = useToggleContent()
 const { login, userId } = useAuth()
 const { fetchUserData } = useUserData()
+const { editModeOn } = useEdit()
 
 const register = async () => {
   // insert a new user into table 'users'
@@ -56,6 +57,7 @@ const register = async () => {
     if(registerRequest.success){
       login(registerRequest.id)
       fetchUserData(registerRequest.id)
+      editModeOn()
       router.push({path: '/profil', query: {wizard: userId.value}})
     } else {
       throw createError({

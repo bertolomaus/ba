@@ -30,6 +30,7 @@ const projectIsNew = (pId: number) => {
 }
 
 const generateNavigationLinks = async () => {
+  console.log(userData.value);
   try {
     await fetchUserData(userId.value)
     await findProjectsUserCanHelpWith()
@@ -55,14 +56,14 @@ const checkIfUserCanHelpWithSomething = () => {
   })
 }
 
-onMounted(async () => {
-  if (isLoggedIn.value) {
-    await fetchUserData(userId.value)
-    await findProjectsUserCanHelpWith()
-    await findQuetionsUserCanHelpWith()
-    checkIfUserCanHelpWithSomething()
-  }
-})
+// onMounted(async () => {
+//   if (isLoggedIn.value) {
+//     await fetchUserData(userId.value)
+//     await findProjectsUserCanHelpWith()
+//     await findQuetionsUserCanHelpWith()
+//     checkIfUserCanHelpWithSomething()
+//   }
+// })
 
 watch(isLoggedIn, async (newVal, oldVal) => {
   try {
@@ -106,14 +107,14 @@ watch(isLoggedIn, async (newVal, oldVal) => {
         <div class="sidebar-controls">
           <div v-if="isLoggedIn" class="sidebar-controls-highlight"
             :class="[{ 'highlight-nav': showSidebarNav }, { 'highlight-interaction': !showSidebarNav }]"></div>
-          <div v-if="isLoggedIn" class="sidebar-open-navigation" @click="showNavigation">
+          <div v-if="isLoggedIn" class="sidebar-open-navigation" @click="showNavigation(); generateNavigationLinks()">
             <svg viewBox="0 0 8 7">
               <rect width="8" height="1" x="0" y="0" />
               <rect width="8" height="1" x="0" y="3" />
               <rect width="8" height="1" x="0" y="6" />
             </svg>
           </div>
-          <div class="sidebar-open-interaction" @click="showInteraction">
+          <div class="sidebar-open-interaction" @click="showInteraction(); generateNavigationLinks()">
             <NuxtImg v-if="isLoggedIn" :src="userData.avatar" alt="Wizard Logo" width="48" class="px-2 w-16" />
             <IconLogin v-else />
             <div class="notification" v-if="isLoggedIn && userCanHelpWithSomething">

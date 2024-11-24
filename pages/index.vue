@@ -28,7 +28,7 @@ onMounted(() => {
       </div>
       <div class="quote my-8 mx-auto">
         <NuxtImg :src="'quote.png'" alt="Zitat Gabe Newell" class="quote-icon" />
-        <blockquote>The programmers of tomorrow are the wizards of the future. You're going to look like you have
+        <blockquote>The programmers of tomorrow are the <span class="text-textColor-primary font-medium">wizards</span> of the future. You're going to look like you have
           magic powers compared to everybody else.</blockquote>
         <p>- Gabe Newell</p>
       </div>

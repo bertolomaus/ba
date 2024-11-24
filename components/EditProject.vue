@@ -82,20 +82,21 @@ const onSubmit = async () => {
       // update userData > update project in data
       await fetchUserData(userId.value)
       const projectIndex = userData.value.projects.findIndex(p => p.id === project.value.id)
-      
+
       if (projectIndex !== -1) {
         userData.value.projects[projectIndex] = { ...project.value }
       }
       await updateUserData(userId.value, userData.value)
     } else {
       project.value.owner = userId.value
-      await $fetch('/api/createProject', {
+      const response = await $fetch('/api/createProject', {
         method: 'POST',
         body: {
           id: props.id,
           data: project.value
         }
       })
+      project.value.id = response.id
 
       // update userData > add new project to data
       await fetchUserData(userId.value)
@@ -166,7 +167,8 @@ onMounted(async () => {
       <div class="field field-description">
         <textarea v-model="project.description" name="description" placeholder=""></textarea>
         <label for="description">Beschreib dein Projekt</label>
-        <p class="hint">Beschreib deine Idee: Was möchtest du Umsetzen? Welche Sprachen, Software, Frameworks oder Tools willst du einsetzen? Was möchtest du dabei lernen?</p>
+        <p class="hint">Beschreib deine Idee: Was möchtest du Umsetzen? Welche Sprachen, Software, Frameworks oder Tools
+          willst du einsetzen? Was möchtest du dabei lernen?</p>
       </div>
 
       <div class="field field-tags">
@@ -226,7 +228,8 @@ onMounted(async () => {
           <AddCircle class="w-5" :is-open="showResourceDetails" />
           <p>Ressource hinzufügen</p>
         </div>
-        <p class="hint ml-3">Nutze dies, um Links zu allen relevanten Ressourcen deines Projektes an einem Ort zu speichern - z.B. Git-Repositories, Discord-Server, Miroboards, Cloudspeicher, ...</p>
+        <p class="hint ml-3">Nutze dies, um Links zu allen relevanten Ressourcen deines Projektes an einem Ort zu
+          speichern - z.B. Git-Repositories, Discord-Server, Miroboards, Cloudspeicher, ...</p>
         <div class="resource-details ml-8" v-if="showResourceDetails">
           <div class="field">
             <input type="text" v-model="resourceName" name="resourceName" placeholder="">
@@ -283,8 +286,9 @@ onMounted(async () => {
         </button>
       </div>
     </form>
-    <div class="helpers grid grid-cols-4 gap-4">
-      <div
+
+    <div v-if="false" class="helpers grid grid-cols-4 gap-4">
+      <!-- <div
         v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= project.requiredSkills.length / 2)"
         :key="index" class="card card-user">
         <NuxtLink :to="{ path: 'profil', query: { wizard: helper.id } }" class="flex gap-4 flex-wrap items-center">
@@ -292,7 +296,8 @@ onMounted(async () => {
           <p class="h4">{{ helper.name }}</p>
         </NuxtLink>
         <p>{{ helper.skills }}</p>
-      </div>
+      </div> -->
     </div>
+
   </div>
 </template>

@@ -60,7 +60,6 @@ const removeHobby = (index: number) => {
 
 // update database entry
 const save = async () => {
-  console.log(userData.value);
   if (profileId != '0' && profileId == userId.value.toString()) {
     updateUserData(parseInt(profileId), userData.value)
 

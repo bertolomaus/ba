@@ -21,7 +21,11 @@ const editAvatar = ref(false)
 const { isScrolled } = useWindow()
 const confirmPw = ref()
 const confirmEmail = ref()
-const openConfirm = ref(false)
+const openConfirmPassword = ref(false)
+const openConfirmDelete = ref(false)
+const changePwOld = ref()
+const changePwNew = ref()
+const pwChangedSuccesfully = ref(false)
 
 // toggle the avatar edit mode
 const toggleEditAvatar = () => {
@@ -56,6 +60,7 @@ const removeHobby = (index: number) => {
 
 // update database entry
 const save = async () => {
+  console.log(userData.value);
   if (profileId != '0' && profileId == userId.value.toString()) {
     updateUserData(parseInt(profileId), userData.value)
 
@@ -66,6 +71,12 @@ const save = async () => {
 
     setSkills(skills)
     editModeOff()
+
+    openConfirmDelete.value = false
+    openConfirmPassword.value = false
+    pwChangedSuccesfully.value = false;
+    changePwOld.value = '';
+    changePwNew.value = '';
   }
   else {
     console.log(profileId, userId.value.toString())
@@ -76,6 +87,11 @@ const save = async () => {
 const discardChanges = async () => {
   prepareContent()
   editModeOff()
+  openConfirmDelete.value = false
+  openConfirmPassword.value = false
+  pwChangedSuccesfully.value = false;
+  changePwOld.value = '';
+  changePwNew.value = '';
 }
 
 // trigger save() on ctrl+s
@@ -113,12 +129,39 @@ const deleteProfile = async () => {
       }
     })
     console.log(response);
-    if(response.success){
+    if (response.success) {
       logout()
     }
   } catch (e) {
     console.error(e)
   }
+}
+
+//change password
+const changePassword = async () => {
+  try {
+    const response = await $fetch('/api/auth/changePassword', {
+      method: 'POST',
+      body: {
+        id: userId.value,
+        pwOld: changePwOld.value,
+        pwNew: changePwNew.value
+      }
+    })
+    if (response.success) {
+      showPwChangeSuccessMessage()
+    }
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+// show success message when changing pw
+const showPwChangeSuccessMessage = () => {
+  pwChangedSuccesfully.value = true;
+  openConfirmPassword.value = false;
+  changePwOld.value = '';
+  changePwNew.value = '';
 }
 
 onMounted(async () => {
@@ -188,10 +231,30 @@ onUnmounted(() => {
             <div v-if="editMode">
               <h3>Status</h3>
               <textarea placeholder="Status" name="status" v-model="userData.status"></textarea>
-              <p class="hint">Was treibt dichh gerade um?</p>
+              <p class="hint">Was treibt dich gerade um?</p>
             </div>
             <div v-else>
               <p>{{ userData.status }}</p>
+            </div>
+          </div>
+          <div class="changePassword mt-8" v-if="editMode">
+            <div v-if="!pwChangedSuccesfully">
+              <button class="btn" @click="openConfirmPassword = true">Passwort ändern</button>
+              <div v-if="openConfirmPassword" class="mt-8 max-w-lg p-8 bg-slate-750 border border-slate-500">
+                <p>Gib dein altes Passwort ein:</p>
+                <input placeholder="Altes Passwort" name="changePwOld" v-model="changePwOld" class="mt-0"
+                  type="password" />
+                <p class="mt-2">Gib dein neues Passwort ein:</p>
+                <input placeholder="Neues Passwort" name="changePwNew" v-model="changePwNew" class="mt-0"
+                  type="password" />
+                <div class="flex gap-4 mt-4">
+                  <button class="btn" @click="changePassword">Passwort ändern</button>
+                  <button class="btn btn-muted" @click="discardChanges">Abbrechen</button>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <p class="h4"><span class="text-green">Password wurde geändert.</span></p>
             </div>
           </div>
         </div>
@@ -313,9 +376,9 @@ onUnmounted(() => {
           </NuxtLink>
         </div>
       </div>
-      <div class="deleteProfile mt-16 relative">
-        <button class="btn btn-red" @click="openConfirm = true">Profil löschen</button>
-        <div v-if="openConfirm" class="mt-8 max-w-lg p-8 bg-slate-750 border border-slate-500">
+      <div class="deleteProfile mt-16 relative" v-if="editMode">
+        <button class="btn btn-red" @click="openConfirmDelete = true">Profil löschen</button>
+        <div v-if="openConfirmDelete" class="mt-8 max-w-lg p-8 bg-slate-750 border border-slate-500">
           <p class="h6"><span class="text-red">Diese Aktion kann nicht rückgängig gemacht werden.</span></p>
           <p>Wenn du dein Profil löschst, werden ebenfalls alle deine Projekte und Fragen gelöscht.</p>
           <p>Um fortzufahren, gib dein Passwort ein:</p>

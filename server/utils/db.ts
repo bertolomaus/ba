@@ -26,6 +26,21 @@ export const getLoginData = db
 .from(users)
 .where(sql`${users.email} = ${sql.placeholder("email")}`)
 
+export const getLoginDataById = db
+.select({
+  email: users.email,
+  password: users.password,
+})
+.from(users)
+.where(sql`${users.id} = ${sql.placeholder("id")}`)
+
+export const updateLoginData = db
+.update(users)
+.set({
+  password: sql`${sql.placeholder("password")}`
+})
+.where(sql`${users.id} = ${sql.placeholder("id")}`)
+
 export const getUserDataById = db
 .select({
   data: users.data,

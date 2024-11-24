@@ -1,11 +1,87 @@
-@media(min-width:500px){
+@media(max-width:1328px){
+
+  .el-text.columns-2{
+    @apply columns-1
+  }
+
+  .teaser.grid-cols-2{
+    @apply grid-cols-1;
+  }
 }
 
-@media(min-width:800px){
+@media(max-width:800px){
+  .quote{
+    @apply pr-0 pl-12;
+  }
+
+  .container, .teaser{
+    @apply px-8
+  }
+
+  .teaser-content {
+    @apply hover:scale-100 hover:bg-opacity-60
+  }
 }
 
-@media(min-width:1328px){
-}
+@media(max-width:500px){
 
-@media(min-width:2561px){
+  .teaser-content{
+    @apply py-24
+  }
+
+  .container, .teaser, .headerbar, .sidebar-controls{
+    @apply px-4
+  }
+
+  .headerbar{
+    @apply h-20
+  }
+
+  .logo img, .open-interaction img{
+     @apply h-12
+  }
+
+  .sidebar-controls-highlight{
+    @apply left-4
+  }
+
+  .sidebar-controls-highlight.highlight-interaction{
+    @apply left-24
+  }
+
+  .open-navigation{
+    @apply mr-2
+  }
+
+  .sidebar-content{
+    width:80vw;
+  }
+
+  .sidebar .navigation, .sidebar .interaction{
+    @apply px-4
+  }
+
+  .sidebar-content:before, .sidebar-content:after{
+    @apply w-4
+  }
+
+  .sidebar .navigation a, .sidebar .interaction a{
+    @apply pl-6
+  }
+
+  .quote{
+    @apply pb-0 pl-8 pt-4 -ml-2
+  }
+
+  .quote-icon{
+    @apply h-auto w-48
+  }
+
+  blockquote{
+    @apply text-lg
+  }
+
+  h1, .h1{
+    font-size:calc(1rem + 7vw);
+  }
 }

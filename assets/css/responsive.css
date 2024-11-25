@@ -7,6 +7,10 @@
   .teaser.grid-cols-2{
     @apply grid-cols-1;
   }
+
+  .tags li svg{
+    @apply ml-2 w-6
+  }
 }
 
 @media(max-width:800px){
@@ -20,6 +24,26 @@
 
   .teaser-content {
     @apply hover:scale-100 hover:bg-opacity-60
+  }
+
+  .btn-editMode{
+    @apply right-4 top-32
+  }
+
+  .modal-content{
+    @apply left-8 right-8 bottom-8 top-8
+  }
+
+  .modal-close{
+    @apply top-2 right-2
+  }
+
+  .avatar{
+    @apply w-40
+  }
+
+  .avatar-and-name{
+    @apply gap-8
   }
 }
 
@@ -82,6 +106,70 @@
   }
 
   h1, .h1{
-    font-size:calc(1rem + 7vw);
+    font-size:calc(1rem + 6vw);
+  }
+
+  .btn-editMode{
+    @apply top-24
+  }
+
+  .avatar-and-name{
+    @apply block
+  }
+
+  .avatar{
+    @apply w-28 mb-8
+  }
+
+  .skill-level .star{
+    @apply pr-1 w-6
+  }
+
+  .modal-content{
+    @apply left-4 right-4 bottom-4 top-4
+  }
+
+  .modal-close{
+    @apply top-1 right-1
+  }
+
+  .hint{
+    @apply pl-0
+  }
+
+  form .checkbox label{
+    @apply w-full
+  }
+
+  .endEditModeButtons{
+    @apply flex-wrap left-4 bottom-4 right-4 translate-x-0
+  }
+
+  .endEditModeButtons > *{
+    @apply w-full px-4
+  }
+
+  .endEditModeButtons .btn-green{
+    @apply py-4
+  }
+
+  .endEditModeButtons .btn-green:hover{
+    @apply hover:px-4
+  }
+
+  .contact-owner li{
+    @apply w-full;
+  }
+
+  .tags li{
+    @apply text-sm
+  }
+
+  .resource-details{
+    @apply ml-0 w-full
+  }
+
+  .resource-details .btn{
+    @apply px-4
   }
 }

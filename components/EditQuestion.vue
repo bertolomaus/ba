@@ -126,7 +126,7 @@ onMounted(async () => {
       </div>
 
       <div class="field field-description">
-        <textarea v-model="question.description" name="description" placeholder=""></textarea>
+        <textarea v-model="question.description" name="description" placeholder="" rows="4"></textarea>
         <label for="description">Beschreib dein Problem</label>
         <div class="hint">
           <p>
@@ -142,7 +142,7 @@ onMounted(async () => {
       </div>
 
       <div class="field field-attemptedSolutions">
-        <textarea v-model="question.attemptedSolutions" name="attemptedSolutions" placeholder=""></textarea>
+        <textarea v-model="question.attemptedSolutions" name="attemptedSolutions" placeholder="" rows="4"></textarea>
         <label for="attemptedSolutions">Welche Lösungsansätze hast du schon versucht?</label>
         <p class="hint">Welche Ideen hast du schon versucht, welche Ansätze hast du zur Lösung? Oder brauchst du Hilfe dabei, den Anfang überhaupt zu finden?</p>
       </div>

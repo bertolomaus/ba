@@ -159,13 +159,13 @@ onMounted(async () => {
       </div>
 
       <div class="field field-goal">
-        <textarea v-model="project.goal" name="goal" placeholder=""></textarea>
+        <textarea v-model="project.goal" name="goal" placeholder="" rows="4"></textarea>
         <label for="goal">Was ist dein konkretes Ziel?</label>
         <p class="hint">Beschreibe präzise, welchen Zweck dein Projekt erfüllen soll.</p>
       </div>
 
       <div class="field field-description">
-        <textarea v-model="project.description" name="description" placeholder=""></textarea>
+        <textarea v-model="project.description" name="description" placeholder="" rows="4"></textarea>
         <label for="description">Beschreib dein Projekt</label>
         <p class="hint">Beschreib deine Idee: Was möchtest du Umsetzen? Welche Sprachen, Software, Frameworks oder Tools
           willst du einsetzen? Was möchtest du dabei lernen?</p>
@@ -183,19 +183,19 @@ onMounted(async () => {
       </div>
 
       <div class="field field-winCondition">
-        <textarea v-model="project.winCondition" name="winCondition" placeholder=""></textarea>
+        <textarea v-model="project.winCondition" name="winCondition" placeholder="" rows="4"></textarea>
         <label for="winCondition">Wann ist dein Ziel erreicht?</label>
         <p class="hint">Definiere die Akzeptanzkriterien für dein Projekt.</p>
       </div>
 
       <div class="field field-whyAchieveable">
-        <textarea v-model="project.whyAchieveable" name="whyAchieveable" placeholder=""></textarea>
+        <textarea v-model="project.whyAchieveable" name="whyAchieveable" placeholder="" rows="4"></textarea>
         <label for="whyAchieveable">Dein Ziel ist erreichbar, weil...</label>
         <p class="hint">Beschriebe, auf welchem Wege du dein Ziel erreichen willst.</p>
       </div>
 
       <div class="field field-whyRelevant">
-        <textarea v-model="project.whyRelevant" name="whyRelevant" placeholder=""></textarea>
+        <textarea v-model="project.whyRelevant" name="whyRelevant" placeholder="" rows="4"></textarea>
         <label for="whyRelevant">Dein Ziel ist relevant, weil...</label>
         <p class="hint">Beschreibe, wieso du dieses Ziel erreichen willst.</p>
       </div>
@@ -209,7 +209,7 @@ onMounted(async () => {
       <div class="field field-resources">
         <div class="resources-list">
           <ul>
-            <li v-for="(resource, index) in project.resources" :key="index" class="flex gap-2 items-start">
+            <li v-for="(resource, index) in project.resources" :key="index" class="flex gap-2 items-start mb-8">
               <div class="resource-input">
                 <div class="field">
                   <input type="text" v-model="resource.name" name="resourceName" placeholder="" />
@@ -286,18 +286,6 @@ onMounted(async () => {
         </button>
       </div>
     </form>
-
-    <div v-if="false" class="helpers grid grid-cols-4 gap-4">
-      <!-- <div
-        v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= project.requiredSkills.length / 2)"
-        :key="index" class="card card-user">
-        <NuxtLink :to="{ path: 'profil', query: { wizard: helper.id } }" class="flex gap-4 flex-wrap items-center">
-          <NuxtImg :src="helper.avatar" :alt="helper.name" />
-          <p class="h4">{{ helper.name }}</p>
-        </NuxtLink>
-        <p>{{ helper.skills }}</p>
-      </div> -->
-    </div>
 
   </div>
 </template>

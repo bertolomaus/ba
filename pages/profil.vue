@@ -196,7 +196,7 @@ onUnmounted(() => {
       <h1 class=""><span v-if="userData.name">{{ userData.name }}<span
             v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
           </span><span v-else>s </span></span>Profil</h1>
-      <div class="flex gap-16">
+      <div class="flex gap-16 avatar-and-name">
         <div>
           <div class="avatar">
             <NuxtImg :src="userData.avatar" :alt="`Avatar ${userData.name}`" width="256" />
@@ -229,7 +229,7 @@ onUnmounted(() => {
           <div class="status">
             <div v-if="editMode">
               <h3>Status</h3>
-              <textarea placeholder="Status" name="status" v-model="userData.status"></textarea>
+              <textarea placeholder="Status" name="status" v-model="userData.status" rows="3"></textarea>
               <p class="hint">Was treibt dich gerade um?</p>
             </div>
             <div v-else>
@@ -346,7 +346,7 @@ onUnmounted(() => {
       <div class="bio">
         <h3 v-if="userData.bio || editMode">Über {{ userData.name }}</h3>
         <div v-if="editMode">
-          <textarea placeholder="Bio" name="bio" v-model="userData.bio"></textarea>
+          <textarea placeholder="Bio" name="bio" v-model="userData.bio" rows="4"></textarea>
         </div>
         <div v-else>{{ userData.bio }}</div>
       </div>

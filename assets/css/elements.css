@@ -33,11 +33,11 @@ form .field.checkbox + .checkbox{
 }
 
 form [type="checkbox"]{
-  @apply w-max m-0 mr-4 flex w-4
+  @apply w-max m-0 mr-4 mt-1.5 flex w-4
 }
 
 form .checkbox label{
-  @apply text-base bg-none static w-max pl-0 flex pointer-events-auto
+  @apply text-base bg-none static w-max pl-0 flex pointer-events-auto leading-6 items-start
 }
 
 form .has-error input,
@@ -138,7 +138,7 @@ a:hover .btn-text:after{
 }
 
 .btn-editMode{
-  @apply fixed top-36 right-8 flex gap-3 items-center
+  @apply fixed top-36 right-8 flex gap-3 items-center bg-slate-750;
 }
 
 .scrolled .btn-editMode{
@@ -198,6 +198,19 @@ a.card:hover{
 
 .list-projects .tags, .list-questions .tags{
   @apply mb-0
+}
+
+.resource-input,
+.resource-details input {
+  @apply w-96 max-w-full
+}
+
+.resource-input > .field:first-child {
+  @apply mt-0
+}
+
+.resource-input + .trash{
+  @apply mt-7
 }
 
 

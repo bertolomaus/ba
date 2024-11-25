@@ -59,7 +59,7 @@ watch(async () =>
         <h3 class="h3">Welche Lösungsansätze wurden schon versucht?</h3>
         <p>{{ question?.attemptedSolutions }}</p>
         <h3 class="h3">Du kannst {{ ownerData?.name }} helfen? So kannst du Kontakt aufnehmen:</h3>
-        <ul class="flex gap-4 contact-owner">
+        <ul class="flex gap-4 flex-wrap contact-owner">
           <li v-if="ownerData?.contact[0]">
             <a :href="`https://wa.me/${ownerData?.contact[0]}`" class="flex gap-2 items-center" target="_blank">
               <NuxtImg :src="'wa.png'" alt="Icon Whatsapp" height="24" />

@@ -64,6 +64,14 @@
   @apply w-6 h-6 object-contain object-center mr-4;
 }
 
+.item-skills{
+  @apply gap-4 leading-6 items-start;
+}
+
+.item-skills:nth-child(n+2){
+  @apply mt-4
+}
+
 .skill-name {
   @apply w-40;
 }
@@ -89,9 +97,6 @@
   @apply w-0 opacity-0 transition-all;
 }
 
-.skills li:hover .trash {
-}
-
 .skills li:hover .trash,
 .personal li:hover .trash {
   @apply opacity-100 w-6;
@@ -113,6 +118,7 @@
   @apply fixed bottom-8 flex gap-4;
   left: 50%;
   transform: translateX(-50%);
+  z-index:100;
 }
 
 .endEditModeButtons .btn-green {

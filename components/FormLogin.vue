@@ -34,7 +34,8 @@ const handleLogin = async () => {
       body: {
         email: values.email,
         password: values.password
-      }
+      },
+      server: false
     })
     if (loginRequest.success) {
       login(loginRequest.userId)

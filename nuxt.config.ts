@@ -1,11 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
-  nitro: {
-    preset: "node-server",
-  },
+  ssr: false,
   devtools: { enabled: false },
-  modules: ["@nuxtjs/tailwindcss", "@vee-validate/nuxt", "@nuxt/image"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image"],
   css: ["~/assets/css/styles.css"],
   tailwindcss: {
     cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],

@@ -86,7 +86,7 @@ const register = async () => {
         </div>
       </div>
       <div class="field field-password" :class="[{'has-text': password}, {'has-error': errors.password}, {'is-acceptable': password && !errors.password}]">
-        <input v-model="password" v-bind="passwordAttrs"  name="password" placeholder="" />
+        <input v-model="password" v-bind="passwordAttrs" name="password" placeholder="" type="password" />
         <label for="password">Passwort</label>
         <div class="errors">
           {{ errors.password }}
@@ -96,7 +96,7 @@ const register = async () => {
         </div>
       </div>
       <div class="field field-password" :class="[{'has-text': passwordConfirm}, {'has-error': errors.passwordConfirm}, {'is-acceptable': passwordConfirm && !errors.passwordConfirm}]">
-        <input  v-model="passwordConfirm" v-bind="passwordConfirmAttrs" name="passwordConfirm" placeholder="" />
+        <input  v-model="passwordConfirm" v-bind="passwordConfirmAttrs" name="passwordConfirm" placeholder="" type="password" />
         <label for="passwordConfirm">Passwort bestätigen</label>
         <div class="errors">
           {{ errors.passwordConfirm }}

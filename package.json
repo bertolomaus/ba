@@ -15,8 +15,7 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.8.1",
-    "@nuxtjs/tailwindcss": "^6.12.1",
-    "@vee-validate/nuxt": "^4.13.2",
+    "vee-validate": "^4.13.2",
     "@vee-validate/yup": "^4.13.2",
     "better-sqlite3": "^9.6.0",
     "drizzle-orm": "^0.33.0",
@@ -24,6 +23,10 @@
     "vue": "latest"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.24.0"
+    "drizzle-kit": "^0.24.0",
+    "@nuxtjs/tailwindcss": "^6.12.1",
+    "@types/better-sqlite3": "^7.6.10",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38"
   }
 }

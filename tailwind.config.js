@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "~/{assets,components,composables,content,pages}/*.{html,js,json,ts,jsx,tsx,vue}",
+    "./{assets,components,composables,content,pages}/*.{html,js,json,ts,jsx,tsx,vue}",
   ],
   theme: {
     screens: {

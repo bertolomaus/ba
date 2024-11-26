@@ -30,7 +30,6 @@ const projectIsNew = (pId: number) => {
 }
 
 const generateNavigationLinks = async () => {
-  console.log(userData.value);
   try {
     await fetchUserData(userId.value)
     await findProjectsUserCanHelpWith()

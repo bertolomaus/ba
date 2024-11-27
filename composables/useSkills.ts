@@ -2,12 +2,12 @@ export const useSkills = () => {
   const allSkills = useState<string[]>('allSkills', () => [])
 
   const getSkills = async () => {
-    const skillsRequest = await $fetch('/api/data/getSkills')
+    const skillsRequest = await $fetch('/api/getSkills')
     allSkills.value = skillsRequest.result
   }
 
   const setSkills = async (skills: string[]) => {
-    await $fetch('/api/data/setSkills', {
+    await $fetch('/api/setSkills', {
       method: 'POST',
       body: {
         skills: skills

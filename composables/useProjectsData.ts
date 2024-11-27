@@ -52,7 +52,7 @@ export const useProjectsData = () => {
 
   const fetchProjectData = async (id: number) => {
     try {
-      const dataRequest: any = await $fetch('/api/data/getProjectData', {
+      const dataRequest: any = await $fetch('/api/getProjectData', {
         method: 'POST',
         body: {
           id: id
@@ -92,7 +92,7 @@ export const useProjectsData = () => {
 
   const updateProjectsList = async () => {
     try {
-      const dataRequest: any = await $fetch('/api/data/getAllProjectsData', {
+      const dataRequest: any = await $fetch('/api/getAllProjectsData', {
         method: 'POST',
         body: {}
       })
@@ -129,7 +129,7 @@ export const useProjectsData = () => {
   const fetchMembers = async (ids: number[] = []) => {
     for(let id of ids){
       try{
-        let memberRequest: any = await $fetch('/api/data/getUserData', {
+        let memberRequest: any = await $fetch('/api/getUserData', {
           method: 'POST',
           body: {
             id: id,

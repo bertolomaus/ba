@@ -32,7 +32,7 @@ export const useQuestionData = () => {
 
   const fetchQuestionData = async (id: number) => {
     try {
-      const dataRequest: any = await $fetch("/api/data/getQuestionData", {
+      const dataRequest: any = await $fetch("/api/getQuestionData", {
         method: "POST",
         body: {
           id: id,
@@ -65,7 +65,7 @@ export const useQuestionData = () => {
 
   const updateQuestionsList = async () => {
     try {
-      const dataRequest: any = await $fetch("/api/data/getAllQuestionData", {
+      const dataRequest: any = await $fetch("/api/getAllQuestionData", {
         method: "POST",
         body: {},
       });
@@ -107,7 +107,7 @@ export const useQuestionData = () => {
 
   const fetchOwner = async (id: number = 0) => {
     try {
-      let response: any = await $fetch("/api/data/getUserData", {
+      let response: any = await $fetch("/api/getUserData", {
         method: "POST",
         body: {
           id: id,

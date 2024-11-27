@@ -65,7 +65,7 @@ export const useUserData = () => {
   const fetchUserData = async (id = userId.value) => {
     try {
       // send request to api/data
-      const dataRequest = await $fetch('/api/data/getUserData', {
+      const dataRequest = await $fetch('/api/getUserData', {
         method: 'POST',
         body: {
           id: id,
@@ -90,7 +90,7 @@ export const useUserData = () => {
 
     try {
       // send credentials to api/auth
-      const dataRequest = await $fetch('/api/data/updateUserData', {
+      const dataRequest = await $fetch('/api/updateUserData', {
         method: 'POST',
         body: {
           id: id,
@@ -123,7 +123,7 @@ export const useUserData = () => {
   const fetchAllData = async () => {
     try {
       // send request to api/data
-      const dataRequest = await $fetch('/api/data/getAllUserData', {
+      const dataRequest = await $fetch('/api/getAllUserData', {
         method: 'POST',
         body: {}
       })

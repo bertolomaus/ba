@@ -120,7 +120,7 @@ const prepareContent = async () => {
 //delete profile
 const deleteProfile = async () => {
   try {
-    const response = await $fetch('/api/auth/delete', {
+    const response = await $fetch('/api/delete', {
       method: 'POST',
       body: {
         email: confirmEmail.value,
@@ -139,7 +139,7 @@ const deleteProfile = async () => {
 //change password
 const changePassword = async () => {
   try {
-    const response = await $fetch('/api/auth/changePassword', {
+    const response = await $fetch('/api/changePassword', {
       method: 'POST',
       body: {
         id: userId.value,

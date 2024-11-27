@@ -29,7 +29,7 @@ const [password, passwordAttrs] = defineField('password')
 const handleLogin = async () => {
   try {
     // send credentials to api/auth
-    const loginRequest = await $fetch('/api/auth/login', {
+    const loginRequest = await $fetch('/api/login', {
       method: 'POST',
       body: {
         email: values.email,

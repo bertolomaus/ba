@@ -20,7 +20,8 @@
     "better-sqlite3": "^9.6.0",
     "drizzle-orm": "^0.33.0",
     "nuxt": "^3.12.4",
-    "vue": "latest"
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
     "drizzle-kit": "^0.24.0",

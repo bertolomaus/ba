@@ -22,7 +22,7 @@ const showResourceDetails = ref<boolean>(false)
 const getHelpers = async () => {
   try {
     // send credentials to api/data
-    const matchesRequest = await $fetch('/api/data/getUserIdsBySkills', {
+    const matchesRequest = await $fetch('/api/getUserIdsBySkills', {
       method: 'POST',
       body: {
         skills: project.value.requiredSkills

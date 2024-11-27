@@ -1,4 +1,4 @@
-import { getLoginDataById, updateLoginData } from "../../utils/db"
+import { getLoginDataById, updateLoginData } from "../utils/db"
 
 export default defineEventHandler(async (event: any) => {
   const body = await readBody(event)

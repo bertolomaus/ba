@@ -1,4 +1,4 @@
-import { setSkill } from "../../utils/db";
+import { setSkill } from "../utils/db";
 
 export default defineEventHandler(async (event: any) => {
   const body = await readBody(event)

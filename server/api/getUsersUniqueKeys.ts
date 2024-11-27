@@ -1,4 +1,4 @@
-import { getUniqueKeys } from "../../utils/db"
+import { getUniqueKeys } from "../utils/db"
 
 export default defineEventHandler(async (event: any) => {
   const body = await readBody(event);

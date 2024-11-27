@@ -1,4 +1,4 @@
-import { getUserDataById } from "../../utils/db"
+import { getUserDataById } from "../utils/db"
 
 export default defineEventHandler(async (event: any) => {
   const body = await readBody(event);

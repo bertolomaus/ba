@@ -1,4 +1,4 @@
-import { register, getAllUserIds } from "../../utils/db"
+import { register, getAllUserIds } from "../utils/db"
 import { generateNumber } from '~/composables/generateRandomNumber'
 
 export default defineEventHandler(async (event: any) => {

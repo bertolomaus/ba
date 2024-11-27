@@ -1,4 +1,4 @@
-import { getSkills } from "../../utils/db"
+import { getSkills } from "../utils/db"
 
 export default defineEventHandler(async () => {
   // get an array of all skills the system knows of so far

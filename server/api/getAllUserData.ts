@@ -1,4 +1,4 @@
-import { getAllUserData } from "../../utils/db"
+import { getAllUserData } from "../utils/db"
 
 export default defineEventHandler(async () => {
   // get the data attribute from every registered user

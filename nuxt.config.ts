@@ -4,7 +4,6 @@ export default defineNuxtConfig({
   ssr: false,
   devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "@nuxt/image"],
-  css: ["~/assets/css/styles.css"],
   tailwindcss: {
     cssPath: ["~/assets/css/tailwind.css", { injectPosition: "first" }],
     configPath: "tailwind.config.js",
@@ -14,6 +13,7 @@ export default defineNuxtConfig({
     config: {},
     viewer: true,
   },
+  css: ["~/assets/css/styles.css"],
   app: {
     head: {
       link: [
@@ -32,5 +32,6 @@ export default defineNuxtConfig({
   },
   image: {
     dir: "assets/img",
-  },
+    static: "assets/img",
+  }
 });

@@ -15,19 +15,20 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.8.1",
-    "vee-validate": "^4.13.2",
     "@vee-validate/yup": "^4.13.2",
     "better-sqlite3": "^9.6.0",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "nuxt": "^3.12.4",
+    "vee-validate": "^4.13.2",
     "vue": "latest",
     "vue-router": "latest"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.24.0",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@types/better-sqlite3": "^7.6.10",
     "autoprefixer": "^10.4.19",
+    "drizzle-kit": "^0.24.0",
     "postcss": "^8.4.38"
   }
 }

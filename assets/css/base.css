@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h1, .h1{
-  @apply text-3xl mb-8 text-primary;
+  @apply text-3xl mb-8 text-slate-800;
   -webkit-text-stroke: #e5e7ea 0px;
   text-shadow:0 -1px #e5e7ea, -1px 0 #e5e7ea, -1px -1px #e5e7ea, 0px 1px #e5e7ea, 1px 0px #e5e7ea, 1px 1px #e5e7ea, 1px 2px #e5e7ea, 2px 1px #e5e7ea, 2px 2px #e5e7ea, 2px 2.5px #e5e7ea, 2.5px 2px #e5e7ea, 2.5px 2.5px 1px #e5e7ea, 2px 3px #e5e7ea, 3px 2px #e5e7ea, 3px 3px #e5e7ea;
 }

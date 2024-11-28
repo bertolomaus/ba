@@ -2,8 +2,11 @@ import { drizzle } from "drizzle-orm/better-sqlite3"
 import Database from "better-sqlite3"
 import { sql } from "drizzle-orm"
 import { users, projects, questions, skills } from "~/schema"
-
-const sqlite = new Database("sqlite.db")
+import path from "path";
+import { fileURLToPath } from "url";
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(_filename);
+const sqlite = new Database(path.resolve(_dirname, "../../sqlite.db"))
 export const db = drizzle(sqlite)
 
 // +++ prepared statements +++

@@ -110,7 +110,7 @@ const register = async () => {
       </div>
     </form>
     <p>
-      Du hast bereits einen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span class="btn-text">Login</span></a>
+      Du hast bereits einen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">⭢ <span class="btn-text">Login</span></a>
     </p>
   </div>
 </template>

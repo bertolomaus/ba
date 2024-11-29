@@ -6,12 +6,12 @@ import Edit from '../components/Edit.vue'
 
 const route = useRoute()
 const { userId, logout } = useAuth()
-const profileId = route.query.wizard?.toString()
-const { userData, fetchUserData, updateUserData, getHobbies, allHobbies } = useUserData()
+const profileId = ref(route.query.wizard?.toString())
+const { userData, fetchUserData, updateUserData, getHobbies, allHobbies, profileData, fetchProfileData } = useUserData()
 const { showSidebar } = useToggleContent()
 const { showModal } = useModal()
 const { getSkills, allSkills, setSkills } = useSkills()
-const { editMode, editModeOn, editModeOff } = useEdit()
+const { editMode, editModeOff } = useEdit()
 const isOwner = ref(false)
 const listAvatars = ref([
   "profile-mr-dark.png",
@@ -60,8 +60,8 @@ const removeHobby = (index: number) => {
 
 // update database entry
 const save = async () => {
-  if (profileId != '0' && profileId == userId.value.toString()) {
-    updateUserData(parseInt(profileId), userData.value)
+  if (profileId.value != '0' && profileId.value == userId.value.toString()) {
+    updateUserData(parseInt(profileId.value), userData.value)
 
     let skills: string[] = []
     userData.value.skills.forEach((skill) => {
@@ -78,7 +78,7 @@ const save = async () => {
     changePwNew.value = '';
   }
   else {
-    console.log(profileId, userId.value.toString())
+    console.log(profileId.value, userId.value.toString())
   }
 }
 
@@ -103,13 +103,14 @@ const handleKeydown = (event: KeyboardEvent) => {
 
 // fetch profile info, skills, hobbies, set isOwner and hide modal & sidebar
 const prepareContent = async () => {
+  profileId.value = route.query.wizard?.toString()
   try {
-    if (profileId) {
-      fetchUserData(parseInt(profileId.toString()))
+    if (profileId.value) {
+      fetchProfileData(parseInt(profileId.value.toString()))
     } else {
-      fetchUserData()
+      fetchProfileData()
     }
-    profileId == userId.value.toString() ? isOwner.value = true : isOwner.value = false
+    profileId.value == userId.value.toString() ? isOwner.value = true : isOwner.value = false
     getSkills()
     getHobbies()
   } catch (error) {
@@ -174,8 +175,10 @@ onMounted(async () => {
 })
 
 // change displayed content whenever wizard id in url changes
-watch(async () => route.query.wizard, (newWizard, oldWizard) => {   //looks like watch gets value from first param and puts new/old values into 2nd
+watch(() => route.query.wizard, (newWizard, oldWizard) => {   //looks like watch gets value from first param and puts new/old values into 2nd
+  console.log("hello, world");
   if (newWizard !== oldWizard) {
+    console.log("hello, again");
     prepareContent()
   }
 })
@@ -191,15 +194,15 @@ onUnmounted(() => {
 
 <template>
   <div class="profil">
-    <Edit :class="{ 'scrolled': isScrolled }" />
+    <Edit :class="{ 'scrolled': isScrolled }" v-if="isOwner" />
     <div class="container">
-      <h1 class=""><span v-if="userData.name">{{ userData.name }}<span
-            v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
+      <h1 class=""><span v-if="profileData.name">{{ profileData.name }}<span
+            v-if="profileData.name.charAt(profileData.name.length - 1) === 's' || profileData.name.charAt(profileData.name.length - 1) === 'x' || profileData.name.charAt(profileData.name.length - 1) === 'z'">'
           </span><span v-else>s </span></span>Profil</h1>
       <div class="flex gap-16 avatar-and-name">
         <div>
           <div class="avatar">
-            <NuxtImg :src="userData.avatar" :alt="`Avatar ${userData.name}`" width="256" />
+            <NuxtImg :src="profileData.avatar" :alt="`Avatar ${profileData.name}`" width="256" />
             <div class="edit-avatar" v-if="editMode">
               <div class="iconEditAvatar" @click="toggleEditAvatar" :class="editAvatar ? 'active' : ''">
                 <svg class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
@@ -223,7 +226,7 @@ onUnmounted(() => {
               <input placeholder="Name" name="name" v-model="userData.name" />
             </div>
             <div v-else>
-              <h3>{{ userData.name }}</h3>
+              <h3>{{ profileData.name }}</h3>
             </div>
           </div>
           <div class="status">
@@ -233,7 +236,7 @@ onUnmounted(() => {
               <p class="hint">Was treibt dich gerade um?</p>
             </div>
             <div v-else>
-              <p>{{ userData.status }}</p>
+              <p>{{ profileData.status }}</p>
             </div>
           </div>
           <div class="changePassword mt-8" v-if="editMode">
@@ -259,7 +262,7 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="contact">
-        <h3 v-if="userData.contact || editMode">Kontakt</h3>
+        <h3 v-if="profileData.contact || editMode">Kontakt</h3>
         <div v-if="editMode">
           <p>Abgesehen von Eulen und Gedankenlesen, wie möchtest du kontaktiert werden?</p>
           <input placeholder="Whatsapp" name="whatsapp" v-model="userData.contact[0]" />
@@ -275,33 +278,33 @@ onUnmounted(() => {
         </div>
         <div v-else>
           <ul class="list-contact">
-            <li v-if="userData.contact[0]">
-              <a :href="`https://wa.me/${userData.contact[0]}`" class="flex gap-2 items-center" target="_blank">
+            <li v-if="profileData.contact[0]">
+              <a :href="`https://wa.me/${profileData.contact[0]}`" class="flex gap-2 items-center" target="_blank">
                 <NuxtImg :src="'wa.png'" alt="Icon Whatsapp" height="24" />
                 Whatsapp
               </a>
             </li>
-            <li v-if="userData.contact[1]">
+            <li v-if="profileData.contact[1]">
               <p class="flex gap-2 items-center">
                 <NuxtImg :src="'discord.png'" alt="Icon Discord" height="24" />
-                Discord: {{ userData.contact[1] }}
+                Discord: {{ profileData.contact[1] }}
               </p>
             </li>
-            <li v-if="userData.contact[2]">
-              <a :href="`signal://send?phone=${userData.contact[2]}`" class="flex gap-2 items-center" target="_blank">
+            <li v-if="profileData.contact[2]">
+              <a :href="`signal://send?phone=${profileData.contact[2]}`" class="flex gap-2 items-center" target="_blank">
                 <NuxtImg :src="'signal.png'" alt="Icon Signal" height="24" />
                 Signal
               </a>
             </li>
-            <li v-if="userData.contact[3]">
-              <a :href="`https://web.webex.com/meet/${userData.contact[3]}`" class="flex gap-2 items-center"
+            <li v-if="profileData.contact[3]">
+              <a :href="`https://web.webex.com/meet/${profileData.contact[3]}`" class="flex gap-2 items-center"
                 target="_blank">
                 <NuxtImg :src="'webex.png'" alt="Icon Webex" height="24" />
                 Webex
               </a>
             </li>
-            <li v-if="userData.contact[4]">
-              <a :href="`mailto:${userData.contact[4]}`" class="flex gap-2 items-center" target="_blank">
+            <li v-if="profileData.contact[4]">
+              <a :href="`mailto:${profileData.contact[4]}`" class="flex gap-2 items-center" target="_blank">
                 <NuxtImg :src="'mail.png'" alt="Icon Email" height="24" />
                 Email
               </a>
@@ -313,7 +316,7 @@ onUnmounted(() => {
         <h3>Fertigkeiten</h3>
         <ul class="list-skills">
           <li class="item-skills flex"
-            v-for="(skill, index) in userData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"
+            v-for="(skill, index) in profileData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"
             :key="skill.name">
             <div class="skill-name">{{ skill.name }}</div>
             <div class="flex skill-level" v-if="editMode">
@@ -335,7 +338,7 @@ onUnmounted(() => {
         <p v-if="editMode">Erzähl ein bisschen was über dich! Gib deinen Kommilitonen die Möglichkeit, dich
           kennenzulernen.</p>
         <ul class="tags mt-4">
-          <li v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
+          <li v-for="(hobby, index) in profileData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
             <Trash @click="removeHobby(index)" v-if="editMode" />
           </li>
@@ -344,27 +347,27 @@ onUnmounted(() => {
           @submit-input="addNewHobby" />
       </div>
       <div class="bio">
-        <h3 v-if="userData.bio || editMode">Über {{ userData.name }}</h3>
+        <h3 v-if="profileData.bio || editMode">Über {{ profileData.name }}</h3>
         <div v-if="editMode">
           <textarea placeholder="Bio" name="bio" v-model="userData.bio" rows="4"></textarea>
         </div>
-        <div v-else>{{ userData.bio }}</div>
+        <div v-else>{{ profileData.bio }}</div>
       </div>
-      <div class="projects" v-if="userData.projects">
+      <div class="projects" v-if="profileData.projects">
         <h3>
-          <span v-if="userData.name">{{ userData.name }}<span
-              v-if="userData.name.charAt(userData.name.length - 1) === 's' || userData.name.charAt(userData.name.length - 1) === 'x' || userData.name.charAt(userData.name.length - 1) === 'z'">'
+          <span v-if="profileData.name">{{ profileData.name }}<span
+              v-if="profileData.name.charAt(profileData.name.length - 1) === 's' || profileData.name.charAt(profileData.name.length - 1) === 'x' || profileData.name.charAt(profileData.name.length - 1) === 'z'">'
             </span><span v-else>s </span></span>Projekte
         </h3>
         <div class="list-projects cards">
-          <NuxtLink class="card" v-for="(project, index) in userData.projects.filter(p => !p.isDone)" :key="index"
+          <NuxtLink class="card" v-for="(project, index) in profileData.projects.filter(p => !p.isDone)" :key="index"
             :to="{ path: 'projekt', query: { id: project.id } }">
             <h4 class="h3">{{ project.title }}</h4>
             <ul class="tags tags-small">
               <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
             </ul>
           </NuxtLink>
-          <NuxtLink class="card isDone" v-for="(project, index) in userData.projects.filter(p => p.isDone)" :key="index"
+          <NuxtLink class="card isDone" v-for="(project, index) in profileData.projects.filter(p => p.isDone)" :key="index"
             :to="{ path: 'projekt', query: { id: project.id } }">
             <h4 class="h3">
               <IconCheck />{{ project.title }}

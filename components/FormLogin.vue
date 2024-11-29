@@ -80,7 +80,7 @@ const handleLogin = async () => {
       </div>
     </form>
     <p>
-      Du hast noch keinen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">🡒 <span
+      Du hast noch keinen Account? <a href="#" @click.prevent="toggleAuthForm" title="Registrieren">⭢ <span
           class="btn-text">Registrieren</span></a>
     </p>
   </div>

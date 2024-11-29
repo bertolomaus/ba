@@ -80,6 +80,8 @@ const save = async () => {
   else {
     console.log(profileId.value, userId.value.toString())
   }
+
+  prepareContent()
 }
 
 // abort edit
@@ -291,7 +293,8 @@ onUnmounted(() => {
               </p>
             </li>
             <li v-if="profileData.contact[2]">
-              <a :href="`signal://send?phone=${profileData.contact[2]}`" class="flex gap-2 items-center" target="_blank">
+              <a :href="`signal://send?phone=${profileData.contact[2]}`" class="flex gap-2 items-center"
+                target="_blank">
                 <NuxtImg :src="'signal.png'" alt="Icon Signal" height="24" />
                 Signal
               </a>
@@ -367,8 +370,8 @@ onUnmounted(() => {
               <li v-for="(skill, index) in project.requiredSkills" :key="index">{{ skill }}</li>
             </ul>
           </NuxtLink>
-          <NuxtLink class="card isDone" v-for="(project, index) in profileData.projects.filter(p => p.isDone)" :key="index"
-            :to="{ path: 'projekt', query: { id: project.id } }">
+          <NuxtLink class="card isDone" v-for="(project, index) in profileData.projects.filter(p => p.isDone)"
+            :key="index" :to="{ path: 'projekt', query: { id: project.id } }">
             <h4 class="h3">
               <IconCheck />{{ project.title }}
             </h4>

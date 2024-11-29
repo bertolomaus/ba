@@ -77,6 +77,19 @@ export const useUserData = () => {
     visitedProjects: [],
     visitedQuestions: [],
   }));
+  const emptyUser = {
+    name: "",
+    avatar: "profile-mr-light.png",
+    contact: [],
+    status: "",
+    skills: [],
+    hobbies: [],
+    bio: "",
+    questions: [],
+    projects: [],
+    visitedProjects: [],
+    visitedQuestions: [],
+  };
   const allHobbies = useState<string[]>("allHobbies", () => []);
   const projectsUserCanHelpWith = useState<ProjectsUserCanHelpWith[]>(
     "projectsUserCanHelpWith",
@@ -137,6 +150,11 @@ export const useUserData = () => {
       console.error("Error while fetching data:", error);
     }
   };
+
+  const clearData = () => {
+    userData.value = emptyUser;
+    profileData.value = emptyUser;
+  }
 
   const updateUserData = async (id = userId.value, data: Object) => {
     const dataString = JSON.stringify(data);
@@ -277,6 +295,7 @@ export const useUserData = () => {
     addVisitedProject,
     addVisitedQuestion,
     fetchProfileData,
-    profileData
+    profileData,
+    clearData
   };
 };

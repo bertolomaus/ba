@@ -22,6 +22,7 @@ const userCanHelpWithSomething = ref(false)
 // }
 
 const questionIsNew = (qId: number) => {
+  console.log(userData.value.visitedQuestions);
   return !userData.value.visitedQuestions.includes(qId)
 }
 

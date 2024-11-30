@@ -22,12 +22,11 @@ const userCanHelpWithSomething = ref(false)
 // }
 
 const questionIsNew = (qId: number) => {
-  console.log(userData.value.visitedQuestions);
-  return !userData.value.visitedQuestions.includes(qId)
+  return !userData.value.questionsVisited.includes(qId)
 }
 
 const projectIsNew = (pId: number) => {
-  return !userData.value.visitedProjects.includes(pId)
+  return !userData.value.projectsVisited.includes(pId)
 }
 
 const generateNavigationLinks = async () => {
@@ -45,12 +44,12 @@ const checkIfUserCanHelpWithSomething = () => {
   userCanHelpWithSomething.value = false;
 
   projectsUserCanHelpWith.value.forEach(p => {
-    if (!userData.value.visitedProjects.includes(p.id)) {
+    if (!userData.value.projectsVisited.includes(p.id)) {
       userCanHelpWithSomething.value = true;
     }
   })
   questionsUserCanHelpWith.value.forEach(q => {
-    if (!userData.value.visitedQuestions.includes(q.id)) {
+    if (!userData.value.questionsVisited.includes(q.id)) {
       userCanHelpWithSomething.value = true;
     }
   })

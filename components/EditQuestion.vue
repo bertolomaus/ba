@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { LocationQueryRaw } from 'vue-router';
 import Autocomplete from '../components/Autocomplete.vue'
 import Trash from '../components/Trash.vue'
 
@@ -14,6 +15,7 @@ const { question, fetchQuestionData } = useQuestionData()
 const { userData, fetchUserData, updateUserData } = useUserData()
 const { toggleModal } = useModal()
 const { editMode } = useEdit()
+const route  = useRouter()
 const possibleHelpers = ref<UserDataShort[]>([])
 
 const getHelpers = async () => {
@@ -179,16 +181,5 @@ onMounted(async () => {
         </button>
       </div>
     </form>
-    <div class="helpers grid grid-cols-4 gap-4">
-      <div
-        v-for="(helper, index) in possibleHelpers.filter(helper => helper.skills.length >= question.requiredSkills.length / 2)"
-        :key="index">
-        <p>id: {{ helper.id }}</p>
-        <p>name: {{ helper.name }}</p>
-        <p>common: {{ helper.skills }}</p>
-        <img src="../assets/img/profile-mr-light.png" :alt="helper.name">
-        <NuxtLink :to="{ path: 'profil', query: { wizard: helper.id } }">Mehr erfahren</NuxtLink>
-      </div>
-    </div>
   </div>
 </template>

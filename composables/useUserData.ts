@@ -13,8 +13,8 @@ export interface UserData {
   bio: string;
   questions: Question[];
   projects: Project[];
-  visitedProjects: number[];
-  visitedQuestions: number[];
+  projectsVisited: number[];
+  questionsVisited: number[];
 }
 
 interface UserDataWithId {
@@ -28,8 +28,8 @@ interface UserDataWithId {
   bio: string;
   questions: Question[];
   projects: Project[];
-  visitedProjects: number[];
-  visitedQuestions: number[];
+  projectsVisited: number[];
+  questionsVisited: number[];
 }
 export interface UserDataShort {
   id: number;
@@ -61,8 +61,8 @@ export const useUserData = () => {
     bio: "",
     questions: [],
     projects: [],
-    visitedProjects: [],
-    visitedQuestions: [],
+    projectsVisited: [],
+    questionsVisited: [],
   }));
   const profileData = useState<UserData>("profileData", () => ({
     name: "",
@@ -74,8 +74,8 @@ export const useUserData = () => {
     bio: "",
     questions: [],
     projects: [],
-    visitedProjects: [],
-    visitedQuestions: [],
+    projectsVisited: [],
+    questionsVisited: [],
   }));
   const emptyUser = {
     name: "",
@@ -87,8 +87,8 @@ export const useUserData = () => {
     bio: "",
     questions: [],
     projects: [],
-    visitedProjects: [],
-    visitedQuestions: [],
+    projectsVisited: [],
+    questionsVisited: [],
   };
   const allHobbies = useState<string[]>("allHobbies", () => []);
   const projectsUserCanHelpWith = useState<ProjectsUserCanHelpWith[]>(
@@ -267,15 +267,15 @@ export const useUserData = () => {
   };
 
   const addVisitedProject = async (id: number) => {
-    if (!userData.value.visitedProjects.includes(id)) {
-      userData.value.visitedProjects.push(id);
+    if (!userData.value.projectsVisited.includes(id)) {
+      userData.value.projectsVisited.push(id);
     }
     updateUserData(userId.value, userData.value);
   };
 
   const addVisitedQuestion = async (id: number) => {
-    if (!userData.value.visitedQuestions.includes(id)) {
-      userData.value.visitedQuestions.push(id);
+    if (!userData.value.questionsVisited.includes(id)) {
+      userData.value.questionsVisited.push(id);
     }
     updateUserData(userId.value, userData.value);
   };

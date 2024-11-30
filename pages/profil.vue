@@ -319,8 +319,24 @@ onUnmounted(() => {
         <h3>Fertigkeiten</h3>
         <ul class="list-skills">
           <li class="item-skills flex"
-            v-for="(skill, index) in profileData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"
+            v-if="editMode"
+            v-for="(skill, index) in userData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"
             :key="skill.name">
+            <div class="skill-name">{{ skill.name }}</div>
+            <div class="flex skill-level" v-if="editMode">
+              <Star @click="skill.level = index + 1" class="pr-2 cursor-pointer" v-for="(item, index) in 5" :key="index"
+                :data-skill="index + 1" :class="index + 1 <= skill.level ? 'fill-highlight' : 'fill-none'" />
+            </div>
+            <div class="flex skill-level pointer-events-none" v-else>
+              <Star class="pr-2" v-for="(item, index) in 5" :key="index" :data-skill="index + 1"
+                :class="index + 1 <= skill.level ? 'fill-highlight' : 'fill-none'" />
+            </div>
+            <Trash @click="removeSkill(index)" class="ml-4" v-if="editMode" />
+          </li>
+          <li class="item-skills flex"
+            v-else
+            v-for="(skill, index) in profileData.skills.sort((a, b) => { if (b.level != a.level) { return b.level - a.level } return a.name.localeCompare(b.name) })"
+            :key="index">
             <div class="skill-name">{{ skill.name }}</div>
             <div class="flex skill-level" v-if="editMode">
               <Star @click="skill.level = index + 1" class="pr-2 cursor-pointer" v-for="(item, index) in 5" :key="index"
@@ -341,9 +357,13 @@ onUnmounted(() => {
         <p v-if="editMode">Erzähl ein bisschen was über dich! Gib deinen Kommilitonen die Möglichkeit, dich
           kennenzulernen.</p>
         <ul class="tags mt-4">
-          <li v-for="(hobby, index) in profileData.hobbies.sort()" :key="index">
+          <li v-if="editMode" v-for="(hobby, index) in userData.hobbies.sort()" :key="index">
             <div class="w-max">{{ hobby }}</div>
             <Trash @click="removeHobby(index)" v-if="editMode" />
+          </li>
+          <li v-else v-for="(hobby, indexPofile) in profileData.hobbies.sort()" :key="indexPofile">
+            <div class="w-max">{{ hobby }}</div>
+            <Trash @click="removeHobby(indexPofile)" v-if="editMode" />
           </li>
         </ul>
         <Autocomplete v-if="editMode" :label="'Hobby hinzufügen'" :suggestions="allHobbies.sort()"

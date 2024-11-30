@@ -28,15 +28,17 @@ onMounted(() => {
       </div>
       <div class="quote my-8 mx-auto">
         <NuxtImg :src="'quote.png'" alt="Zitat Gabe Newell" class="quote-icon" />
-        <blockquote>The programmers of tomorrow are the <span class="text-textColor-primary font-medium">wizards</span> of the future. You're going to look like you have
+        <blockquote>The programmers of tomorrow are the <span class="text-textColor-primary font-medium">wizards</span>
+          of the future. You're going to look like you have
           magic powers compared to everybody else.</blockquote>
         <p>- Gabe Newell</p>
       </div>
       <div class="el-text columns-2 gap-4">
         <p>
-          Die Wizard WebApp soll euch dabei helfen, eure Stärken, Kenntnisse und Erfahrungen mit anderen zu teilen.
-          Hier
-          könnt ihr eure Projekte präsentieren, Fragen stellen und mit anderen Teilnehmern des Freiraums in Kontakt
+          Im Freiraum wollt ihr eure informatischen Fertigkeiten verbessern - dabei werdet ihr ohne Zweifel auf Fragen,
+          Probleme und Hindernisse stoßen. Die Wizard WebApp soll euch dabei helfen, eure Stärken, Kenntnisse und
+          Erfahrungen mit anderen zu teilen.
+          Hier könnt ihr eure Projekte präsentieren, Fragen stellen und mit anderen Teilnehmern des Freiraums in Kontakt
           kommen. Hier werden ihr darüber informiert, wenn jemand eine Frage hat, bei der ihr womöglich helfen könnt
           oder eure Fertigkeiten bei einem Gruppenprojekt gesucht werden.
         </p>

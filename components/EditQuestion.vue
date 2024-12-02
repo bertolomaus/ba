@@ -157,7 +157,7 @@ onMounted(async () => {
         </ul>
         <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
           @submit-input="addRequiredSkill" />
-        <p class="hint">Diese Eingaben erscheinen als Tags in der Liste der offenen Fragen. Basierend auf diesen Tags wird dein Problem Leuten vorgeschlagen, die über die erforderlichen Fertigkeiten verfügen, dir bei deiner Frage zu helfen.</p>
+        <p class="hint">Welche Fertigkeiten werden benötigt, um die Frage zu lösen? Diese Eingaben erscheinen als Tags in der Liste der offenen Fragen. Basierend auf diesen Tags wird dein Problem Leuten vorgeschlagen, die über die erforderlichen Fertigkeiten verfügen, dir bei deiner Frage zu helfen.</p>
       </div>
 
       <div class="field checkbox field-isVisible">

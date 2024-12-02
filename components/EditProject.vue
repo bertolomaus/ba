@@ -180,7 +180,7 @@ onMounted(async () => {
         </ul>
         <Autocomplete :label="'Erforderliche Fertigkeiten'" :suggestions="allSkills.sort()"
           @submit-input="addRequiredSkill" />
-        <p class="hint">Diese Eingaben erscheinen als Tags in der Liste der aller Projekte.</p>
+        <p class="hint">Welche Fertigkeiten werden benötigt, um dein Projekt zu bearbeiten? Diese Eingaben erscheinen als Tags in der Liste der aller Projekte.</p>
       </div>
 
       <div class="field field-winCondition">

@@ -317,6 +317,7 @@ onUnmounted(() => {
       </div>
       <div class="skills">
         <h3>Fertigkeiten</h3>
+        <p v-if="editMode">Liste deine Fertigkeiten auf und gib eine Einschätzung ab, wie gut du in den jeweiligen Gebieten bist.</p>
         <ul class="list-skills">
           <li class="item-skills flex"
             v-if="editMode"
